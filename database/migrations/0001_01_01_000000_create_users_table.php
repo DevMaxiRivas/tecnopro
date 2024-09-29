@@ -15,8 +15,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('rol');  // variable auxiliar para saber de manera directa el rol del usuario
-            $table->string('nombre');
-            $table->string('apellido');
+            $table->string('name'); // nombre completo del usuario
             $table->integer('dni');
             $table->string('telefono')->nullable();
             $table->string('domicilio');
