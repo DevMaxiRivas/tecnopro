@@ -19,10 +19,10 @@
             <div class="mb-3 row">
                 <label for="nombre" class="col-sm-4 col-form-label"> * Nombre </label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control @error('descripcion') is-invalid @enderror"
-                        id="descripcion" name="descripcion"
-                        value="{{ old('descripcion', optional($categoria)->descripcion) }}">
-                    @error('descripcion')
+                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
+                        id="nombre" name="nombre"
+                        value="{{ old('nombre', optional($categoria)->nombre) }}">
+                    @error('nombre')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
                 </div>
