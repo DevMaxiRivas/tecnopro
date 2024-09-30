@@ -60,7 +60,7 @@
                     <tbody>
                         @foreach ($categorias as $categoria)
                         <tr>
-                            <td>{{ $categoria->descripcion }}</td>
+                            <td>{{ $categoria->nombre }}</td>
                             <td class="d-flex justify-content-center">
                                 <form action="{{ route('marca.destroy', $categoria) }}" method="POST">
                                     @csrf 

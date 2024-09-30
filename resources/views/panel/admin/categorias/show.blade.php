@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="categoriaModalLabel{{ $categoria->id }}"><strong>
                     Datos de la Categoria:
-                        "{{ $categoria->descripcion }}"
+                        "{{ $categoria->nombre }}"
                 </strong></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
@@ -15,7 +15,7 @@
                 {{-- Contenido del modal --}}
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item bg-light pb-0">
-                        <strong>Nombre:</strong> <p>{{ $categoria->descripcion }}</p>
+                        <strong>Nombre:</strong> <p>{{ $categoria->nombre }}</p>
                     </li>
                     <li class="list-group-item pb-0">
                         <strong>Estado:</strong>

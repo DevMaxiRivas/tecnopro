@@ -10,7 +10,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 mb-3">
-            <h1>Editar Datos de la Categoria "{{ $categoria->descripcion }}"</h1>
+            <h1>Editar Datos de la Categoria "{{ $categoria->nombre }}"</h1>
             <a href="{{ route('categoria.index') }}" class="btn btn-sm btn-secondary text-uppercase">
                 Volver Atras
             </a>

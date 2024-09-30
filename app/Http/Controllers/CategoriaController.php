@@ -32,12 +32,13 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $categoria = new Categoria();
+        $categoria->nombre = $request->get('nombre');
         $categoria->activo = $request->get('activo');
 
         $categoria->save();
         return redirect()
             ->route('categoria.index')
-            ->with('alert', 'Categoria "' . '" agregada exitosamente.');
+            ->with('alert', 'Categoria "' . $categoria->nombre . '" agregada exitosamente.');
     }
 
     /**
@@ -61,13 +62,14 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
+        $categoria->nombre = $request->get('nombre');
         $categoria->activo = $request->get('activo');
 
         $categoria->update();
 
         return redirect()
             ->route('categoria.index')
-            ->with('alert', 'Categoria "' . '" actualizada exitosamente.');
+            ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
 
     public function cambiarEstado(Request $request)
