@@ -38,7 +38,7 @@ class CategoriaController extends Controller
             'nombre' => 'required|min:3',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
-            'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
+            'nombre.min' => 'El nombre debe tener al menos 3 caracteres!!.',
         ]);
 
         $categoria->save();
