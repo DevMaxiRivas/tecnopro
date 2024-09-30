@@ -34,6 +34,12 @@ class CategoriaController extends Controller
         $categoria = new Categoria();
         $categoria->nombre = $request->get('nombre');
         $categoria->activo = $request->get('activo');
+        $request->validate([
+            'nombre' => 'required|min:3',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
+        ]);
 
         $categoria->save();
         return redirect()

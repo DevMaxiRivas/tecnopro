@@ -1,6 +1,6 @@
 <div class="card mb-5">
     <form action="{{ $categoria->id ? route('categoria.update', $categoria) : route('categoria.store') }}" method="POST"
-        enctype="multipart/form-data" onsubmit="return validarFormulario()">
+        enctype="multipart/form-data" >
         @csrf
         @if ($categoria->id)
             @method('PUT')
@@ -25,6 +25,9 @@
                     @error('nombre')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
+                    @if ($errors->has('nombre'))
+                        <span class="error">{{ $errors->first('nombre') }}</span>
+                    @endif
                 </div>
             </div>
 
@@ -61,16 +64,7 @@
             </button>
         </div>
     </form>
-<script>
-function validarFormulario(){
-    var nombre = document.getElementByld("nombre").value;
-    if(nombre.length < 3){
-        alert("El nombre de categoria debe tener almenos 3 caracteres ");
-        return false;
-    }
-    return true;
-}
-</script>
+
 </div>
 
 @push('js')
