@@ -1,0 +1,29 @@
+/* @import url('button_switch.css'); */
+@import url('login.css');
+
+/* h1{
+    font-family: ;
+}
+
+h2,h3,h4,h5,h6{
+    font-family: ;
+}
+
+p, span, a{
+    font-family: ;
+}
+
+button{
+    font-family: ;
+}
+
+body{
+    
+} */
+
+.form-select {
+ padding: 6px;
+ border-radius: 4px;
+ border-color: #ccc;
+ outline: none;
+}

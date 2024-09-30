@@ -1,0 +1,233 @@
+/*/
+ Contiene las variables base para incluir en otros CSS, entonces se puede reutilizar
+ para respetar el estilo y combinación de colores.
+/*/
+
+@import url('fonts.css');
+
+/******************************** Variables CSS */
+:root {
+
+    /* Colores Generales */
+    --background: #f8f9fa !important;
+    --content-box: #dee2e6 !important;
+    --element-box: #ecf1f5 !important;
+    --text-heading: #232629 !important;
+    --text-general-g: #343a40 !important;
+    --text-general-w: #dee2e6 !important;
+    --enfasis: #1A9FDA !important;
+
+    /* Colores para Gradients */
+    --blue-400: #847aff;
+    --blue-600: #481eff;
+
+    --blue-500: #5c44ff;
+    --blue-700: #330ae3;
+
+    --blue-800: #2f0acd;
+
+
+
+    /* Fuentes y Tipografía */
+    --title-font: 'GalanoGrotesque';
+    --subheading-font: 'CheyenneSans';
+    --body-font: 'SoinSansRoman';
+    --btn-font: 'Acre';
+
+    /* Text Sizes */
+    --biggest-font-size: 2rem;
+    --big-font-size: 1.5rem;
+    --normal-font-size: 1.2rem;
+    --small-font-size: 1.1em;
+    --smaller-font-size: .75rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1.125rem;
+
+    /* Box Shadows */
+    --content-box-shadow: 10px 10px 15px -3px rgba(87, 87, 87, 0.11);
+    --inner-content-box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    --inner-content-box-shadow-right: inset -39px 0px 11px -33px rgba(0, 0, 0, 0.1);
+
+    /* Z index */
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-modal: 1000;
+
+}
+
+/******************************** Ayudas Visuales */
+
+.ver-grid {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(86, 61, 124, .15);
+    border: 1px solid rgba(86, 61, 124, .2);
+}
+
+.ver-container {
+    border: 1px solid rgba(205, 177, 247, 0.397);
+    background-color: #343a4033;
+}
+
+/******************************** Estilos Textos */
+h1,
+.text-title {
+    color: var(--text-heading);
+    font-size: var(--biggest-font-size);
+    font-family: var(--title-font);
+}
+
+h2,
+.text-heading {
+    color: var(--text-heading);
+    font-size: var(--big-font-size);
+    font-family: var(--subheading-font);
+}
+
+h3,
+.text-heading-h3 {
+    color: var(--text-heading);
+    font-size: var(--normal-font-size);
+    font-family: var(--subheading-font);
+}
+
+p,
+.text-body-g {
+    color: var(--text-general-grey);
+    font-size: var(--normal-font-size);
+    font-family: var(--body-font);
+}
+
+.p-small {
+    color: var(--text-general-grey);
+    font-size: var(--small-font-size);
+    font-family: var(--body-font);
+}
+
+.text-body-w {
+    color: var(--text-general-grey);
+    font-size: var(--normal-font-size);
+    font-family: var(--body-font);
+}
+
+.text-enfasis {
+    color: var(--text-heading);
+    font-size: var(--h2-font-size);
+    font-family: var(--btn-font);
+}
+
+/******************************** Clases Personalizaddas */
+.add-shadow {
+    box-shadow: var(--content-box-shadow);
+}
+
+.add-inner-shadow {
+    box-shadow: var(--inner-content-box-shadow);
+}
+
+.add-inner-right-shadow {
+    box-shadow: var(--inner-content-box-shadow-right);
+}
+
+/******************************** Clases del Tema */
+
+.content-box {
+    background-color: var(--content-box);
+}
+
+.element-box {
+    background-color: var(--element-box);
+}
+
+.producto-card img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+}
+
+.color-enfasis {
+    background-color: var(--enfasis) !important;
+    color: #dee2e6;
+    border: none !important;
+}
+
+.card {
+    border: none !important;
+}
+
+.btn-enfasis {
+    border: 2px solid var(--enfasis) !important;
+    font-size: 0.9rem;
+    min-width: 9rem;
+    transition: 0.3s all ease-in-out;
+}
+
+.btn-enfasis:hover {
+    /* opacity: 0.9;  */
+    background-color: rgb(255, 255, 255) !important;
+    color: var(--enfasis) !important;
+    border: 2px solid var(--enfasis) !important;
+}
+
+.btn-enfasis:active {
+    background-color: var(--enfasis) !important;
+    color: white !important;
+}
+
+.btn-atras {
+    font-size: 0.9rem;
+    min-width: 9rem;
+    color: white;
+}
+
+.btn-atras:hover {
+    /* opacity: 0.9;  */
+    background-color: rgb(255, 255, 255) !important;
+    color: gray !important;
+    border: 2px solid var(--enfasis) !important;
+}
+
+.check-out label,
+.check-out .list-group-item {
+    font-family: var(--btn-font);
+}
+
+.check-out input {
+    font-family: var(--btn-font);
+    color: gray;
+}
+
+.check-out .form-control:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #a89dda;
+    outline: 0;
+    box-shadow: 0 0 0 0.18rem rgba(132, 79, 255, 0.25);
+}
+
+.main-content {
+    min-height: 67vh;
+}
+
+/******************************** Efectos de Cards */
+
+.zoom-shadow {
+    transition: 0.3s;
+}
+
+.zoom-shadow:hover {
+    box-shadow: 0px 0px 50px 0px rgba(31, 69, 113, 0.5);
+    -webkit-box-shadow: 0 0px 30px 0 rgba(31, 69, 113, 0.2);
+}
+
+.inner {
+    overflow: hidden;
+}
+
+.inner img {
+    transition: all 1.5s ease;
+}
+
+.inner:hover img {
+    transform: scale(1.2);
+}

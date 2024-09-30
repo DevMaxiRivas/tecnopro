@@ -1,0 +1,23 @@
+/*/
+    Fuentes
+/*/
+
+@font-face {
+    font-family: 'GalanoGrotesque';
+    src: url('/storage/fonts/Num1-GalanoGrotesque-Bold-Heading.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'CheyenneSans';
+    src: url('/storage/fonts/Num2-CheyenneSans-ExtraBold.ttf') format('woff2');
+}
+
+@font-face {
+    font-family: 'SoinSansRoman';
+    src: url('/storage/fonts/Num3-Soin-Sans-Pro-Roman.ttf') format('woff2');
+}
+
+@font-face {
+    font-family: 'Acre';
+    src: url('/storage/fonts/Num4-Acre-Medium-Buttons.ttf') format('woff2');
+}
