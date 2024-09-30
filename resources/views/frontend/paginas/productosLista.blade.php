@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', '¨TecnoPro Productos')
+@section('title', 'TecnoPro Productos')
 @section('main-content')
 
     {{-- Aside Categorias / Filtrar / Novedades --}}

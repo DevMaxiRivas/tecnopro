@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', '¨TecnoPro Inicio')
+@section('title', 'TecnoPro Inicio')
 @section('main-content')
 
     @if (session('alert'))

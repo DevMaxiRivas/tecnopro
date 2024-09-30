@@ -20,17 +20,21 @@ Route::get('productos/detallesProducto/{producto}', [PaginaDeInicio::class, 'Man
 Route::get('productos/filtroPrecio', [PaginaDeInicio::class, 'filtrarPorPrecio'])->name('filtrarPorPrecio');
 Route::get('/resultados', [PaginaDeInicio::class, 'resultadosBusqueda'])->name('resultados-busqueda');
 
-// Carrito de compras
-Route::get('/carrito', [App\Http\Controllers\DetalleComprasController::class, 'index'])->name('carrito.carrito');
-Route::get('/miCarrito', [App\Http\Controllers\DetalleComprasController::class, 'miCarrito'])->name('carrito.miCarrito');
-Route::get('/agregarProductos', [App\Http\Controllers\DetalleComprasController::class, 'testProductos'])->name('carrito.agregarProductos');
-Route::post('/miCarrito/quitarItem', [App\Http\Controllers\DetalleComprasController::class, 'quitarItem'])->name('carrito.quitarItem');
-Route::post('/miCarrito/actualizarCantidad', [App\Http\Controllers\DetalleComprasController::class, 'actualizarCantidad'])->name('carrito.actualizarCantidad');
-Route::post('/miCarrito/agregarAlCarrito', [App\Http\Controllers\DetalleComprasController::class, 'agregarAlCarrito'])->name('carrito.agregarAlCarrito');
 
-// Rutas para generar y pagar el pedido
-Route::get('/carritoCantidadItems', [App\Http\Controllers\DetalleComprasController::class, 'contarItemsCarrito'])->name('carrito.contarItemsCarrito');
-Route::post('/carrito/checkout', [App\Http\Controllers\PedidoController::class, 'checkout'])->name('carrito.checkout');
-Route::get('/carrito/checkout', [App\Http\Controllers\PedidoController::class, 'create'])->name('carrito.create');
-Route::any('/carrito/guardar', [App\Http\Controllers\PedidoController::class, 'store'])->name('pedido.store');
-Route::any('/pedido/pago', [App\Http\Controllers\PedidoController::class, 'pago'])->name('pedido.pago');
+Route::middleware('auth')->group(function () {
+
+    // Carrito de compras
+    Route::get('/carrito', [App\Http\Controllers\DetalleComprasController::class, 'index'])->name('carrito.carrito');
+    Route::get('/miCarrito', [App\Http\Controllers\DetalleComprasController::class, 'miCarrito'])->name('carrito.miCarrito');
+    Route::get('/agregarProductos', [App\Http\Controllers\DetalleComprasController::class, 'testProductos'])->name('carrito.agregarProductos');
+    Route::post('/miCarrito/quitarItem', [App\Http\Controllers\DetalleComprasController::class, 'quitarItem'])->name('carrito.quitarItem');
+    Route::post('/miCarrito/actualizarCantidad', [App\Http\Controllers\DetalleComprasController::class, 'actualizarCantidad'])->name('carrito.actualizarCantidad');
+    Route::post('/miCarrito/agregarAlCarrito', [App\Http\Controllers\DetalleComprasController::class, 'agregarAlCarrito'])->name('carrito.agregarAlCarrito');
+
+    // Rutas para generar y pagar el pedido
+    Route::get('/carritoCantidadItems', [App\Http\Controllers\DetalleComprasController::class, 'contarItemsCarrito'])->name('carrito.contarItemsCarrito');
+    Route::post('/carrito/checkout', [App\Http\Controllers\PedidoController::class, 'checkout'])->name('carrito.checkout');
+    Route::get('/carrito/checkout', [App\Http\Controllers\PedidoController::class, 'create'])->name('carrito.create');
+    Route::any('/carrito/guardar', [App\Http\Controllers\PedidoController::class, 'store'])->name('pedido.store');
+    Route::any('/pedido/pago', [App\Http\Controllers\PedidoController::class, 'pago'])->name('pedido.pago');
+});

@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', '¨TecnoPro Carrito')
+@section('title', 'TecnoPro Carrito')
 @section('main-content')
     <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
     <!-- Breadcrumbs -->

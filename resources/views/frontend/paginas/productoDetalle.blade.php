@@ -1,5 +1,5 @@
 @extends('frontend.layouts.master')
-@section('title', '¨TecnoPro Detalles del Producto')
+@section('title', 'TecnoPro Detalles del Producto')
 @section('main-content')
     <link rel="stylesheet" href="{{ asset('css/detalleProducto.css') }}">
 
@@ -28,25 +28,6 @@
                         <img class="imagen" src = "{{ $imagen[0] }}" alt = "imagen-producto">
                         <img class="imagen" src = "{{ isset($imagen[1]) ? $imagen[1] : '' }}" alt = "imagen-producto">
                         <img class="imagen" src = "{{ isset($imagen[2]) ? $imagen[2] : '' }}" alt = "imagen-producto">
-                    </div>
-                </div>
-                <div class = "img-select">
-                    <div class = "img-item add-shadow p-2">
-                        <a href = "#" data-id = "1">
-                            <img src = "{{ $imagen[0] }}" alt = "{{ $imagen[0] }}">
-                        </a>
-                    </div>
-                    <div class = "img-item add-shadow p-2">
-                        <a href = "#" data-id = "2">
-                            <img src = "{{ isset($imagen[1]) ? $imagen[1] : '' }}"
-                                alt = "{{ isset($imagen[1]) ? $imagen[1] : '' }}">
-                        </a>
-                    </div>
-                    <div class = "img-item add-shadow p-2">
-                        <a href = "#" data-id = "3">
-                            <img src = "{{ isset($imagen[2]) ? $imagen[2] : '' }}"
-                                alt = "{{ isset($imagen[2]) ? $imagen[2] : '' }}">
-                        </a>
                     </div>
                 </div>
             </div>
