@@ -12,7 +12,9 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        //
+        $categorias = Categoria::latest()->get();
+        //Retornamos una vista y enviamos la variable "categorias"
+        return view('panel.administrador.lista_categorias.index', compact('categorias'));
     }
 
     /**
@@ -20,7 +22,8 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        $categoria = new Categoria();
+        return view('panel.administrador.lista_categorias.create', compact('categoria')); //compact(mismo nombre de la variable)
     }
 
     /**
@@ -28,7 +31,14 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria = new Categoria();
+        $categoria->descripcion = $request->get('descripcion');
+        $categoria->activo = $request->get('activo');
+
+        $categoria->save();
+        return redirect()
+            ->route('categoria.index')
+            ->with('alert', 'Categoria "' . $categoria->descripcion . '" agregada exitosamente.');
     }
 
     /**
@@ -36,7 +46,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+        return view('panel.administrador.lista_categorias.show', compact('categoria')); 
     }
 
     /**
@@ -44,7 +54,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return view('panel.administrador.lista_categorias.edit', compact('categoria'));
     }
 
     /**
@@ -52,7 +62,28 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
+        $categoria->descripcion = $request->get('descripcion');
+        $categoria->activo = $request->get('activo');
+
+        $categoria->update();
+
+        return redirect()
+            ->route('categoria.index')
+            ->with('alert', 'Categoria "' . $categoria->descripcion . '" actualizada exitosamente.');
+    }
+
+    public function cambiarEstado(Request $request)
+    {
+        $categoria = Categoria::find($request->_id);
+
+        if (!$categoria) {
+            return response()->json(['error' => 'Categoría no encontrada'], 404);
+        }
+
+        $categoria->activo = !$categoria->activo; // Cambia el estado
+        $categoria->save();
+
+        return response()->json(['message' => 'Estado de categoría cambiado con éxito']);
     }
 
     /**
