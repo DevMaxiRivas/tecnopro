@@ -60,7 +60,6 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        return view('panel.admin.categorias.edit', compact('categoria'));
     }
 
     /**
@@ -68,29 +67,10 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        $categoria->nombre = $request->get('nombre');
-        $categoria->activo = $request->get('activo');
-
-        $categoria->update();
-
-        return redirect()
-            ->route('categoria.index')
-            ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
 
     public function cambiarEstado(Request $request)
-    {
-        $categoria = Categoria::find($request->_id);
-
-        if (!$categoria) {
-            return response()->json(['error' => 'Categoría no encontrada'], 404);
-        }
-
-        $categoria->activo = !$categoria->activo; // Cambia el estado
-        $categoria->save();
-
-        return response()->json(['message' => 'Estado de categoría cambiado con éxito']);
-    }
+    { }
 
     /**
      * Remove the specified resource from storage.
