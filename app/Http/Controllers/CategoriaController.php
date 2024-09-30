@@ -52,7 +52,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        return view('panel.admin.categorias.show', compact('categoria')); 
+       // return view('panel.admin.categorias.show', compact('categoria')); 
     }
 
     /**
