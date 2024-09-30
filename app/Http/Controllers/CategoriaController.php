@@ -14,7 +14,7 @@ class CategoriaController extends Controller
     {
         $categorias = Categoria::latest()->get();
         //Retornamos una vista y enviamos la variable "categorias"
-        return view('panel.administrador.lista_categorias.index', compact('categorias'));
+        return view('panel.admin.categorias.index', compact('categorias'));
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoriaController extends Controller
     public function create()
     {
         $categoria = new Categoria();
-        return view('panel.administrador.lista_categorias.create', compact('categoria')); //compact(mismo nombre de la variable)
+        return view('panel.admin.categorias.create', compact('categoria')); //compact(mismo nombre de la variable)
     }
 
     /**
@@ -46,7 +46,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        return view('panel.administrador.lista_categorias.show', compact('categoria')); 
+        return view('panel.admin.categorias.show', compact('categoria')); 
     }
 
     /**
@@ -54,7 +54,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        return view('panel.administrador.lista_categorias.edit', compact('categoria'));
+        return view('panel.admin.categorias.edit', compact('categoria'));
     }
 
     /**

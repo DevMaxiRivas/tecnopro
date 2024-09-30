@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-12">
-            @include('panel.administrador.lista_categorias.forms.form')
+            @include('panel.admin.categorias.forms.form')
         </div>
 
     </div>
