@@ -64,8 +64,8 @@
 <script>
 function validarFormulario(){
     var nombre = document.getElementByld("nombre").value;
-    if(nombre.length < 4){
-        alert("El nombre de categoria debe tener almenos 3 caracterteres ");
+    if(nombre.length > 3){
+        alert("El nombre de categoria debe tener almenos 3 caracteres ");
         return false;
     }
     return true;
