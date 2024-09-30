@@ -9,6 +9,10 @@ class Producto extends Model
 {
     use HasFactory;
 
+    // Estados del producto
+    const ACTIVO = 1;
+    const INACTIVO = 0;
+
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'productos';
    
@@ -19,7 +23,8 @@ class Producto extends Model
         'descripcion', 
         'stock_disponible',
         'precio', 
-        'url_imagen'
+        'url_imagen',
+        'activo'
     ];
     
     // INNER JOIN con la tabla Categoria por medio de la FK id_categoria

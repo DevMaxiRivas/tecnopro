@@ -316,9 +316,9 @@ return [
             'can' => 'manage-blog',
         ],
         [
-            'text' => 'mi nuevo item',
-            'url' => 'admin/blog',
-            'icon' => 'far fa-fw fa-file',
+            'text' => 'Mis productos',
+            'route' => 'producto.index', // ruta de inicio del crud productos
+            'icon' => 'fas fa-store',
             // 'can' => 'manage-blog',
         ],
         [
