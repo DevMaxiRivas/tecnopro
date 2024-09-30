@@ -116,15 +116,14 @@
 
 
 {{-- Importacion de Archivos JS --}}
-{{--
-@section('js') --}}
+
+@section('js') 
 
     {{-- La funcion asset() es una funcion de Laravel PHP que nos dirige a la carpeta "public" --}}
-   {{-- <script src="{{ asset('adminlte/js/categorias.js') }}"></script>
+    <script src="{{ asset('adminlte/dist/js/categorias.js') }}"></script>
     <script>
         var cambiarEstadoUrl = '{{ route('cambiar.estado.categoria') }}';
         var token = '{{ csrf_token() }}';
     </script>
     <script src="{{ asset('js/button_switch.js') }}"></script>
 @stop
---}}
