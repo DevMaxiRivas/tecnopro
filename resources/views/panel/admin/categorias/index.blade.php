@@ -59,8 +59,9 @@
                     </thead>
                     <tbody>
                         @foreach ($categorias as $categoria)
-                        <>
+
                             <td>{{ $categoria->nombre }}</td>
+                            
                             <td class="d-flex justify-content-center">
                                 <form action="" method="POST">
                                     @csrf 
@@ -68,13 +69,13 @@
                                     {{-- <button type="submit" class="btn btn-sm btn-danger text-uppercase">
                                         Eliminar
                                     </button> --}}
-                                   <div>
+                                    <div>
                                         <label class="switch">
                                             <input type="checkbox" id="miInterruptor" data-change-id="{{ $categoria->id }}" class="miInterruptor" value="{{ $categoria->activo }}">
                                             <span class="slider"> <p class="estadop" style="visibility: hidden">{{ $categoria->activo }}</p></span>
                                         </label>
                                     </div>
-                                </form> 
+                                </form>
                             </td>
                             
                             
