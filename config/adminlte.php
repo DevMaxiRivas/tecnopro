@@ -315,7 +315,13 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-    
+        [
+            'text'        => 'Categorias',
+            'route'       => 'categoria.index',
+            // 'route' => 'proveedor.index',
+            'icon'        => 'fas fa-project-diagram',
+            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
+        ],
         [
             'text' => 'Mis productos',
             'route' => 'producto.index', // ruta de inicio del crud productos
