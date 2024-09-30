@@ -10,17 +10,17 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        
     }
-
+    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +28,6 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -36,7 +35,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+        
     }
 
     /**
@@ -44,7 +43,7 @@ class CategoriaController extends Controller
      */
     public function edit(Categoria $categoria)
     {
-        //
+        return view('panel.admin.categorias.edit', compact('categoria'));
     }
 
     /**
@@ -52,14 +51,23 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        //
-    }
+        $categoria->nombre = $request->get('nombre');
+        $categoria->activo = $request->get('activo');
 
+        
+        $categoria->update();
+
+        return redirect()
+            ->route('categoria.index')
+            ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
+    }
+    
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Categoria $categoria)
     {
-        //
+       
+        
     }
 }

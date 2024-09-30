@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>Tecno</b>Pro',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -315,12 +315,14 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
+    
         [
             'text' => 'Mis productos',
             'route' => 'producto.index', // ruta de inicio del crud productos
             'icon' => 'fas fa-store',
             // 'can' => 'manage-blog',
         ],
+        
         [
             'text' => 'pages',
             'url' => 'admin/pages',
