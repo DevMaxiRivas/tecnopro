@@ -39,6 +39,8 @@ class CategoriaController extends Controller
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
+            'nombre.unique' => 'Ya existe una categoría con ese nombre.'
+
         ]);
 
         $categoria->save();
