@@ -76,14 +76,7 @@
                                     </div>
                                 </form> 
                             </td>--}}
-                            <td>
-                                    <div>
-                                        <label class="switch">
-                                            <input type="checkbox" id="miInterruptor" data-change-id="{{ $categoria->id }}" class="miInterruptor" value="{{ $categoria->activo }}">
-                                            <span class="slider"> <p class="estadop" style="visibility: hidden">{{ $categoria->activo }}</p></span>
-                                        </label>
-                                    </div>
-                            </td>
+                            <td> {{ $categoria->activo }}</td>
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <a href="{{ route('categoria.show', $categoria) }}" title="Ver" data-toggle="modal" data-target="#categoriaModal{{ $categoria->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
