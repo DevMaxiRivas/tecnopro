@@ -62,20 +62,12 @@
 
                             <td>{{ $categoria->nombre }}</td>
                             
-                            <td class="d-flex justify-content-center">
-                                <form action="" method="POST">
-                                    @csrf 
-                                    @method('DELETE')
-                                    {{-- <button type="submit" class="btn btn-sm btn-danger text-uppercase">
-                                        Eliminar
-                                    </button> --}}
-                                    <div>
-                                        <label class="switch">
-                                            <input type="checkbox" id="miInterruptor" data-change-id="{{ $categoria->id }}" class="miInterruptor" value="{{ $categoria->activo }}">
-                                            <span class="slider"> <p class="estadop" style="visibility: hidden">{{ $categoria->activo }}</p></span>
-                                        </label>
-                                    </div>
-                                </form>
+                            <td>
+                                @if ($categoria->activo == 0)
+                                    <span class="badge badge-danger">INACTIVO</span>
+                                @else
+                                    <span class="badge badge-success">ACTIVO</span>
+                                @endif
                             </td>
                             
                             
@@ -116,14 +108,14 @@
 
 
 {{-- Importacion de Archivos JS --}}
-
+{{--
 @section('js') 
-
+--}}
     {{-- La funcion asset() es una funcion de Laravel PHP que nos dirige a la carpeta "public" --}}
-    <script src="{{ asset('adminlte/dist/js/categorias.js') }}"></script>
+    {{--<script src="{{ asset('adminlte/dist/js/categorias.js') }}"></script>
     <script>
         var cambiarEstadoUrl = '{{ route('cambiar.estado.categoria') }}';
         var token = '{{ csrf_token() }}';
     </script>
     <script src="{{ asset('js/button_switch.js') }}"></script>
-@stop
+@stop--}}
