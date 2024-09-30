@@ -61,21 +61,21 @@
                         @foreach ($categorias as $categoria)
                         <tr>
                             <td>{{ $categoria->nombre }}</td>
-                            <td class="d-flex justify-content-center">
+                           {{-- <td class="d-flex justify-content-center">
                                 <form action="{{ route('marca.destroy', $categoria) }}" method="POST">
                                     @csrf 
-                                    @method('DELETE')
+                                    @method('DELETE')--}}
                                     {{-- <button type="submit" class="btn btn-sm btn-danger text-uppercase">
                                         Eliminar
                                     </button> --}}
-                                    <div>
+                                   {{-- <div>
                                         <label class="switch">
                                             <input type="checkbox" id="miInterruptor" data-change-id="{{ $categoria->id }}" class="miInterruptor" value="{{ $categoria->activo }}">
                                             <span class="slider"> <p class="estadop" style="visibility: hidden">{{ $categoria->activo }}</p></span>
                                         </label>
                                     </div>
-                                </form>
-                            </td>
+                                </form> 
+                            </td>--}}
                             <td>
                                 <div class="d-flex justify-content-center">
                                     <a href="{{ route('categoria.show', $categoria) }}" title="Ver" data-toggle="modal" data-target="#categoriaModal{{ $categoria->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
