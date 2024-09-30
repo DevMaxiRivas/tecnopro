@@ -25,9 +25,7 @@
                     @error('nombre')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
-                    @if ($errors->has('nombre'))
-                        <span class="error">{{ $errors->first('nombre') }}</span>
-                    @endif
+                    
                 </div>
             </div>
 
