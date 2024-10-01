@@ -12,7 +12,10 @@ class CategoriaController extends Controller
      */
     public function index(Request $request)
     {
-        
+        $categoria = Categoria::latest()->get();
+
+    
+        return view('panel.admin.categorias.index', compact('categoria'));
     }
     
     /**
@@ -20,7 +23,8 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        
+        $categoria = new Categoria();
+        return view('panel.admin.categorias.create', compact('categoria'));
     }
 
     /**
@@ -28,6 +32,15 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        $categoria = new Categoria();
+        $categoria->nombre = $request->get('nombre');
+        $categoria->activo = $request->get('activo');
+
+        // Almacena la info del producto en la BD
+        $categoria->save();
+        return redirect()
+            ->route('categoria.index')
+            ->with('alert', 'Categoria "' . $categoria->nombre . '" agregada exitosamente.');
     }
 
     /**
@@ -35,7 +48,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        
+        return view('panel.admin.categorias.show', compact('categoria')); 
     }
 
     /**
