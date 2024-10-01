@@ -1,10 +1,9 @@
 <?php
 
 // Rutas del Panel de Administracion
-
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoriaController;
 
 Route::get('/', function() {
     return view('panel.index');
