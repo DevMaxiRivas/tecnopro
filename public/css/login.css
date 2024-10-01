@@ -1,0 +1,76 @@
+.login-page, .register-page{
+    background-image: url('../imagenes/patron-esmarty.svg') !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-page, .register-page{
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.login-box, .register-box {
+    width: 360px;
+    /* height: 400px; */
+}
+
+.login-box .btn.btn-flat {
+    border-radius: 10px;
+    border-width: 1px;
+    box-shadow: none;
+    background-color: #1429a0;
+}
+
+.register-box .btn.btn-flat {
+    border-radius: 10px;
+    border-width: 1px;
+    box-shadow: none;
+    background-color: #1429a0;
+}
+
+.register-box .btn.btn-flat:hover {
+    /* border-radius: 0;
+    border-width: 1px; */
+    /* box-shadow: none; */
+    background-color:#f8f9fa ;
+    color: #1429a0;
+    /* text-decoration: underline; */
+    
+}
+
+.login-box .btn.btn-flat:hover {
+    /* border-radius: 0;
+    border-width: 1px; */
+    /* box-shadow: none; */
+    background-color:#f8f9fa ;
+    color: #1429a0;
+    /* text-decoration: underline; */
+    
+}
+
+
+.card-primary.card-outline {
+    border-top: 3px solid #1429a0;
+}
+
+/* .divLogo {
+    background-color: black!important;
+} */
+
+/* #f7f7f7 */
+
+/* .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #1429a0;
+    outline: 0;
+    box-shadow: inset 0 0 0 transparent;
+} */
