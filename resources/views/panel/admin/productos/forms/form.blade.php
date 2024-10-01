@@ -17,7 +17,7 @@
             <div class="mb-3 row">
                 <label for="imagen" class="col-sm-4 col-form-label"> * Imagen </label>
                 <div class="col-sm-8">
-                    <input class="form-control @error('imagen') is-invalid @enderror" type="file" id="imagen" name="imagen" accept="image/*">
+                    <input class="form-control @error('imagen') is-invalid @enderror" type="file" id="imagen" name="imagen" accept="image/jpeg,png,jpg,webp">
                     
                     @error('imagen')
                         <div class="invalid-feedback"> {{ $message }} </div>

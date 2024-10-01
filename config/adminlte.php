@@ -295,7 +295,7 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /* [
             'type' => 'navbar-search',
             'text' => 'search',
             'topnav_right' => true,
@@ -303,10 +303,10 @@ return [
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
-        ],
+        ], */
 
         // Sidebar items:
-        [
+        /* [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
@@ -314,9 +314,9 @@ return [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
-        ],
+        ], */
         [
-            'text'        => 'Categorias',
+            'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
             // 'route' => 'proveedor.index',
             'icon'        => 'fas fa-project-diagram',
@@ -328,8 +328,7 @@ return [
             'icon' => 'fas fa-store',
             // 'can' => 'manage-blog',
         ],
-        
-        [
+        /* [
             'text' => 'pages',
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',
@@ -400,7 +399,7 @@ return [
             'text' => 'information',
             'icon_color' => 'cyan',
             'url' => '#',
-        ],
+        ], */
     ],
 
     /*

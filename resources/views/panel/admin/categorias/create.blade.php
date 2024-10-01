@@ -3,14 +3,13 @@
 @section('title', 'Crear Categoria')
 
 @section('content_header')
-    
+    <h1>&nbsp;<strong>NUEVA CATEGORIA</strong></h1>
 @stop
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12 mb-3">
-            <h1>Creación de una Nueva Categoria</h1>
             <a href="{{ route('categoria.index') }}" class="btn btn-sm btn-secondary text-uppercase">
                 Volver Atras
             </a>

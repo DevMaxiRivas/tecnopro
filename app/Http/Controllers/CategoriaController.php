@@ -13,6 +13,7 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::latest()->get();
+        
         //Retornamos una vista y enviamos la variable "categorias"
         return view('panel.admin.categorias.index', compact('categorias'));
     }
@@ -31,19 +32,21 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $categoria = new Categoria();
-        $categoria->nombre = $request->get('nombre');
-        $categoria->activo = $request->get('activo');
         $request->validate([
             'nombre' => 'required|min:3|unique:categorias,nombre',
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
             'nombre.unique' => 'Ya existe una categoría con ese nombre.'
-
         ]);
 
+        $categoria = new Categoria();
+
+        $categoria->nombre = $request->get('nombre');
+        $categoria->activo = $request->get('activo');
+
         $categoria->save();
+
         return redirect()
             ->route('categoria.index')
             ->with('alert', 'Categoria "' . $categoria->nombre . '" agregada exitosamente.');
@@ -73,7 +76,6 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->get('nombre');
         $categoria->activo = $request->get('activo');
 
-        
         $categoria->update();
 
         return redirect()
