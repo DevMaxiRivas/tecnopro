@@ -257,7 +257,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'panel',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -295,7 +295,7 @@ return [
 
     'menu' => [
         // Navbar items:
-        [
+        /* [
             'type' => 'navbar-search',
             'text' => 'search',
             'topnav_right' => true,
@@ -303,10 +303,10 @@ return [
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
-        ],
+        ], */
 
         // Sidebar items:
-        [
+        /* [
             'type' => 'sidebar-menu-search',
             'text' => 'search',
         ],
@@ -314,21 +314,21 @@ return [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
-        ],
+        ], */
         [
-            'text' => 'Categorias',
-            'route' => 'categoria.index', // ruta de inicio del crud productos
-            'icon' => 'fab fa-fw fa-buffer',
-            // 'can' => 'manage-blog',
+            'text'        => 'Mis Categorias',
+            'route'       => 'categoria.index',
+            // 'route' => 'proveedor.index',
+            'icon'        => 'fas fa-project-diagram',
+            'can'         => 'lista_categorias'
         ],
         [
             'text' => 'Mis productos',
             'route' => 'producto.index', // ruta de inicio del crud productos
             'icon' => 'fas fa-store',
-            // 'can' => 'manage-blog',
+            'can' => 'lista_productos',
         ],
-        
-        [
+        /* [
             'text' => 'pages',
             'url' => 'admin/pages',
             'icon' => 'far fa-fw fa-file',
@@ -399,7 +399,7 @@ return [
             'text' => 'information',
             'icon_color' => 'cyan',
             'url' => '#',
-        ],
+        ], */
     ],
 
     /*
@@ -438,7 +438,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -454,6 +454,21 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                ],
+            ],
+        ],
+        'DataTables Responsive' => [
+            'active' => true,
+            'files' => [
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css',
                 ],
             ],
         ],

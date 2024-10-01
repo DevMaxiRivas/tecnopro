@@ -10,12 +10,12 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $categoria = Categoria::latest()->get();
-
-    
-        return view('panel.admin.categorias.index', compact('categoria'));
+       $categorias = Categoria::latest()->get();
+        
+        //Retornamos una vista y enviamos la variable "categorias"
+        return view('panel.admin.categorias.index', compact('categorias'));
     }
     
     /**
@@ -24,7 +24,7 @@ class CategoriaController extends Controller
     public function create()
     {
         $categoria = new Categoria();
-        return view('panel.admin.categorias.create', compact('categoria'));
+        return view('panel.admin.categorias.create', compact('categoria')); //compact(mismo nombre de la variable)
     }
 
     /**
@@ -32,12 +32,21 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required|min:3|unique:categorias,nombre',
+        ], [
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
+            'nombre.unique' => 'Ya existe una categoría con ese nombre.'
+        ]);
+
         $categoria = new Categoria();
+
         $categoria->nombre = $request->get('nombre');
         $categoria->activo = $request->get('activo');
 
-        // Almacena la info del producto en la BD
         $categoria->save();
+
         return redirect()
             ->route('categoria.index')
             ->with('alert', 'Categoria "' . $categoria->nombre . '" agregada exitosamente.');
@@ -67,14 +76,16 @@ class CategoriaController extends Controller
         $categoria->nombre = $request->get('nombre');
         $categoria->activo = $request->get('activo');
 
-        
         $categoria->update();
 
         return redirect()
             ->route('categoria.index')
             ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
-    
+
+    public function cambiarEstado(Request $request)
+    { }
+
     /**
      * Remove the specified resource from storage.
      */

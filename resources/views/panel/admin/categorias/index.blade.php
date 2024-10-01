@@ -1,9 +1,11 @@
 @extends('adminlte::page')
+
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
+
 @section('title', 'Categorías')
 @section('content_header')
-    <h1>&nbsp;<strong>CATEGORIAS</strong></h1>
+    <h1>&nbsp;<strong>MIS CATEGORIAS</strong></h1>
 @stop
 
 @section('content')
@@ -14,6 +16,7 @@
                 Nueva Categoria 
             </a>
         </div>
+
         @if (session('alert'))
         <div class="col-12">
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -24,6 +27,7 @@
             </div>
         </div>
         @endif
+
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -35,8 +39,8 @@
                             <option value="0">Desactivado</option>
                         </select>
                     </div>--}}
-                    @if (count($categoria) > 0)
-                    <table id="tabla-categorias" class="table table-striped table-hover w-100">
+                    @if (count($categorias) > 0)
+                    <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
                         <thead>
                             <tr>
                                 <th scope="col" class="text-uppercase text-center">Nombre</th>
@@ -45,11 +49,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($categoria as $categoria)
+                            @foreach ($categorias as $categoria)
                             <tr>
                                 <td class="text-center">{{ $categoria->nombre }}</td>
                                 <td class="text-center">
-                                    <form action="{{ route('categoria.destroy', $categoria) }}" method="POST">
+                                    @if ($categoria->activo == 0)
+                                        <span class="badge badge-danger">INACTIVO</span>
+                                    @else
+                                        <span class="badge badge-success">ACTIVO</span>
+                                    @endif
+                                    {{-- <form action="{{ route('categoria.destroy', $categoria) }}" method="POST">
                                         @csrf 
                                         @method('DELETE')
                                         <div>
@@ -58,7 +67,7 @@
                                                 <span class="slider"><p class="estadop" style="visibility: hidden">{{ $categoria->activo }}</p></span>
                                             </label>
                                         </div>
-                                    </form>
+                                    </form> --}}
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
@@ -76,10 +85,10 @@
                         </tbody>
                     </table>
                     @else
-                            <div class="alert alert-danger mb-0" role="alert">
-                                No hay categorias disponibles
-                            </div>                          
-                        @endif
+                        <div class="alert alert-danger mb-0" role="alert">
+                            No hay categorias disponibles
+                        </div>                          
+                    @endif
                 </div>
             </div>
         </div>

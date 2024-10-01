@@ -3,7 +3,11 @@
 @section('title', 'Editar')
 
 @section('content_header')
-    <h1>Editar Datos del Producto "{{ $producto->nombre }}"</h1>
+    <h1>
+        <strong>
+            Editar producto "{{ $producto->nombre }}"
+        </strong>
+    </h1>
 @stop
 
 @section('content')

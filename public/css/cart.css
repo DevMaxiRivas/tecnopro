@@ -1,0 +1,21 @@
+/*/
+    Estilos para el carrito de comrpas cart.blade
+/*/
+
+@import url(base.css);
+
+.btn-disminuir:hover {
+    /* opacity: 0.9;  */
+    background-color: rgba(255, 255, 255, 0) !important;
+    color: red !important;
+    border: 2px solid red !important;
+}
+
+.btn-aumentar:hover {
+    /* opacity: 0.9;  */
+    background-color: rgba(255, 255, 255, 0) !important;
+    color: green !important;
+    border: 2px solid green !important;
+    background: rgba(107, 177, 112, 0.274), 98;
+}
+

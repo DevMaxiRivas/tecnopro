@@ -1,0 +1,6 @@
+/* Responsive para mobiles */
+@media only screen and (max-width: 768px) {
+    #datatable {
+        text-align: left !important;
+    }    
+}

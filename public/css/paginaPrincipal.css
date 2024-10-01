@@ -1,0 +1,186 @@
+@import url(slider.css);
+
+/* Estilo general */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style-type: none;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--background);
+    color: #333;
+}
+
+.navbar{
+    padding: 0;
+}
+
+.navbar.scrolled {
+    background-color: var(--background);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.under:hover{
+    text-decoration: none;
+}
+
+/* ul a:visited, ul a:link {
+    color: #f3f3f3;
+} ver el tema que me hace invisible los icons del navbar*/
+
+.titulo a{
+    text-decoration: none;
+}
+
+.breadcrumb li a{
+    text-decoration: none;
+}
+
+/* Categorías */
+.categoria-lista {
+    list-style: none;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* botón Filtrar */
+button.filtrar {
+    background-color: #330ae3;
+    color: #fff; 
+    border: 1px solid #330ae3; 
+    padding: 10px 20px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+button.filtrar:hover {
+    background-color: #2f0acd!important;
+    border-color: #2f0acd!important; 
+}
+
+#precio_range {
+    width: 75%;
+}
+
+/* Últimos Productos */
+.card {
+    margin-bottom: 20px;
+}
+
+/* Todos los Productos */
+.single-product {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.product-img img {
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-content {
+    padding: 10px;
+}
+
+.pagination {
+    margin: 20px 0;
+}
+
+/* Carrito de Compras */
+btn-disminuir {
+    width: 20px;
+    height: 20px;
+}
+
+/* Efecto Categorias */
+
+.img-container {
+    width: 100%;
+    height: 500px;
+    cursor: pointer;
+    overflow: hidden;
+    }
+  
+  .zoom-effect {
+      width: 100%;
+    height: 500px;
+      object-fit: cover;
+    transform: scale(1);
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+/* Efectos */
+
+
+/*Footer */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+}
+
+.footer p {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+
+.contact ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact li {
+    margin-bottom: 10px;
+}
+
+.contact a {
+    color: #fff;
+    margin-right: 10px;
+}
+
+.copyright {
+    padding-top: 20px;
+    border-top: 1px solid #565656;
+}
+
+.copyright p {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.copyright a {
+    color: #fff;
+    font-weight: bold;
+}
+
+.precio-estilo{
+    white-space: nowrap;
+}
+
+.categoria-descripcion-estilo{
+    text-transform: uppercase;
+    transition: all 0.5s ease;
+    color: white;
+}
+
+.categoria-descripcion-estilo:hover{
+    color: white;
+    opacity: 0.4;
+}
+
+.btn-enfasis-adicional:hover{
+    background-color: rgba(255, 255, 255, 0) !important;
+    color: var(--enfasis) !important;
+    border: 1px solid var(--enfasis) !important;
+}
