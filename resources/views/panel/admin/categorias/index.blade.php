@@ -4,6 +4,7 @@
 @section('plugins.Sweetalert2', true)
 
 @section('title', 'Categorías')
+
 @section('content_header')
     <h1>&nbsp;<strong>MIS CATEGORIAS</strong></h1>
 @stop
