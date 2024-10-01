@@ -1,7 +1,8 @@
 <div class="card mb-5">
-    <form action="{{ $categoria->id ? route('categoria.update', $categoria) : route('categoria.store') }}" method="POST"
-        enctype="multipart/form-data" >
+    <form action="{{ $categoria->id ? route('categoria.update', $categoria) : route('categoria.store') }}" method="POST">
+        
         @csrf
+        
         @if ($categoria->id)
             @method('PUT')
         @endif
@@ -14,18 +15,16 @@
             </div> --}}
             {{-- @endif --}}
 
-
-
             <div class="mb-3 row">
                 <label for="nombre" class="col-sm-4 col-form-label"> * Nombre </label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control @error('nombre') is-invalid @enderror"
                         id="nombre" name="nombre"
                         value="{{ old('nombre', optional($categoria)->nombre) }}">
+                    
                     @error('nombre')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
-                    
                 </div>
             </div>
 
@@ -39,7 +38,7 @@
 
                     {{-- <input type="text" class="form-control @error('activo') is-invalid @enderror" id="activo"
                         name="activo" value="{{ old('activo', optional($categoria)->activo) }}"> --}}
-                    @error('descripcion')
+                    @error('activo')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
                 </div>
@@ -56,13 +55,13 @@
                 </div>
             --}}
         </div>
+
         <div class="card-footer">
-            <button type="submit" class="btn btn-success text-uppercase">
+            <button {{ $categoria->id ? 'id=update-button' : '' }} type="submit" class="btn btn-success text-uppercase">
                 {{ $categoria->id ? 'Actualizar' : 'Guardar' }}
             </button>
         </div>
     </form>
-
 </div>
 
 @push('js')
