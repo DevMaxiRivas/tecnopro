@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function() {
     return view('panel.index');
-});
+})->name('panel');
 
 
 Route::resource('/categorias', CategoriaController::class)->names('categoria');

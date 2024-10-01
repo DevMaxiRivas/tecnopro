@@ -75,7 +75,7 @@
 
                         @guest
                             <li><a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    href="{{ route('login') }}">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a></li>
+                                    href="{{ route('panel') }}">Iniciar Sesión <i class="fas fa-sign-in-alt"></i></a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -84,6 +84,11 @@
                             </li>
                             {{--  --}}
                         @else
+                            @role('admin')
+                            <li><a class="dropdown-item d-flex align-items-center justify-content-between "
+                                        href="{{ route('panel') }}">Panel <i
+                                            class="fa-solid fa-user-gear small"></i></a></li>
+                            @endrole
                             @role('cliente')
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between "
                                         href="{{ route('cliente.editar') }}">Mi Perfil <i

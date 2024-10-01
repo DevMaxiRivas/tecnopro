@@ -13,7 +13,8 @@
 
         </div>
     @endif
-
+    
+    @if (count($productos) > 0)
     {{-- Ultimos Agregados --}}
     <section class="shop-home-list section pt-4">
         <div class="container pt-4">
@@ -24,7 +25,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row justify-content-around mt-2 mb-4">
                 @foreach ($productos->take(5) as $producto)
                     @php $imagen = explode('|', $producto->url_imagen) @endphp
@@ -47,9 +47,17 @@
                     </div>
             </div>
             @endforeach
-
+            
+            
         </div>
-        </div>
+    </div>
+    @else
+    <div class="d-flex justify-content-center">
+                <div class="container text-center">
+                    <h4 class="text-danger" style="margin:100px auto;"> No hay productos disponibles en este momento.</h4>
+                </div>
+            </div>
+    @endif
     </section>
     {{-- Ultimos Agregados Fin --}}
 @endsection
