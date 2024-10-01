@@ -59,7 +59,7 @@
 
                         </div> --}}
                         @if (count($productos) > 0)
-                            <table id="datatables" class="table table-striped table-hover w-100" style="text-align: center">
+                            <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-uppercase">Codigo</th>
@@ -98,31 +98,31 @@
                                                 <span class="badge badge-success">ACTIVO</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        {{-- <td>
                                             <form action="{{ route('producto.destroy', $producto) }}" method="POST">
                                                 @csrf 
                                                 @method('DELETE')
-                                                {{-- <button type="submit" class="btn btn-sm btn-danger text-uppercase">
+                                                <button type="submit" class="btn btn-sm btn-danger text-uppercase">
                                                     Eliminar
-                                                </button> --}}
-                                                {{-- <div>
+                                                </button>
+                                                <div>
                                                     <label class="switch">
                                                         <input type="checkbox" class="miInterruptor" value="{{ $producto->activo }}" data-change-id="{{ $producto->id }}">
                                                         <span class="slider"> <p class="estadop" style="visibility: hidden">{{ $producto->activo }}</p></span>
                                                     
                                                     </label>
-                                                </div> --}}
-                                            </form>
-                                        </td>
+                                                </div
+                                            </form> 
+                                        </td> --}}
                                         <td>
                                             <div class="d-flex justify-content-center">
-                                                {{-- <a href="{{ route('producto.show', $producto) }}" title="Ver" data-toggle="modal" data-target="#productoModal{{ $producto->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
+                                                <a href="#{{-- route('producto.show', $producto) --}}" title="Ver" data-toggle="modal" data-target="#productoModal{{ $producto->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
                                                     <i class="far fa-eye" aria-hidden="true"></i>
                                                 </a>
                                                 
-                                                <a href="{{ route('producto.edit', $producto) }}" title="Editar" class="btn btn-sm btn-warning text-white text-uppercase me-1">
+                                                <a href="#{{-- route('producto.edit', $producto) --}}" title="Editar" class="btn btn-sm btn-warning text-white text-uppercase me-1">
                                                     <i class="fas fa-edit" aria-hidden="true"></i>
-                                                </a> --}}
+                                                </a>
 
                                                 {{-- <form action="{{ route('producto.destroy', $producto) }}" method="POST">
                                                     @csrf 
