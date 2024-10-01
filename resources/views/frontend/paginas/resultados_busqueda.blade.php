@@ -46,11 +46,6 @@
 
             {{-- Sección Principal --}}
             <div class="col-lg-10 col-md-12 col-sm-12 col-12">
-                <div class="col-md-12" style="height: 12rem">
-                    <div class="bg-cover img-fluid add-shadow"
-                        style="background-repeat: no-repeat; height: 100%; background-size: cover; background-position: center; background-image:url('{{ asset('imagenes/banner-general.jpg') }}')">
-                    </div>
-                </div>
                 <div class="row pt-4">
                     {{-- Breadcrumbs --}}
                     <div class="container-fluid">
