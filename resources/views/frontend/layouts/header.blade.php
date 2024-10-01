@@ -29,7 +29,7 @@
                     <ul class="dropdown-menu">
                         @foreach ($categorias as $cat)
                             <li><a class="dropdown-item"
-                                    href="{{ route('MandarDatosCategoriaEspecifica', $cat->id) }}">{{ $cat->nombre }}</a>
+                                    href="#{{-- route('MandarDatosCategoriaEspecifica', $cat->id) --}}">{{ $cat->nombre }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -54,7 +54,7 @@
 
             <ul class="navbar-nav carrito-logout gap-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('carrito.carrito') }}" title="Mi carrito">
+                    <a class="nav-link" href="#{{-- route('carrito.carrito') --}}" title="Mi carrito">
                         <i class="fa-solid fa-shopping-cart"></i> <span id="cant_carrito">0</span>
                     </a>
                 </li>
