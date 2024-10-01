@@ -5,6 +5,9 @@
 
 @section('adminlte_css')
     @stack('css')
+
+    <link rel="stylesheet" href="{{asset('css/panel/admin_lte.css')}}">
+
     @yield('css')
 @stop
 
@@ -55,4 +58,6 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
+
+    <script src="{{ asset('js/panel/datatable.js') }}"></script>
 @stop

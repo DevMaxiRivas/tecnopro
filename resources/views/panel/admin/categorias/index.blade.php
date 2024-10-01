@@ -41,7 +41,7 @@
                         </select>
                     </div>--}}
                     @if (count($categorias) > 0)
-                    <table id="datatables" class="table table-striped table-hover w-100" style="text-align: center">
+                    <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
                         <thead>
                             <tr>
                                 <th scope="col" class="text-uppercase text-center">Nombre</th>
