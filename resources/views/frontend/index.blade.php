@@ -33,7 +33,7 @@
                             <a href="{{ route('MandarDatosProductoEspecifico', $producto->id) }}"
                                 style="color: rgb(38, 38, 38)">
                                 <div class="container mt-3 bg-white inner" style="width: 200px; height: 200px">
-                                    <img src="{{ $imagen[0] }}" class="card-img-top img-fluid" alt="{{ $imagen[0] }}">
+                                    <img src="{{ $imagen[0] }}" class="card-img-top img-fluid" alt="{{ $producto->nombre }}">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title"> {{ Str::limit($producto->nombre, 25) }} </h5>
