@@ -44,6 +44,7 @@
                     <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
                         <thead>
                             <tr>
+                                <th scope="col" class="text-uppercase text-center">#</th>
                                 <th scope="col" class="text-uppercase text-center">Nombre</th>
                                 <th scope="col" class="text-uppercase text-center">Activo</th>
                                 <th scope="col" class="text-uppercase text-center">Acciones</th>
@@ -52,6 +53,7 @@
                         <tbody>
                             @foreach ($categorias as $categoria)
                             <tr>
+                                <td class="text-center">{{ $categoria->id }}</td>
                                 <td class="text-center">{{ $categoria->nombre }}</td>
                                 <td class="text-center">
                                     @if ($categoria->activo == 0)
