@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_venta'); // BIGINT(20)
             $table->unsignedBigInteger('id_producto'); // BIGINT(20)
 
-            $table->decimal('precio', 10, 2); // DECIMAL(10, 2)
+            $table->decimal('precio', 20, 2); // DECIMAL(20, 2)
             $table->integer('cantidad');
-            $table->decimal('subtotal', 10, 2); // DECIMAL(10, 2)
+            $table->decimal('subtotal', 20, 2); // DECIMAL(20, 2)
 
             // Creamos la FK "id_venta" que hace referencia al "id" de la tabla "ventas"
             $table->foreign('id_venta')->references('id')->on('ventas');

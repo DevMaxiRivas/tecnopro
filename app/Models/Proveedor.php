@@ -9,6 +9,10 @@ class Proveedor extends Model
 {
     use HasFactory;
 
+    // Estados del proveedor
+    const ACTIVO = '1';
+    const INACTIVO = '0';
+
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'proveedores';
    

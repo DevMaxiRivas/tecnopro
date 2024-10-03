@@ -10,11 +10,10 @@ class Compra extends Model
     use HasFactory;
 
     // Estados de Compra
-    const PENDIENTE = 0;
-    const PAGADO = 1;
-    const EN_PREPARACION = 2;
-    const RECIBIDO = 3;
-    const CANCELADO = 4;
+    const PENDIENTE = '0';
+    const EN_ESPERA = '1';
+    const RECIBIDO = '2';
+    const CANCELADO = '3';
 
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'compras';
@@ -36,8 +35,9 @@ class Compra extends Model
         $this->belongsTo(FormaPago::class, 'id_forma_pago');
     }
 
-    // falta relacion de "compras" -> "detalle_compras" <- "productos"
-    public function detalle_compras() {
-        
+    // INNER JOIN avanzado (compras --> detalle_compras <-- productos)
+    public function productos() {
+        return $this->belongsToMany(Producto::class, 'detalle_compras', 'id_compra', 'id_producto')
+                    ->withPivot(['precio','cantidad', 'subtotal']); // accedo a los demas atributos de la tabla "detalle_compras"
     }
 }

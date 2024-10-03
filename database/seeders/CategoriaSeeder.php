@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categoria;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,21 @@ class CategoriaSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Categoria::create([
+            'nombre' => 'Memorias RAM'
+        ]);
+
+        Categoria::create([
+            'nombre' => 'Almacenamiento'
+        ]);
+
+        Categoria::create([
+            'nombre' => 'Procesadores'
+        ]);
+
+        Categoria::create([
+            'nombre' => 'Placas de video',
+            'activo' => Categoria::INACTIVO
+        ]);
     }
 }
