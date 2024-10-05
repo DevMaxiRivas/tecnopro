@@ -20,11 +20,20 @@ class RoleSeeder extends Seeder
         $rol_compras = Role::create(['name' => User::EMPLEADO_COMPRAS]);
         $rol_cliente = Role::create(['name' => User::CLIENTE]);
 
+        // Permisos del admin
+        Permission::create(['name' => 'lista_usuarios'])->assignRole($rol_admin);
+        Permission::create(['name' => 'lista_formas_pagos'])->assignRole($rol_admin);
+
+        // Permisos del empleado de ventas
+        Permission::create(['name' => 'lista_ventas'])->syncRoles([$rol_admin, $rol_vendedor]);
+        
         // Permisos del cliente
         Permission::create(['name' => 'lista_compras'])->assignRole($rol_cliente);
 
-        // Permisos del admin
-        Permission::create(['name' => 'lista_categorias'])->assignRole($rol_admin);
-        Permission::create(['name' => 'lista_productos'])->assignRole($rol_admin);
+        // Permisos del empleado de compras
+        Permission::create(['name' => 'lista_categorias'])->syncRoles([$rol_admin, $rol_compras]);
+        Permission::create(['name' => 'lista_productos'])->syncRoles([$rol_admin, $rol_compras]);
+        Permission::create(['name' => 'lista_proveedores'])->syncRoles([$rol_admin, $rol_compras]);
+        Permission::create(['name' => 'lista_ordenes_compras'])->syncRoles([$rol_admin, $rol_compras]);
     }
 }

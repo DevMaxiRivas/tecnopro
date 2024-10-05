@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->enum('activo', [Categoria::ACTIVO, Categoria::INACTIVO])->comment('1: Activo, 0: Inactivo');
+            $table->enum('activo', [Categoria::ACTIVO, Categoria::INACTIVO])->comment('1: Activo, 0: Inactivo')->default(Categoria::ACTIVO);
             $table->timestamps();
         });
     }

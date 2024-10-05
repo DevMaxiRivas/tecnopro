@@ -7,7 +7,7 @@
 
     <!-- Shopping Cart -->
     <div class="shopping-cart section m-4">
-        <div class="container border p-2 rounded-2 add-shadow bg-white border-0 " style="">
+        <div class="container p-2 rounded-2 add-shadow bg-white border-0 " style="">
             <div class="row">
                 <div class="col-12 " style="overflow-x: auto;">
                     <!-- Shopping Summery -->

@@ -15,7 +15,16 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Maxi Rivas',
+            'name' => 'Mariano Chivi',
+            'rol' => User::ADMINISTRADOR,
+            'dni' => '40111223',
+            'email' => 'admin@gmail.com',
+            'domicilio' => 'Av. Siempre viva 124',
+            'password' => Hash::make('12345678'),
+        ])->assignRole(User::ADMINISTRADOR);
+
+        User::create([
+            'name' => 'Maximiliano Rivas',
             'rol' => User::CLIENTE,
             'dni' => '40111222',
             'email' => 'cliente@gmail.com',
@@ -24,12 +33,21 @@ class UserSeeder extends Seeder
         ])->assignRole(User::CLIENTE);
 
         User::create([
-            'name' => 'Marian Chivi',
-            'rol' => User::ADMINISTRADOR,
+            'name' => 'Alejandra Arratia',
+            'rol' => User::EMPLEADO_COMPRAS,
             'dni' => '40111223',
-            'email' => 'admin@gmail.com',
-            'domicilio' => 'Av. Siempre viva 124',
+            'email' => 'compras@gmail.com',
+            'domicilio' => 'Av. Siempre viva 123',
             'password' => Hash::make('12345678'),
-        ])->assignRole(User::ADMINISTRADOR);
+        ])->assignRole(User::EMPLEADO_COMPRAS);
+
+        User::create([
+            'name' => 'Tamara Villanueva',
+            'rol' => User::EMPLEADO_VENTAS,
+            'dni' => '40111224',
+            'email' => 'ventas@gmail.com',
+            'domicilio' => 'Av. Siempre viva 123',
+            'password' => Hash::make('12345678'),
+        ])->assignRole(User::EMPLEADO_VENTAS);
     }
 }

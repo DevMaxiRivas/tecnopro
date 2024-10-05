@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_empleado'); // BIGINT(20)
             $table->unsignedBigInteger('id_categoria'); // BIGINT(20)
             $table->string('nombre');
-            $table->text('descripcion'); // TEXT
+            $table->text('descripcion'); // TEXT: Soporta hasta 65535 caracteres
             $table->integer('stock_disponible');
-            $table->decimal('precio', 10, 2); // DECIMAL(10, 2)
+            $table->decimal('precio', 20, 2); // DECIMAL(20, 2)
             $table->string('url_imagen', 100); // VARCHAR(100)
             $table->enum('activo', [Producto::ACTIVO, Producto::INACTIVO])->comment('1: Activo, 0: Inactivo')->default(Producto::ACTIVO);
 

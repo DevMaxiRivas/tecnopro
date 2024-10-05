@@ -10,15 +10,15 @@ class Venta extends Model
     use HasFactory;
 
     // Estados de Venta
-    const PENDIENTE = 0;
-    const PAGADO = 1;
-    const EN_PREPARACION = 2;
-    const ENVIADO = 3;
-    const CANCELADO = 4;
+    const PENDIENTE = '0';
+    const PAGADO = '1';
+    const EN_PREPARACION = '2';
+    const ENVIADO = '3';
+    const CANCELADO = '4';
 
     // Estado de envio de factura por email
-    const FACTURA_ENVIADA = 1;
-    const FACTURA_NO_ENVIADA = 0;
+    const FACTURA_ENVIADA = '1';
+    const FACTURA_NO_ENVIADA = '0';
 
     public function cliente() {
         $this->belongsTo(User::class, 'id_cliente');
@@ -32,8 +32,9 @@ class Venta extends Model
         $this->belongsTo(FormaPago::class, 'id_forma_pago');
     }
 
-    // falta relacion de "ventas" -> "detalle_ventas" <- "productos"
-    public function detalle_ventas() {
-        
+    // INNER JOIN avanzado (ventas --> detalle_ventas <-- productos)
+    public function productos() {
+        return $this->belongsToMany(Producto::class, 'detalle_ventas', 'id_venta', 'id_producto')
+        ->withPivot(['precio','cantidad', 'subtotal']); // accedo a los demas atributos de la tabla "detalle_ventas"
     }
 }

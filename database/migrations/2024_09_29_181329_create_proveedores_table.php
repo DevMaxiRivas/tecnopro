@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Proveedor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('telefono');
             $table->string('email');
-            $table->string('activo')->comment('1: Activo, 0: Inactivo');
+            $table->enum('activo', [Proveedor::ACTIVO, Proveedor::INACTIVO])->comment('1: Activo, 0: Inactivo')->default(Proveedor::ACTIVO);
             $table->timestamps();
         });
     }
