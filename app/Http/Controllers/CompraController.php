@@ -135,7 +135,7 @@ class CompraController extends Controller
     $total = $subtotal + $iva;
     $fecha_emision = $compra->created_at;
     $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
-    $pdf = PDF::loadView('panel.admin.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
+    $pdf = PDF::loadView('panel.admin.compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
     return $pdf->download('Reporte_de_Compra_' . $compra->id . '.pdf');
 
     

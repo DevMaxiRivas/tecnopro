@@ -88,7 +88,7 @@
 
                                                 </a>
                                                 @if ($compra->estado == 1)
-                                                <a href="#{{-- route() --}}" title="Generar Reporte" class="btn btn-sm btn-success text-white text-uppercase me-1 mr-2">
+                                                <a href="{{ route('compras.pdf', $compra->id) }}" title="Generar Reporte" class="btn btn-sm btn-success text-white text-uppercase me-1 mr-2">
                                                     <i class="fas fa-file-pdf"></i>
                                                 </a>
                                                 @endif
