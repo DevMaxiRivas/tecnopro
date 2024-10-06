@@ -339,6 +339,13 @@ return [
             'icon' => 'fas fa-store',
             'can' => 'lista_productos',
         ],
+        [
+            'text' => 'Ordenes de compras',
+            'route' => 'compras.index', // ruta de inicio del crud productos
+            'icon' => 'fas fa-truck',
+           // 'can' => '',
+        ],
+
         /* [
             'text' => 'pages',
             'url' => 'admin/pages',

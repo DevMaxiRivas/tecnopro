@@ -62,4 +62,6 @@ class ProveedorController extends Controller
     {
         //
     }
+
+    
 }

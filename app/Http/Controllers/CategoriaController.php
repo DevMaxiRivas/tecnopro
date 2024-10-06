@@ -80,7 +80,7 @@ class CategoriaController extends Controller
 
         return redirect()
             ->route('categoria.index')
-            ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
+            ->with( 'alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
 
     public function cambiarEstado(Request $request)
