@@ -99,13 +99,21 @@ class ProductoController extends Controller
 
     public function obtenerProductosPorCategoria(Request $request)
     {
+        $productos_cargados = $request->get('productos_ya_agregados');
         $categoriaId = $request->get('id');
-        $productos = Producto::where('id_categoria', $categoriaId)->where('activo', 1)
-            ->select('id', 'nombre')
-            ->get();
+
+        if ($productos_cargados != null) {
+            $productos = Producto::where('id_categoria', $categoriaId)->where('activo', 1)->whereNotIn('id', $productos_cargados)
+                ->select('id', 'nombre')
+                ->get();
+        } else {
+            $productos = Producto::where('id_categoria', $categoriaId)->where('activo', 1)
+                ->select('id', 'nombre')
+                ->get();
+        }
 
         if (!$productos) {
-            return response()->json(['message' => 'categoria not found'], 404);
+            return response()->json(['message' => 'no se encontro categoria'], 400);
         }
 
         return response()->json($productos, 200);

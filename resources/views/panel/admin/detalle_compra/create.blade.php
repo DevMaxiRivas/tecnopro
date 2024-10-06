@@ -28,6 +28,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <input type="hidden" name="orden_compra_id" id="orden_compra_id" value="{{ $orden_compra->id }}">
                         <table id="tabla-productos" class="table table-striped table-hover w-100"
                             style="text-align: center">
                             <thead>
@@ -42,7 +43,8 @@
                             <tbody id="tbody">
                                 @if (count($detalles) > 0)
                                     @foreach ($detalles as $detalle)
-                                        <tr id="{{ $detalle->id }}" class="productos_cargados">
+                                        <tr id="{{ $detalle->id }}" producto='{{ $detalle->id_producto }}'
+                                            class="productos_cargados">
                                             <td class="text-center">{{ $detalle->producto->categoria->nombre }}</td>
                                             <td class="text-center nombre">{{ $detalle->producto->nombre }}</td>
                                             <td><input type="number" class="form-control cantidad"
@@ -69,7 +71,6 @@
                             </tbody>
                         </table>
                         <!-- Modal -->
-                        <!-- Modal -->
                         <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="miModalLabel"
                             aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -83,6 +84,25 @@
                                     <div class="modal-body" id="cuerpoModal"></div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-primary">Aceptar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Eliminar fila -->
+                        <div class="modal fade" id="ModalEliminar" tabindex="-1" role="dialog"
+                            aria-labelledby="miModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="miModalLabel">Eliminar producto</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">¿Estas seguro de eliminar este producto?</div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+                                        <button type="button" class="btn btn-secondary">Cancelar</button>
                                     </div>
                                 </div>
                             </div>
@@ -101,10 +121,31 @@
     <script>
         $(document).ready(function() {
 
+            function desplegarModal(titulo, texto) {
+                $('#miModalLabel').text(titulo);
+                $('#cuerpoModal').html(texto);
+                const miModal = new bootstrap.Modal(document.getElementById('miModal'));
+                miModal.show();
+
+                return;
+            }
+
             // Función para obtener productos de una categoría específica
             function obtenerProductos(categoria) {
+                let productos_cargados = [];
+                $('.productos_cargados').each(function() {
+                    let producto_id = $(this).attr('producto');
+                    productos_cargados.push(producto_id);
+                })
+
+                $('.productos_por_agregar td .producto').each(function() {
+                    let producto_id = $(this).val();
+                    productos_cargados.push(producto_id);
+                })
+                console.log('productos_cargados', productos_cargados);
                 const data = {
-                    'id': categoria
+                    'id': categoria,
+                    'productos_ya_agregados': productos_cargados
                 };
 
                 return new Promise((resolve, reject) => {
@@ -161,10 +202,20 @@
                     .attr('title', 'Eliminar fila');
 
                 btn.on('click', function() {
-                    if (confirm('¿Está seguro de que desea eliminar este producto?')) {
-                        $(this).closest('tr').remove();
-                    }
+                    // Guardamos la referencia a la fila a eliminar en una variable global o en el propio modal
+                    const filaAEliminar = $(this).closest('tr');
+
+                    // Mostrar el modal de confirmación
+                    $('#ModalEliminar').modal('show');
+
+                    // Evento para confirmar eliminación cuando se presione el botón "Aceptar" del modal
+                    $('#ModalEliminar').find('.btn-secondary').off('click').on('click', function() {
+                        filaAEliminar.remove(); // Elimina la fila
+                        $('#ModalEliminar').modal(
+                            'hide'); // Cierra el modal después de la eliminación
+                    });
                 });
+
 
                 return btn;
             }
@@ -239,78 +290,71 @@
             @endif
 
 
-            function desplegarModal(titulo, texto) {
-                $('#miModalLabel').text(titulo);
-                $('#cuerpoModal').html(texto);
-                const miModal = new bootstrap.Modal(document.getElementById('miModal'));
-                miModal.show();
-
-                return;
-            }
-
             $('#guardar').click(function() {
                 let productos_cargados = [];
                 $('.productos_cargados').each(function() {
-                    const id = $(this).attr('id');
+                    const id_detalle = $(this).attr('id');
                     const cantidad = $(this).find('.cantidad').val();
 
                     if (cantidad <= 0) {
                         desplegarModal('Atención', 'En el producto <b>' + $(this).find('.nombre')
                             .text() + "</b> la cantidad debe ser mayor a 0");
                     }
-
-                    if (id && cantidad) {
-                        const data = {
-                            'id': id,
+                    if (id_detalle && cantidad) {
+                        productos_cargados.push({
+                            'id_detalle': id_detalle,
                             'cantidad': cantidad,
-                        };
+                        });
                     }
 
-                    productos_cargados.push(productos_cargados);
                 });
 
                 let productos_por_agregar = [];
+
                 $('.productos_por_agregar').each(function() {
-                    const id = $(this).find(".producto").val();
+                    const id_producto = $(this).find(".producto").val();
                     const cantidad = $(this).find('.cantidad').val();
 
-                    let selector = '.producto option[value="' + id + '"]';
+                    let selector = '.producto option[value="' + id_producto + '"]';
 
                     if (cantidad <= 0) {
                         desplegarModal('Atención', 'En el producto <b>' + $(selector).text() +
                             "</b> la cantidad debe ser mayor a 0");
                     }
-                    if (id && cantidad) {
-                        const data = {
-                            'id': id,
+
+                    if (id_producto && cantidad) {
+                        productos_por_agregar.push({
+                            'id_producto': id_producto,
                             'cantidad': cantidad,
-                        };
+                        });
                     }
 
-                    productos_cargados.push(productos_por_agregar);
                 });
 
-                console.log(productos_por_agregar);
-                console.log(productos_cargados);
-
                 const data = {
-                    // 'productos_cargados': JSON.stringify(productos_cargados),
-                    // 'productos_por_agregar': JSON.stringify(productos_por_agregar),
+                    'orden_compra_id': $('#orden_compra_id').val(),
+                    'productos_cargados': productos_cargados,
+                    'productos_por_agregar': productos_por_agregar,
                 };
 
                 console.log(data);
-                // $.ajax({
-                //     type: 'POST',
-                //     url: '{{-- route('detalle_compra.store') --}}',
-                //     data: data,
-                //     success: function(response) {
-                //         console.log(response);
-                //         window.location.href = '{{-- route('detalle_compra.index') --}}';
-                //     },
-                //     error: function(xhr, status, error) {
-                //         console.log(xhr.responseText);
-                //     }
-                // });
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route('detalle-orden-compra.guardar') }}',
+                    data: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        window.location.href =
+                            '{{ route('detalle-orden-compra.index', $orden_compra->id) }}';
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText);
+                    }
+                });
             })
         });
     </script>
