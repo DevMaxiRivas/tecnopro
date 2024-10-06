@@ -9,8 +9,8 @@ class Categoria extends Model
 {
     use HasFactory;
 
-    const ACTIVO = 1;
-    const INACTIVO = 0;
+    const ACTIVO = '1';
+    const INACTIVO = '0';
 
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'categorias';
@@ -18,8 +18,7 @@ class Categoria extends Model
     // Nombres de las columnas que son modificables
     protected $fillable = [
         'nombre',
-        'activo',
-        'description'
+        'activo'
     ];
 
     // INNER JOIN con la tabla Productos

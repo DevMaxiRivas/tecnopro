@@ -19,9 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_proveedor'); // BIGINT(20)
             $table->unsignedBigInteger('id_forma_pago'); // BIGINT(20)
 
-            $table->enum('estado', [Compra::PENDIENTE, Compra::PAGADO, Compra::EN_PREPARACION, Compra::RECIBIDO, Compra::CANCELADO])->default(Compra::PENDIENTE);
+            $table->enum('estado', [Compra::PENDIENTE, Compra::EN_ESPERA, Compra::RECIBIDO, Compra::CANCELADO])->default(Compra::PENDIENTE);
             $table->string('url_factura')->nullable();
-            $table->decimal('total', 10, 2); // DECIMAL(10, 2)
+            $table->decimal('total', 20, 2); // DECIMAL(10, 2)
             
             // Creamos la FK "id_empleado" que hace referencia al "id" de la tabla "users"
             $table->foreign('id_empleado')->references('id')->on('users');

@@ -9,8 +9,8 @@ class FormaPago extends Model
 {
     use HasFactory;
 
-    const ACTIVO = 1;
-    const INACTIVO = 0;
+    const ACTIVO = '1';
+    const INACTIVO = '0';
 
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'forma_pagos';

@@ -3,11 +3,11 @@
 @section('title', 'Inicio')
 
 @section('content_header')
-    <h1>Programando con Laravel 10 (content_header) </h1>
+    <h1><b>INICIO</b></h1>
 @stop
 
 @section('content')
-    <p>HOLA MUNDO DE ADMIN LTE (content) </p>
+    <p>HOLA MUNDO DE ADMIN LTE </p>
 @stop
 
 @section('css')

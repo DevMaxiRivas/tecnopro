@@ -104,7 +104,7 @@
             <div class="mb-3 row">
                 <label for="precio" class="col-sm-4 col-form-label"> * Precio </label>
                 <div class="col-sm-8">
-                    <input type="number" class="form-control @error('precio') is-invalid @enderror" id="precio" placeholder="Ingrese precio"
+                    <input type="text" class="form-control @error('precio') is-invalid @enderror" id="precio" placeholder="Ingrese precio"
                         name="precio" value="{{ old('precio', optional($producto)->precio) }}" maxlength="9">
                     
                     @error('precio')
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            {{-- @if ($producto->id) --}}
+            @if ($producto->id)
                 <div class="mb-3 row">
                     <label for="activo" class="col-sm-4 col-form-label"> * Estado </label>
                     <div class="col-sm-8">
@@ -151,7 +151,7 @@
                         @enderror
                     </div>
                 </div>
-            {{-- @endif --}}
+            @endif
 
         </div>
 
@@ -183,7 +183,7 @@
             });
 
             // Expresión regular para validar el precio
-            const regex = /^\d+(\.\d{1,2})?$/;
+            /* const regex = /^\d+(\.\d{1,2})?$/;
             const $precio = document.getElementById('precio');
 
             // evento del input para ingresar el precio
@@ -194,7 +194,7 @@
                 if (! regex.test(value)) {
                     e.target.value = value.slice(0, -1); // Elimina el último carácter
                 }
-            });
+            }); */
         });
     </script>
 @endpush

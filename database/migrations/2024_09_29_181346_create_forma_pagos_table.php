@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('forma_pagos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
-            $table->enum('activo', [FormaPago::ACTIVO, FormaPago::INACTIVO])->comment('1: Activo, 0: Inactivo');
+            $table->enum('activo', [FormaPago::ACTIVO, FormaPago::INACTIVO])->comment('1: Activo, 0: Inactivo')->default(FormaPago::ACTIVO);
             $table->timestamps();
         });
     }

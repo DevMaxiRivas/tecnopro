@@ -25,9 +25,9 @@
                 {{-- Breadcrumbs Fin --}}
                 <div class = "img-display">
                     <div class = "img-showcase">
-                        <img class="imagen" src = "{{ $imagen[0] }}" alt = "imagen-producto">
-                        <img class="imagen" src = "{{ isset($imagen[1]) ? $imagen[1] : '' }}" alt = "imagen-producto">
-                        <img class="imagen" src = "{{ isset($imagen[2]) ? $imagen[2] : '' }}" alt = "imagen-producto">
+                        <img class="imagen" src = "{{ $imagen[0] }}" alt = "{{ $producto->nombre }}">
+                        <img class="imagen" src = "{{ isset($imagen[1]) ? $imagen[1] : '' }}" alt = "{{ $producto->nombre }}">
+                        <img class="imagen" src = "{{ isset($imagen[2]) ? $imagen[2] : '' }}" alt = "{{ $producto->nombre }}">
                     </div>
                 </div>
             </div>

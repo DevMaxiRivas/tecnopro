@@ -9,6 +9,8 @@ Route::get('/', function() {
     return view('panel.index');
 })->name('panel');
 
-
-Route::resource('/categorias', CategoriaController::class)->names('categoria');
-Route::resource('/productos', ProductoController::class)->names('producto');
+// Grupo de rutas para usuarios con Rol Admin y Empleado de Compras
+Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
+    Route::resource('/categorias', CategoriaController::class)->names('categoria');
+    Route::resource('/productos', ProductoController::class)->names('producto');
+});

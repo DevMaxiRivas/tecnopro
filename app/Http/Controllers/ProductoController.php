@@ -45,7 +45,9 @@ class ProductoController extends Controller
         $producto->descripcion = $request->get('descripcion');
         $producto->stock_disponible = $request->get('stock_disponible');
         $producto->precio = $request->get('precio');
-        $producto->activo = $request->get('activo');
+        
+        // Cuando un producto se crea, se pone en estado activo por defecto
+        // $producto->activo = $request->get('activo'); 
 
         if ($request->hasFile('imagen')) {
             // Subida de imagen al servidor (public > storage)
