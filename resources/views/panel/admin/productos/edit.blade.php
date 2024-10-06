@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="col-12">
-            @include('panel.administrador.lista_productos.forms.form')
+            @include('panel.admin.productos.forms.form')
         </div>
     </div>
 </div>

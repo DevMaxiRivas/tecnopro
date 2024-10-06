@@ -30,6 +30,8 @@ class Compra extends Model
         $this->belongsTo(User::class, 'id_empleado');
     }
 
+    
+
     // INNER JOIN con la tabla "forma_pago" por medio de la FK "id_forma_pago"
     public function forma_pago() {
         $this->belongsTo(FormaPago::class, 'id_forma_pago');
