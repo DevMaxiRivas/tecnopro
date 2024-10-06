@@ -12,9 +12,10 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            @if ($orden_compra->estado == 'Pendiente')
+            @if ($orden_compra->estado == '0')
                 <div class="col-12 mb-3">
-                    <a href="#{{-- route('detalle_orden_compra.create') --}}" class="btn btn-success text-uppercase">
+                    <a href="{{ route('detalle-orden-compra.agregar', $orden_compra->id) }}"
+                        class="btn btn-success text-uppercase">
                         Agregar productos a la orden compra
                     </a>
                 </div>

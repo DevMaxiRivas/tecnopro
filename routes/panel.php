@@ -18,7 +18,6 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
-    // Route::get('/productos/categoria', [ProductoController::class, 'obtenerProductosPorCategoria'])->name('obtener-productos-por-categoria');
 
     // Detalle de Compra
     Route::get('/detalle-orden-compra/{id_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
