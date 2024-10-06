@@ -39,7 +39,7 @@
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-uppercase text-center">#</th>
-                                        <th scope="col" class="text-uppercase text-center">Id Producto</th>
+                                        <th scope="col" class="text-uppercase text-center">Producto</th>
                                         <th scope="col" class="text-uppercase text-center">Precio</th>
                                         <th scope="col" class="text-uppercase text-center">Cantidad</th>
                                         <th scope="col" class="text-uppercase text-center">Subtotal</th>
@@ -49,7 +49,7 @@
                                     @foreach ($productos as $producto)
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
-                                            <td class="text-center">{{ $producto->id_producto }}</td>
+                                            <td class="text-center">{{ $producto->producto->nombre }}</td>
                                             <td class="text-center">{{ $producto->precio }}</td>
                                             <td class="text-center">{{ $producto->cantidad }}</td>
                                             <td class="text-center">{{ $producto->subtotal }}</td>

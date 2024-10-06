@@ -27,7 +27,7 @@
 
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="table-responsive card-body">
                         <input type="hidden" name="orden_compra_id" id="orden_compra_id" value="{{ $orden_compra->id }}">
                         <table id="tabla-productos" class="table table-striped table-hover w-100"
                             style="text-align: center">
