@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Compra;
 use Illuminate\Http\Request;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class CompraController extends Controller
 {
     /**
@@ -62,4 +62,21 @@ class CompraController extends Controller
     {
         //
     }
+    public function pdf(Compra $compra)
+{
+    $subtotal = 0;
+    $detalle_compras = $compra->detalle_compras;
+    $proveedor = $compra->proveedores;
+    foreach ($detalle_compras as $detalle) {
+        $subtotal += $detalle->subtotal; 
+    }
+    $iva = $subtotal * 0.21;
+    $total = $subtotal + $iva;
+    $fecha_emision = $compra->created_at;
+    $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
+    $pdf = PDF::loadView('panel.admin.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
+    return $pdf->download('Reporte_de_Compra_' . $compra->id . '.pdf');
 }
+
+}
+
