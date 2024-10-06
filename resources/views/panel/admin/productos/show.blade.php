@@ -1,4 +1,5 @@
-<div class="modal fade" id="productoModal{{ $producto->id }}" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel{{ $producto->id }}" aria-hidden="true">
+<div class="modal fade" id="productoModal{{ $producto->id }}" tabindex="-1" role="dialog"
+    aria-labelledby="productoModalLabel{{ $producto->id }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,16 +20,16 @@
                             <div class="col-sm-12"> {{ $producto->nombre }}</div>
                         </li>
                         <li class="list-group-item">
-                            @foreach ($imagenes as $imagen)
+                            {{-- @foreach ($imagenes as $imagen)
                             <img src="{{ $imagen }}" alt="{{ $producto->nombre }}" id="image_preview" class="img-fluid" style="object-fit: contain; object-position: center; height: 130px; width: 130px;">    
-                            @endforeach
+                            @endforeach --}}
                         </li>
                         <li class="list-group-item">
                             <div class="row row-cols-2">
                                 <div class="col-sm-6"><strong>Proveedor</strong></div>
                                 <div class="col-sm-6"><strong>Categoría</strong></div>
-                                <div class="col-sm-6"> {{ $producto->proveedor->descripcion }}</div>
-                                <div class="col-sm-6"> {{ $producto->categoria->descripcion }}</div>
+                                {{-- <div class="col-sm-6"> {{ $producto->proveedor->descripcion }}</div>
+                                <div class="col-sm-6"> {{ $producto->categoria->descripcion }}</div> --}}
                             </div>
                         </li>
                         <li class="list-group-item">

@@ -38,14 +38,14 @@ class ProductoController extends Controller
     public function store(ProductoRequest $request)
     {
         $producto = new Producto();
-        
+
         $producto->id_empleado = auth()->user()->id;
         $producto->id_categoria = $request->get('id_categoria');
         $producto->nombre = $request->get('nombre');
         $producto->descripcion = $request->get('descripcion');
         $producto->stock_disponible = $request->get('stock_disponible');
         $producto->precio = $request->get('precio');
-        
+
         // Cuando un producto se crea, se pone en estado activo por defecto
         // $producto->activo = $request->get('activo'); 
 
@@ -56,13 +56,13 @@ class ProductoController extends Controller
         } else {
             $producto->url_imagen = '';
         }
-        
+
         // Almacena la info del producto en la BD
         $producto->save();
 
         return redirect()
-                ->route('producto.index')
-                ->with('alert', 'Producto "' . $producto->nombre . '" agregado exitosamente.');
+            ->route('producto.index')
+            ->with('alert', 'Producto "' . $producto->nombre . '" agregado exitosamente.');
     }
 
     /**
@@ -95,5 +95,19 @@ class ProductoController extends Controller
     public function destroy(Producto $producto)
     {
         //
+    }
+
+    public function obtenerProductosPorCategoria(Request $request)
+    {
+        $categoriaId = $request->get('id');
+        $productos = Producto::where('id_categoria', $categoriaId)->where('activo', 1)
+            ->select('id', 'nombre')
+            ->get();
+
+        if (!$productos) {
+            return response()->json(['message' => 'categoria not found'], 404);
+        }
+
+        return response()->json($productos, 200);
     }
 }
