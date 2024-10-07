@@ -319,7 +319,8 @@
                             "</b> la cantidad debe ser mayor a 0");
                     }
 
-                    if (id_producto && cantidad) {
+                    if (id_producto && id_producto !== 'Seleccione un producto' && id_producto !==
+                        'Seleccione primero una categoría' && cantidad) {
                         productos_por_agregar.push({
                             'id_producto': id_producto,
                             'cantidad': cantidad,
