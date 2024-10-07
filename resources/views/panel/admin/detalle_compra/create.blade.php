@@ -209,7 +209,7 @@
                     $('#ModalEliminar').modal('show');
 
                     // Evento para confirmar eliminación cuando se presione el botón "Aceptar" del modal
-                    $('#ModalEliminar').find('.btn-secondary').off('click').on('click', function() {
+                    $('#ModalEliminar').find('.btn-danger').off('click').on('click', function() {
                         filaAEliminar.remove(); // Elimina la fila
                         $('#ModalEliminar').modal(
                             'hide'); // Cierra el modal después de la eliminación
