@@ -336,7 +336,6 @@
                     'productos_por_agregar': productos_por_agregar,
                 };
 
-                console.log(data);
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('detalle-orden-compra.guardar') }}',
@@ -346,7 +345,6 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response);
                         window.location.href =
                             '{{ route('detalle-orden-compra.index', $orden_compra->id) }}';
                     },
