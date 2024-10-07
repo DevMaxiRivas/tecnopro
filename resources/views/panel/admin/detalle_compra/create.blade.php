@@ -137,9 +137,10 @@
 
                 $('.productos_por_agregar td .producto').each(function() {
                     let producto_id = $(this).val();
-                    productos_cargados.push(producto_id);
+                    if (producto_id !== 'Seleccione un producto' && producto_id !==
+                        'Seleccione primero una categoría')
+                        productos_cargados.push(producto_id);
                 })
-                console.log('productos_cargados', productos_cargados);
                 const data = {
                     'id': categoria,
                     'productos_ya_agregados': productos_cargados
