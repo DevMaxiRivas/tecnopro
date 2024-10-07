@@ -49,8 +49,6 @@ class DetalleOrdenCompraController extends Controller
             $detalle->save();
         }
 
-        // return redirect()->route('detalle-orden-compra.index', $orden_compra_id);
         return response()->json(['success' => true, 'productos_por_agregar' => $detalle, 'orden_compra_id' => $orden_compra_id, 'detalles' => $detalles]);
     }
-
 }
