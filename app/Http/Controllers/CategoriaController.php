@@ -17,7 +17,7 @@ class CategoriaController extends Controller
         //Retornamos una vista y enviamos la variable "categorias"
         return view('panel.admin.categorias.index', compact('categorias'));
     }
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -57,7 +57,7 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        return view('panel.admin.categorias.show', compact('categoria')); 
+        return view('panel.admin.categorias.show', compact('categoria'));
     }
 
     /**
@@ -83,15 +83,10 @@ class CategoriaController extends Controller
             ->with( 'alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
 
-    public function cambiarEstado(Request $request)
-    { }
+    public function cambiarEstado(Request $request) {}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Categoria $categoria)
-    {
-       
-        
-    }
+    public function destroy(Categoria $categoria) {}
 }

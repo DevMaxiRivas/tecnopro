@@ -10,7 +10,7 @@
 
 {{-- Titulo en el contenido de la Pagina --}}
 @section('content_header')
-    <h1>&nbsp;<strong>MIS ORDENES COMPRAS</strong></h1>
+    <h1>&nbsp;<strong>ORDENES DE COMPRAS</strong></h1>
 @stop
 
 {{-- Contenido de la Pagina --}}
@@ -52,9 +52,9 @@
                             <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="text-uppercase">Codigo OC</th>
+                                        <th scope="col" class="text-uppercase">Codigo</th>
                                         <th scope="col" class="text-uppercase">Proveedor</th>
-                                        <th scope="col" class="text-uppercase">Fecha de modificacion</th>
+                                        <th scope="col" class="text-uppercase">Última modificacion</th>
                                         <th scope="col" class="text-uppercase">Estado</th>
                                         <th scope="col" class="text-uppercase text-center">Opciones</th>
                                     </tr>
@@ -66,7 +66,7 @@
                                         <td>
                                         {{ $compra->proveedor->razon_social }}
                                         <br>
-                                        <span class="badge bg-info">{{ $compra->proveedor->email }}</span>
+                                        <span class="badge badge-light">{{ $compra->proveedor->email }}</span>
                                         </td>
                                         <td>{{ $compra->updated_at }}</td>
                                         <td>
@@ -83,24 +83,26 @@
                                         
                                         <td>
                                             <div class="d-flex justify-content-center">
-                                                <a href="#{{-- route() --}}" title="Cargar producto" data-toggle="modal" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
+                                                <a href="{{ route('detalle-orden-compra.index', $compra->id) }}" title="Cargar producto" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
                                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
 
                                                 </a>
-                                                @if ($compra->estado == 1)
-                                                <a href="{{ route('compras.pdf', $compra->id) }}" title="Generar Reporte" class="btn btn-sm btn-success text-white text-uppercase me-1 mr-2">
-                                                    <i class="fas fa-file-pdf"></i>
-                                                </a>
+                                                @if ($compra->estado == 1 || $compra->estado == 2)
+                                                    <a href="{{ route('compras.pdf', $compra->id) }}" title="Generar Reporte" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                    </a>
                                                 @endif
-                                                <a href="#{{-- route() --}}" title="Cancelar OC" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+
+                                                {{-- <a href="#" title="Cancelar OC" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
                                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                                </a>
+                                                </a> --}}
 
-                                                <a href="{{ route('compras.edit', $compra) }}" title="Editar OC" class="btn btn-sm btn-secondary text-white text-uppercase me-1">
-                                                    <i class="fas fa-edit" aria-hidden="true"></i>
-                                                </a>
-
-                                               
+                                                @if ($compra->estado == 0 && $compra->estado != 1)
+                                                    <a href="{{ route('compras.edit', $compra) }}" title="Editar OC" class="btn btn-sm btn-secondary text-white text-uppercase me-1">
+                                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                                    </a>
+                                                @endif
+                                                
                                             </div>
                                         </td>
                                     </tr>

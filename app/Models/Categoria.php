@@ -27,4 +27,13 @@ class Categoria extends Model
     {
         return $this->hasMany(Producto::class, 'id_categoria');
     }
+
+    public static function obtenerCategorias()
+    {
+        $categorias = Categoria::whereHas('productos', function ($query) {
+            $query->where('activo', 1);
+        })->get();
+
+        return $categorias;
+    }
 }

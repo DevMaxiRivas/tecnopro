@@ -322,11 +322,9 @@ return [
         [
             'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
-            // 'route' => 'proveedor.index',
             'icon'        => 'fas fa-project-diagram',
             'can'         => 'lista_categorias'
         ],
-        
         [
             'text' => 'Mis productos',
             'route' => 'producto.index', // ruta de inicio del crud productos
@@ -337,7 +335,7 @@ return [
             'text' => 'Ordenes de compras',
             'route' => 'compras.index', // ruta de inicio del crud productos
             'icon' => 'fas fa-truck',
-           // 'can' => '',
+            'can' => 'lista_ordenes_compras'
         ],
 
         /* [

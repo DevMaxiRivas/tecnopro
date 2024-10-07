@@ -75,30 +75,31 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($productos as $producto)
-                                    <tr>
-                                        <td>{{ $producto->id }}</td>
-                                        <td>{{ $producto->nombre }}</td>
-                                        <td>{{ $producto->categoria->nombre }}</td>
-                                        {{-- <td>{{ $producto->marca->descripcion}}</td> --}}
-                                        {{-- <td>{{ $producto->marca ? $producto->marca->descripcion : 'N/A'}}</td> --}}
-                                        <td>$ {{ $producto->precio }}</td>
-                                        <td class='text-center'>
-                                            @if ($producto->stock_disponible == 0)
-                                                <span class="badge badge-danger">SIN STOCK</span>
-                                            @else
-                                                {{ $producto->stock_disponible }}
-                                            @endif
-                                        <td>
-                                            <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre }}" class="img-fluid" style="width: 150px;">
-                                        </td>
-                                        <td>
-                                            @if ($producto->activo == 0)
-                                                <span class="badge badge-danger">INACTIVO</span>
-                                            @else
-                                                <span class="badge badge-success">ACTIVO</span>
-                                            @endif
-                                        </td>
-                                        {{-- <td>
+                                        <tr>
+                                            <td>{{ $producto->id }}</td>
+                                            <td>{{ $producto->nombre }}</td>
+                                            <td>{{ $producto->categoria->nombre }}</td>
+                                            {{-- <td>{{ $producto->marca->descripcion}}</td> --}}
+                                            {{-- <td>{{ $producto->marca ? $producto->marca->descripcion : 'N/A'}}</td> --}}
+                                            <td>$ {{ $producto->precio }}</td>
+                                            <td class='text-center'>
+                                                @if ($producto->stock_disponible == 0)
+                                                    <span class="badge badge-danger">SIN STOCK</span>
+                                                @else
+                                                    {{ $producto->stock_disponible }}
+                                                @endif
+                                            <td>
+                                                <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre }}"
+                                                    class="img-fluid" style="width: 150px;">
+                                            </td>
+                                            <td>
+                                                @if ($producto->activo == 0)
+                                                    <span class="badge badge-danger">INACTIVO</span>
+                                                @else
+                                                    <span class="badge badge-success">ACTIVO</span>
+                                                @endif
+                                            </td>
+                                            {{-- <td>
                                             <form action="{{ route('producto.destroy', $producto) }}" method="POST">
                                                 @csrf 
                                                 @method('DELETE')
@@ -114,34 +115,37 @@
                                                 </div
                                             </form> 
                                         </td> --}}
-                                        <td>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#{{-- route('producto.show', $producto) --}}" title="Ver" data-toggle="modal" data-target="#productoModal{{ $producto->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
-                                                    <i class="far fa-eye" aria-hidden="true"></i>
-                                                </a>
-                                                
-                                                <a href="#{{-- route('producto.edit', $producto) --}}" title="Editar" class="btn btn-sm btn-warning text-white text-uppercase me-1">
-                                                    <i class="fas fa-edit" aria-hidden="true"></i>
-                                                </a>
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    <a href="#{{-- route('producto.show', $producto) --}}" title="Ver" data-toggle="modal"
+                                                        data-target="#productoModal{{ $producto->id }}"
+                                                        class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
+                                                        <i class="far fa-eye" aria-hidden="true"></i>
+                                                    </a>
 
-                                                {{-- <form action="{{ route('producto.destroy', $producto) }}" method="POST">
+                                                    <a href="#{{-- route('producto.edit', $producto) --}}" title="Editar"
+                                                        class="btn btn-sm btn-warning text-white text-uppercase me-1">
+                                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                                    </a>
+
+                                                    {{-- <form action="{{ route('producto.destroy', $producto) }}" method="POST">
                                                     @csrf 
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger text-uppercase">
                                                         Eliminar
                                                     </button>
                                                 </form> --}}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {{-- @include('panel.administrador.lista_productos.show') --}}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @include('panel.admin.productos.show')
                                     @endforeach
                                 </tbody>
                             </table>
                         @else
                             <div class="alert alert-danger mb-0" role="alert">
                                 No hay productos disponibles
-                            </div>                          
+                            </div>
                         @endif
                     </div>
                 </div>

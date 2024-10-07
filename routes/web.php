@@ -3,6 +3,7 @@
 // Rutas del Home
 
 use App\Http\Controllers\PaginaDeInicio;
+use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,8 @@ Route::get('productos/categoria/{categoria}', [PaginaDeInicio::class, 'MandarDat
 Route::get('productos/detallesProducto/{producto}', [PaginaDeInicio::class, 'MandarDatosProductoEspecifico'])->name('MandarDatosProductoEspecifico');
 Route::get('productos/filtroPrecio', [PaginaDeInicio::class, 'filtrarPorPrecio'])->name('filtrarPorPrecio');
 Route::get('/resultados', [PaginaDeInicio::class, 'resultadosBusqueda'])->name('resultados-busqueda');
+// API Productos
+Route::get('productos/categoria', [ProductoController::class, 'obtenerProductosPorCategoria'])->name('obtener-productos-por-categoria');
 
 
 Route::middleware('auth')->group(function () {
@@ -39,5 +42,3 @@ Route::middleware('auth')->group(function () {
     //Route::any('/carrito/guardar', [App\Http\Controllers\PedidoController::class, 'store'])->name('pedido.store');
     //Route::any('/pedido/pago', [App\Http\Controllers\PedidoController::class, 'pago'])->name('pedido.pago');
 });
-
-
