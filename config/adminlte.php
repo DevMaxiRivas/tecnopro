@@ -324,7 +324,7 @@ return [
         ],
         [
             'text'        => 'Mis Proveedores',
-            'route'       => 'regproveedor.index',
+            'route'       => 'proveedor.index',
             // 'route' => 'proveedor.index',
             'icon'        => 'fas fa-truck',
             //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>

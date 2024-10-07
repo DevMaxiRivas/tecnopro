@@ -8,7 +8,7 @@
 @section('content_header')
     <h1>
         <strong>
-            Editar Proveedor "{{ $regproveedor->nombre }}"
+            Editar Proveedor "{{ $proveedor->razon_social }}"
         </strong>
     </h1>
 @stop
@@ -17,12 +17,12 @@
 <div class="container-fluid">
     <div class="row justify-content-center"> <!-- Centrado horizontalmente -->
         <div class="col-12 mb-3">
-            <a href="{{ route('regproveedor.index') }}" class="btn btn-sm" style="background-color: #022340; color: white; text-transform: uppercase;">
+            <a href="{{ route('proveedor.index') }}" class="btn btn-sm" style="background-color: #022340; color: white; text-transform: uppercase;">
                 Volver Atrás
             </a>
         </div>
         <div class="col-12">
-            @include('panel.admin.regproveedor.forms.form')
+            @include('panel.admin.proveedor.forms.form')
         </div>
     </div>
 </div>

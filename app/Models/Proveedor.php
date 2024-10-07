@@ -15,7 +15,7 @@ class Proveedor extends Model
     // Nombres de las columnas que son modificables
     protected $fillable = [
         'razon_social',
-        // 'cuit', 
+        //'cuit', 
         'direccion', 
         'telefono',
         'email', 
