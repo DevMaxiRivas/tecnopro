@@ -10,8 +10,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-                <button id="agregarFila" class="btn btn-primary">Agregar Producto</button>
-                <button id="guardar" class="btn btn-success">Guardar</button>
+                <div class="col-8">
+                    <button id="agregarFila" class="btn btn-primary">Agregar Producto</button>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                    <a href="{{ route('detalle-orden-compra.index', $orden_compra->id) }}"
+                        class="btn btn-danger mr-1">Cancelar</a>
+                    <button id="guardar" class="btn btn-success">Guardar</button>
+                </div>
             </div>
 
             @if (session('alert'))
@@ -65,6 +71,7 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif
                             </tbody>
                         </table>
                         <!-- Modal -->
@@ -80,7 +87,10 @@
                                     </div>
                                     <div class="modal-body" id="cuerpoModal"></div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Aceptar</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            aria-label="Close">
+                                            Aceptar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +108,8 @@
                                     </div>
                                     <div class="modal-body">¿Estas seguro de eliminar este producto?</div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Aceptar</button>
                                         <button type="button" class="btn btn-secondary">Cancelar</button>
                                     </div>
                                 </div>
@@ -106,7 +117,6 @@
                         </div>
 
 
-                        @endif
                     </div>
                 </div>
             </div>
@@ -126,6 +136,14 @@
 
                 return;
             }
+
+            // Eventos para cerrar el modal
+            $('#miModal').find('.btn-primary').on('click', function() {
+                $('#miModal').modal(
+                    'hide'); // Cierra el modal después de la eliminación
+                return;
+            })
+
 
             // Función para obtener productos de una categoría específica
             function obtenerProductos(categoria) {
@@ -209,6 +227,10 @@
                     // Evento para confirmar eliminación cuando se presione el botón "Aceptar" del modal
                     $('#ModalEliminar').find('.btn-danger').off('click').on('click', function() {
                         filaAEliminar.remove(); // Elimina la fila
+                        $('#ModalEliminar').modal(
+                            'hide'); // Cierra el modal después de la eliminación
+                    });
+                    $('#ModalEliminar').find('.btn-secondary').off('click').on('click', function() {
                         $('#ModalEliminar').modal(
                             'hide'); // Cierra el modal después de la eliminación
                     });
@@ -329,6 +351,11 @@
                     }
 
                 });
+
+                if (productos_por_agregar.length == 0 && productos_cargados.length == 0) {
+                    desplegarModal('Atención', 'Debe agregar al menos un producto');
+                    return;
+                }
 
                 const data = {
                     'orden_compra_id': $('#orden_compra_id').val(),
