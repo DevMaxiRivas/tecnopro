@@ -133,7 +133,6 @@
                 $('#cuerpoModal').html(texto);
                 const miModal = new bootstrap.Modal(document.getElementById('miModal'));
                 miModal.show();
-
                 return;
             }
 
