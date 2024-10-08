@@ -12,8 +12,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::latest()->get();
-
+       $categorias = Categoria::latest()->get();
+        
         //Retornamos una vista y enviamos la variable "categorias"
         return view('panel.admin.categorias.index', compact('categorias'));
     }
@@ -80,7 +80,7 @@ class CategoriaController extends Controller
 
         return redirect()
             ->route('categoria.index')
-            ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
+            ->with( 'alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
 
     public function cambiarEstado(Request $request) {}

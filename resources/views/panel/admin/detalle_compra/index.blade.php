@@ -12,14 +12,19 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            @if ($orden_compra->estado == '0')
-                <div class="col-12 mb-3">
+            <div class="col-12 mb-3">
+                @if ($orden_compra->estado == '0')
                     <a href="{{ route('detalle-orden-compra.agregar', $orden_compra->id) }}"
-                        class="btn btn-success text-uppercase">
+                        class="btn btn-sm btn-success text-uppercase">
                         Agregar productos a la orden compra
                     </a>
-                </div>
-            @endif
+                @endif
+
+                <a href="{{ route('compras.index') }}" class="btn btn-sm btn-secondary text-uppercase">
+                    Volver Atras
+                </a>
+            </div>
+
 
             @if (session('alert'))
                 <div class="col-12">
@@ -51,9 +56,21 @@
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
-                                            <td class="text-center">{{ $producto->precio }}</td>
+                                            <td class="text-center">
+                                                @if ($producto->precio > 0)
+                                                    {{ $producto->precio }}
+                                                @else
+                                                    - 
+                                                @endif
+                                            </td>
                                             <td class="text-center">{{ $producto->cantidad }}</td>
-                                            <td class="text-center">{{ $producto->subtotal }}</td>
+                                            <td class="text-center">
+                                                @if ($producto->subtotal > 0)
+                                                    {{ $producto->subtotal }}
+                                                @else
+                                                    - 
+                                                @endif
+                                            </td>
                                             {{-- @include('panel.admin.categorias.show') --}}
                                         </tr>
                                     @endforeach
