@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->enum('estado', [Venta::PENDIENTE, Venta::PAGADO, Venta::EN_PREPARACION, Venta::ENVIADO, Venta::CANCELADO])->default(Venta::PENDIENTE);
             $table->string('url_factura')->nullable();
-            $table->decimal('total', 10, 2); // DECIMAL(10, 2)
+            $table->decimal('total', 20, 2); // DECIMAL(20, 2)
             $table->string('link_pago')->nullable();
             $table->string('email_envio_factura')->nullable();
             $table->enum('estado_factura', [Venta::FACTURA_ENVIADA, Venta::FACTURA_NO_ENVIADA])->nullable();

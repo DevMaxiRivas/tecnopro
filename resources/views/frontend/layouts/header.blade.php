@@ -2,7 +2,7 @@
     <div class="container-fluid p-1 ">
         {{-- Logo --}}
         <a class="navbar-brand" href="/" style="max-width: 60%; min-width: 400px; padding-left: 60px;">
-            <img src="{{ asset('imagenes/logo-tecnopro.png') }}" alt="Logo-Esmarty" width="30%">
+            <img src="{{ asset('imagenes/logo-tecnopro.png') }}" alt="Logo-TecnoPro" width="30%">
         </a>
         {{-- Logo Fin --}}
 
@@ -29,7 +29,7 @@
                     <ul class="dropdown-menu">
                         @foreach ($categorias as $cat)
                             <li><a class="dropdown-item"
-                                    href="{{ route('MandarDatosCategoriaEspecifica', $cat->id) }}">{{ $cat->nombre }}</a>
+                                    href="#{{-- route('MandarDatosCategoriaEspecifica', $cat->id) --}}">{{ $cat->nombre }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -54,7 +54,7 @@
 
             <ul class="navbar-nav carrito-logout gap-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('carrito.carrito') }}" title="Mi carrito">
+                    <a class="nav-link" href="#{{-- route('carrito.carrito') --}}" title="Mi carrito">
                         <i class="fa-solid fa-shopping-cart"></i> <span id="cant_carrito">0</span>
                     </a>
                 </li>
@@ -91,10 +91,10 @@
                             @endrole
                             @role('cliente')
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between "
-                                        href="{{ route('cliente.editar') }}">Mi Perfil <i
+                                        href="#">Mi Perfil <i
                                             class="fa-solid fa-user-gear small"></i></a></li>
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between"
-                                        href="{{ route('pedidos.index') }}">Mis compras <i
+                                        href="#">Mis compras <i
                                             class="fa-solid fa-bag-shopping"></i></a></li>
                             @endrole
 

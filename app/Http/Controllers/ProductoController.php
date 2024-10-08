@@ -38,14 +38,16 @@ class ProductoController extends Controller
     public function store(ProductoRequest $request)
     {
         $producto = new Producto();
-        
+
         $producto->id_empleado = auth()->user()->id;
         $producto->id_categoria = $request->get('id_categoria');
         $producto->nombre = $request->get('nombre');
         $producto->descripcion = $request->get('descripcion');
         $producto->stock_disponible = $request->get('stock_disponible');
         $producto->precio = $request->get('precio');
-        $producto->activo = $request->get('activo');
+
+        // Cuando un producto se crea, se pone en estado activo por defecto
+        // $producto->activo = $request->get('activo'); 
 
         if ($request->hasFile('imagen')) {
             // Subida de imagen al servidor (public > storage)
@@ -54,13 +56,13 @@ class ProductoController extends Controller
         } else {
             $producto->url_imagen = '';
         }
-        
+
         // Almacena la info del producto en la BD
         $producto->save();
 
         return redirect()
-                ->route('producto.index')
-                ->with('alert', 'Producto "' . $producto->nombre . '" agregado exitosamente.');
+            ->route('producto.index')
+            ->with('alert', 'Producto "' . $producto->nombre . '" agregado exitosamente.');
     }
 
     /**
@@ -93,5 +95,27 @@ class ProductoController extends Controller
     public function destroy(Producto $producto)
     {
         //
+    }
+
+    public function obtenerProductosPorCategoria(Request $request)
+    {
+        $productos_cargados = $request->get('productos_ya_agregados');
+        $categoriaId = $request->get('id');
+
+        if ($productos_cargados != null) {
+            $productos = Producto::where('id_categoria', $categoriaId)->where('activo', 1)->whereNotIn('id', $productos_cargados)
+                ->select('id', 'nombre')
+                ->get();
+        } else {
+            $productos = Producto::where('id_categoria', $categoriaId)->where('activo', 1)
+                ->select('id', 'nombre')
+                ->get();
+        }
+
+        if (!$productos) {
+            return response()->json(['message' => 'no se encontro categoria'], 400);
+        }
+
+        return response()->json($productos, 200);
     }
 }

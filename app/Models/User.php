@@ -13,8 +13,8 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasRoles;
 
     // Estado de usuario
-    const INACTIVO = 0;
-    const ACTIVO = 1;
+    const INACTIVO = '0';
+    const ACTIVO = '1';
 
     // Roles del Usuario
     const CLIENTE = 'cliente';

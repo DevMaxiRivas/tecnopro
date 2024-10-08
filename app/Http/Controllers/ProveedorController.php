@@ -34,13 +34,31 @@ class ProveedorController extends Controller
     {
         $request->validate([
             'razon_social' => 'required|min:3|max:45|unique:proveedores,razon_social',
-            'cuit'=>'required|min:11|max:11|integer|unique:proveedores,cuit',
+            'cuit'=>'required|digits:11|integer|unique:proveedores,cuit',
+            'direccion' => 'required|string|max:45',
+            'telefono' => 'required|integer',
+            'email' => 'required|string|max:255|unique:users|regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/',
+            
 
         ], [
             'razon_social.required' => 'El campo razon social es obligatorio.',
             'razon_social.min' => 'La razon social debe tener al menos 3 caracteres.',
             'razon_social.unique' => 'Ya existe un proveedor con esa razon social.',
-            'cuit.required' => 'El campo CUIT es obligatorio.',
+
+            'cuit.required' => 'El campo cuit es obligatorio.',
+            'cuit.integer' => 'El campo cuit debe ser un numero',
+            'cuit.min' => 'El campo cuit debe tener 11 caracteres',
+            'cuit.max' => 'El campo cuit debe tener 11 caracteres',
+
+            'direccion.required' => 'El campo domicilio es obligatorio',
+
+            'telefono.required' => 'El campo telefono es obligatorio',
+            'telefono.integer' => 'El campo telefono debe ser numerico',
+
+            'email.required' => 'El campo email es obligatorio.',
+            'email.regex' => 'El campo email tiene un formato incorrecto',
+            'email.unique' => 'Este email ya se encuentra registrado',
+
             
         ], 
         
@@ -108,5 +126,7 @@ class ProveedorController extends Controller
        
         
     }
+
+    
 }
 

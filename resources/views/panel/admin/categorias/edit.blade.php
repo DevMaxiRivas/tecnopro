@@ -1,22 +1,16 @@
 @extends('adminlte::page')
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> --}}
-
-@section('plugins.Sweetalert2', true)
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 @section('title', 'Editar')
 @section('content_header')
-    <h1>
-        <strong>
-            Editar categoria "{{ $categoria->nombre }}"
-        </strong>
-    </h1>
 @stop
 
 @section('content')
-<div class="container-fluid">
+<div class="container mt-5"> <!-- Añadido mt-5 para margen superior -->
     <div class="row justify-content-center"> <!-- Centrado horizontalmente -->
         <div class="col-12 mb-3">
+            <h1>Editar Datos de la Categoria "{{ $categoria->nombre }}"</h1>
             <a href="{{ route('categoria.index') }}" class="btn btn-sm" style="background-color: #022340; color: white; text-transform: uppercase;">
                 Volver Atrás
             </a>
@@ -65,5 +59,8 @@
     });
 </script>
 @stop
+
+
+
 
 

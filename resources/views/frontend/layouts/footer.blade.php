@@ -23,7 +23,7 @@
                         <a href="/"><img src="{{ asset('imagenes/logo-tecnopro-claro.png') }}" alt="Logo Esmarty"
                                 width="150"></a>
 
-                        <p class="text-center">En Esmarty, nos enorgullece ofrecerte lo último en productos electrónicos
+                        <p class="text-center">En TecnoPro, nos enorgullece ofrecerte lo último en productos electrónicos
                             de alta calidad. <br>
                             ¡Gracias por ser parte de nuestra comunidad tecnológica!
                         </p>

@@ -49,19 +49,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'dni' => ['required', 'integer'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'min:5', 'max:255', 'regex:/^[\p{L} ]+$/u'],
+            'dni' => ['required', 'integer', 'min:7'],
+            'email' => ['required', 'string', 'max:255', 'unique:users', 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/'],
             'domicilio' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ],
         [
             'name.required' => 'El campo nombre es obligatorio.',
+            'name.min' => 'El campo nombre debe tener un minimo de 5 caracteres',
+            'name.regex' => 'El campo nombre debe tener solo letras',
 
             'dni.required' => 'El campo dni es obligatorio.',
+            'dni.integer' => 'El campo dni debe ser un numero',
+            'dni.min' => 'El campo dni debe tener como minimo 7 caracteres',
 
             'email.required' => 'El campo email es obligatorio.',
-            'email.email' => 'El campo email tiene un formato incorrecto',
+            'email.regex' => 'El campo email tiene un formato incorrecto',
             'email.unique' => 'Este email ya se encuentra registrado',
 
             'domicilio.required' => 'El campo domicilio es obligatorio',
