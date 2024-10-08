@@ -97,7 +97,7 @@
                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                 </a> --}}
 
-                                                @if ($compra->estado == 0 && $compra->estado != 1)
+                                                @if ($compra->estado == 0 || $compra->estado == 1)
                                                     <a href="{{ route('compras.edit', $compra) }}" title="Editar OC" class="btn btn-sm btn-secondary text-white text-uppercase me-1">
                                                         <i class="fas fa-edit" aria-hidden="true"></i>
                                                     </a>

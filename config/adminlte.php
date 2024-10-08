@@ -323,7 +323,14 @@ return [
             'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
             'icon'        => 'fas fa-project-diagram',
-            'can'         => 'lista_categorias'
+            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
+        ],
+        [
+            'text'        => 'Mis Proveedores',
+            'route'       => 'proveedor.index',
+            // 'route' => 'proveedor.index',
+            'icon'        => 'fas fa-truck',
+            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
         ],
         [
             'text' => 'Mis productos',
