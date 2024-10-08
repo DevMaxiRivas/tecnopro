@@ -56,9 +56,21 @@
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
-                                            <td class="text-center">{{ $producto->precio }}</td>
+                                            <td class="text-center">
+                                                @if ($producto->precio > 0)
+                                                    {{ $producto->precio }}
+                                                @else
+                                                    - 
+                                                @endif
+                                            </td>
                                             <td class="text-center">{{ $producto->cantidad }}</td>
-                                            <td class="text-center">{{ $producto->subtotal }}</td>
+                                            <td class="text-center">
+                                                @if ($producto->subtotal > 0)
+                                                    {{ $producto->subtotal }}
+                                                @else
+                                                    - 
+                                                @endif
+                                            </td>
                                             {{-- @include('panel.admin.categorias.show') --}}
                                         </tr>
                                     @endforeach

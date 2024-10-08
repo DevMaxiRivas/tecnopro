@@ -329,7 +329,7 @@ return [
             'text'        => 'Mis Proveedores',
             'route'       => 'proveedor.index',
             // 'route' => 'proveedor.index',
-            'icon'        => 'fas fa-truck',
+            'icon'        => 'far fa-handshake',
             //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
         ],
         [
