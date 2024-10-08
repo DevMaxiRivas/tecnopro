@@ -10,14 +10,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-                <div>
-                    <button id="agregarFila" class="btn btn-sm btn-primary text-uppercase">Agregar Producto</button>
-                    <a href="{{ route('detalle-orden-compra.index', $orden_compra) }}" class="btn btn-sm btn-secondary text-uppercase">
-                        Volver Atras
-                    </a>
+                <div class="col-8">
+                    <button id="agregarFila" class="btn btn-primary">Agregar Producto</button>
                 </div>
-                
-                <button id="guardar" class="btn btn-sm btn-success text-uppercase">Guardar</button>
+                <div class="col-4 d-flex justify-content-end">
+                    <a href="{{ route('detalle-orden-compra.index', $orden_compra->id) }}"
+                        class="btn btn-danger mr-1">Cancelar</a>
+                    <button id="guardar" class="btn btn-success">Guardar</button>
+                </div>
             </div>
 
             @if (session('alert'))
@@ -57,23 +57,21 @@
                                                     value="{{ $detalle->cantidad }}" min="1">
                                             </td>
                                             <td class="text-center">
-                                                <form action="#{{-- route('detalle_orden_compra.destroy', $detalle->id) --}}" method="POST">
-                                                    @csrf
-                                                    <button class="btn btn-link btn-eliminar p-0" title="Eliminar fila"><svg
-                                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z">
-                                                            </path>
-                                                            <path
-                                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z">
-                                                            </path>
-                                                        </svg></button>
-                                                    @method('DELETE')
+                                                <button class="btn btn-link btn-eliminar p-0" title="Eliminar fila"><svg
+                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z">
+                                                        </path>
+                                                        <path
+                                                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z">
+                                                        </path>
+                                                    </svg></button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
+                                @endif
                             </tbody>
                         </table>
                         <!-- Modal -->
@@ -89,7 +87,10 @@
                                     </div>
                                     <div class="modal-body" id="cuerpoModal"></div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">Aceptar</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            aria-label="Close">
+                                            Aceptar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +108,8 @@
                                     </div>
                                     <div class="modal-body">¿Estas seguro de eliminar este producto?</div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Aceptar</button>
                                         <button type="button" class="btn btn-secondary">Cancelar</button>
                                     </div>
                                 </div>
@@ -115,7 +117,6 @@
                         </div>
 
 
-                        @endif
                     </div>
                 </div>
             </div>
@@ -136,6 +137,14 @@
                 return;
             }
 
+            // Eventos para cerrar el modal
+            $('#miModal').find('.btn-primary').on('click', function() {
+                $('#miModal').modal(
+                    'hide'); // Cierra el modal después de la eliminación
+                return;
+            })
+
+
             // Función para obtener productos de una categoría específica
             function obtenerProductos(categoria) {
                 let productos_cargados = [];
@@ -146,9 +155,10 @@
 
                 $('.productos_por_agregar td .producto').each(function() {
                     let producto_id = $(this).val();
-                    productos_cargados.push(producto_id);
+                    if (producto_id !== 'Seleccione un producto' && producto_id !==
+                        'Seleccione primero una categoría')
+                        productos_cargados.push(producto_id);
                 })
-                console.log('productos_cargados', productos_cargados);
                 const data = {
                     'id': categoria,
                     'productos_ya_agregados': productos_cargados
@@ -215,8 +225,12 @@
                     $('#ModalEliminar').modal('show');
 
                     // Evento para confirmar eliminación cuando se presione el botón "Aceptar" del modal
-                    $('#ModalEliminar').find('.btn-secondary').off('click').on('click', function() {
+                    $('#ModalEliminar').find('.btn-danger').off('click').on('click', function() {
                         filaAEliminar.remove(); // Elimina la fila
+                        $('#ModalEliminar').modal(
+                            'hide'); // Cierra el modal después de la eliminación
+                    });
+                    $('#ModalEliminar').find('.btn-secondary').off('click').on('click', function() {
                         $('#ModalEliminar').modal(
                             'hide'); // Cierra el modal después de la eliminación
                     });
@@ -328,7 +342,8 @@
                             "</b> la cantidad debe ser mayor a 0");
                     }
 
-                    if (id_producto && cantidad) {
+                    if (id_producto && id_producto !== 'Seleccione un producto' && id_producto !==
+                        'Seleccione primero una categoría' && cantidad) {
                         productos_por_agregar.push({
                             'id_producto': id_producto,
                             'cantidad': cantidad,
@@ -337,13 +352,17 @@
 
                 });
 
+                if (productos_por_agregar.length == 0 && productos_cargados.length == 0) {
+                    desplegarModal('Atención', 'Debe agregar al menos un producto');
+                    return;
+                }
+
                 const data = {
                     'orden_compra_id': $('#orden_compra_id').val(),
                     'productos_cargados': productos_cargados,
                     'productos_por_agregar': productos_por_agregar,
                 };
 
-                console.log(data);
                 $.ajax({
                     type: 'POST',
                     url: '{{ route('detalle-orden-compra.guardar') }}',
@@ -353,7 +372,6 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
                     success: function(response) {
-                        console.log(response);
                         window.location.href =
                             '{{ route('detalle-orden-compra.index', $orden_compra->id) }}';
                     },
