@@ -6,7 +6,8 @@
 @section('title', 'Detalle de Orden de Comra')
 
 @section('content_header')
-    <h1>&nbsp;<strong>Detalle de Orden de Compra</strong></h1>
+    <h1>&nbsp;<strong>Detalles de la Orden de Compra N° {{ $orden_compra->id }} para el proveedor
+            {{ $orden_compra->proveedor->razon_social }}</strong></h1>
 @stop
 
 @section('content')
@@ -60,7 +61,7 @@
                                                 @if ($producto->precio > 0)
                                                     {{ $producto->precio }}
                                                 @else
-                                                    - 
+                                                    -
                                                 @endif
                                             </td>
                                             <td class="text-center">{{ $producto->cantidad }}</td>
@@ -68,7 +69,7 @@
                                                 @if ($producto->subtotal > 0)
                                                     {{ $producto->subtotal }}
                                                 @else
-                                                    - 
+                                                    -
                                                 @endif
                                             </td>
                                             {{-- @include('panel.admin.categorias.show') --}}

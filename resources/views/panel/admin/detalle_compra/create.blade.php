@@ -3,7 +3,8 @@
 @section('title', 'Registrar productos en OC')
 
 @section('content_header')
-    <h1>&nbsp;<strong>NUEVOS PRODUCTOS EN ORDEN DE COMPRA</strong></h1>
+    <h1>&nbsp;<strong>Detalles de la Orden de Compra N° {{ $orden_compra->id }} para el proveedor
+            {{ $orden_compra->proveedor->razon_social }}</strong></h1>
 @stop
 
 @section('content')
