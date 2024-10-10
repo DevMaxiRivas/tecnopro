@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Categoria;
+use App\Models\DetalleCompra;
 use App\Models\Producto;
 use App\Models\DetalleCompras;
 use Illuminate\Contracts\Session\Session;
@@ -32,13 +33,12 @@ class DetalleComprasController extends Controller
         return view('frontend.pages.productosTest', compact('productos', 'categorias'));
     }
 
-
     public function contarItemsCarrito()
     {
         $cant_carrito = 0; //Inicio la variable que guarda la cantidad de items en el carrito
 
         $user_id = Auth::id();
-        $carrito = DetalleCompras::latest()->where('id_cliente', $user_id)->whereNull('id_pedido')->with('productos')->get();
+        $carrito = DetalleCompra::latest()->where('id_cliente', $user_id)->whereNull('id_pedido')->with('productos')->get();
 
         foreach ($carrito as $item) { //Recorro el carrito y cuento cuantos items hay
             $cant_carrito += $item->cant_producto;
@@ -47,7 +47,6 @@ class DetalleComprasController extends Controller
         return $cant_carrito;
     }
 
-
     public function agregarAlCarrito(Request $request) //Busca un item especifico en los pedidos y actualiza la cantidad pedida
     {
         $producto = Producto::find($request->_id);
@@ -55,8 +54,9 @@ class DetalleComprasController extends Controller
         if (!$producto) {
             return response()->json(['error' => 'Producto no encontrado'], 404);
         }
+
         $user_id = Auth::id();
-        $itemViejo = DetalleCompras::where('id_cliente', $user_id)->where('id_producto', $producto->id)->whereNull('id_pedido')->first(); //Se fija si ya hay un producto igual cargado en el carrito
+        $itemViejo = DetalleCompra::where('id_cliente', $user_id)->where('id_producto', $producto->id)->whereNull('id_pedido')->first(); //Se fija si ya hay un producto igual cargado en el carrito
 
         if ($itemViejo) { //Si ya existe ese producto en el carrito, solo aumenta la cantidad en +1
             if ($producto->stock_disponible > $itemViejo->cant_producto) {
@@ -67,7 +67,7 @@ class DetalleComprasController extends Controller
                 return response()->json(['message' => 'No hay mas stock del producto']);
             }
         } else if ($producto->stock_disponible > 0) { //Si no existe ya en el carrito, verifica que haya stock disponible, y entonces lo agrega
-            $nuevoItem = new DetalleCompras();
+            $nuevoItem = new DetalleCompra();
             $nuevoItem->id_cliente = Auth::id();
             $nuevoItem->id_pedido = null;
             $nuevoItem->id_producto = $producto->id;
@@ -87,15 +87,14 @@ class DetalleComprasController extends Controller
     public function miCarrito() //Trae todos los productos que esten en un carrito, pero no en un pedido, dependiendo del cliente 
     {
         $user_id = Auth::id();
-        $DetalleCompras = DetalleCompras::latest()->where('id_cliente', $user_id)->whereNull('id_pedido')->with('productos')->get();
+        $DetalleCompras = DetalleCompra::latest()->where('id_cliente', $user_id)->whereNull('id_pedido')->with('productos')->get();
         return response()->json($DetalleCompras);
     }
-
 
     public function actualizarCantidad(Request $request) //Busca un item especifico en los pedidos y actualiza la cantidad pedida
     {
 
-        $item = DetalleCompras::find($request->_id);
+        $item = DetalleCompra::find($request->_id);
 
         if (!$item) {
             return response()->json(['error' => 'Item no encontrado'], 404);
@@ -114,17 +113,17 @@ class DetalleComprasController extends Controller
         }
     }
 
-
     public function quitarItem(Request $id) //Elimina una fila de detalle_pedidos, borra un item de un carrito
     {
 
-        $item = DetalleCompras::find($id->_id);
+        $item = DetalleCompra::find($id->_id);
 
         if (!$item) {
             return response()->json(['error' => 'Producto no encontrado'], 404);
         }
 
         $item->delete();
+
         return response()->json(['message' => 'Producto eliminado del carrito correctamente']);
     }
 }
