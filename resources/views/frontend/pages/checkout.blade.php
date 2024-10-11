@@ -3,7 +3,7 @@
 @section('main-content')
     <!-- Breadcrumbs -->
     <div class="section m-4 check-out">
-    <div class="container border p-3 rounded-3 add-shadow bg-white border-0 ">
+    <div class="container p-3 rounded-3 add-shadow bg-white border-0 ">
         <div class="pt-3 pb-1 text-left">
           
           <h2>Completa tus datos:</h2>
