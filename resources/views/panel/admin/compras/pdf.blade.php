@@ -50,7 +50,7 @@
                 <td class="desc"><h3>{{ $detalle->producto->nombre }}</h3></td>
                 <td class="unit">${{ number_format($detalle->precio, 2) }}</td>
                 <td class="qty">{{ $detalle->cantidad }}</td>
-                <td class="total">{{$detalle->subtotal}}</td>
+                <td class="total">${{number_format($detalle->subtotal,2)}}</td>
             </tr>
             @endforeach
         </tbody>
@@ -58,17 +58,17 @@
           <tr>
             <td colspan="2"></td>
             <td colspan="2">SUBTOTAL</td>
-            <td>{{$subtotal}}</td>
+            <td>${{number_format($subtotal,2)}}</td>
           </tr>
           <tr>
             <td colspan="2"></td>
             <td colspan="2">IVA 21%</td>
-            <td>{{$iva}}</td>
+            <td>${{number_format($iva,2)}}</td>
           </tr>
           <tr>
             <td colspan="2"></td>
             <td colspan="2">TOTAL</td>
-            <td>{{$total}}</td>
+            <td>${{number_format($total,2)}}</td>
           </tr>
         </tfoot>
       </table>
