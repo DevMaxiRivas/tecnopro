@@ -7,6 +7,7 @@ use App\Http\Controllers\DetalleOrdenCompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DetalleController;
+use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,9 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     //Proveedores 
     Route::resource('/proveedor', ProveedorController::class)->names('proveedor'); 
+    
+    //FormaPago
+    Route::resource('/formapago', FormaPagoController::class)->names('formapago'); 
 
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
