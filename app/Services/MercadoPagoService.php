@@ -28,17 +28,17 @@ class MercadoPagoService
         foreach ($carrito as $productoCompra) {
 
             $item = new Item();
-            $item->title = $productoCompra->productos->nombre;
-            $item->quantity = $productoCompra->cant_producto;
-            $item->unit_price = $productoCompra->subtotal;
+            $item->title = $productoCompra->producto->nombre;
+            $item->quantity = $productoCompra->cantidad;
+            $item->unit_price = $productoCompra->precio;
 
             $items[] = $item;
         }
 
         $preference->back_urls = [
-            'success' => route('pedido.pago'),
-            'pending' => route('pedido.pago'),
-            'failure' => route('pedido.pago')
+            'success' => route('venta.pago'),
+            'pending' => route('venta.pago'),
+            'failure' => route('venta.pago')
         ];
 
         $preference->external_reference = $id_pedido;
@@ -58,17 +58,8 @@ class MercadoPagoService
             )
         ];
 
-
-
-
-        /* $preference->external_reference = $compra->id; */
         $preference->save();
 
         return $preference;
-    }
-
-    public function obtenerPago()
-    {
-        // Consultar a mercadopago por la preferencia...
     }
 }

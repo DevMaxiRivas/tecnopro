@@ -38,4 +38,13 @@ class Producto extends Model
     {
         return $this->belongsTo(User::class, 'id_empleado');
     }
+
+    public static function actualizarStocks($id_pedido)
+    {
+        $items = DetalleVenta::where('id_venta', $id_pedido)->get();
+        foreach ($items as $item) {
+            $producto = self::find($item->id_producto);
+            $producto->stock_disponible -= $item->cantidad;
+        }
+    }
 }

@@ -20,7 +20,7 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::resource('/categorias', CategoriaController::class)->names('categoria');
 
     //Proveedores 
-    Route::resource('/proveedor', ProveedorController::class)->names('proveedor'); 
+    Route::resource('/proveedor', ProveedorController::class)->names('proveedor');
 
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
@@ -29,10 +29,10 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     // Detalle de Compra
     Route::get('/detalle-orden-compra/{id_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
+    Route::get('/detalle-orden-compra/{id_compra}', [DetalleOrdenCompraController::class, 'index'])->name('detalle-orden-compra.index');
+    // Rutas para detalle de compra
+    // Route::get('/detalle-orden-compra/{orden_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
+    // Route::resource('/detalle-orden-compra', DetalleOrdenCompraController::class)->names('detalle-orden-compra');
+
     Route::post('/detalle-orden-compra/guardar', [DetalleOrdenCompraController::class, 'guardarDetallesCompras'])->name('detalle-orden-compra.guardar');
-    Route::resource('/detalle-orden-compra/{id_compra}', DetalleOrdenCompraController::class)->names('detalle-orden-compra');
 });
-
-
-
-
