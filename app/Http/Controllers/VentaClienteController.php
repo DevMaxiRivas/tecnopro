@@ -19,7 +19,7 @@ class VentaclienteController extends Controller
         $ventas = Venta::where('id_cliente', $clienteId)->get();
 
         // Retornar la vista con las ventas
-        return view('panel.admin.ventas.index', compact('ventas'));
+        return view('panel.admin.ventas.cliente.index', compact('ventas'));
     }
 
     /**
@@ -31,7 +31,7 @@ class VentaclienteController extends Controller
         $ventas = Venta::where('id', $id)->where('id_cliente', Auth::id())->firstOrFail();
 
         // Retornar la vista con los detalles de la venta
-        return view('panel.admin.ventas.show', compact('detalle_ventas'));
+        return view('panel.admin.ventas.cliente.show', compact('detalle_ventas'));
     }
 
 

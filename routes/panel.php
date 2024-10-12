@@ -29,8 +29,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::resource('/formapago', FormaPagoController::class)->names('formapago'); 
 
      //Mis Compras
-    Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.index');
-    Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cancelar');
+    Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.cliente.index');
+    Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cliente.cancelar');
     
     
     //Detalle de mis compras
