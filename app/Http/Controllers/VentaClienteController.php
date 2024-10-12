@@ -39,14 +39,14 @@ class VentaclienteController extends Controller
     {
         // Verificar que la venta pertenece al cliente autenticado
         if ($venta->id_cliente != Auth::id()) {
-            return redirect()->route('ventas.index')->with('error', 'No puedes cancelar esta venta.');
+            return redirect()->route('ventas.cliente.index')->with('error', 'No puedes cancelar esta venta.');
         }
     
         // Cambiar el estado de la venta a "cancelado"
         $venta->estado = 5; // Asumiendo que 5 significa "cancelado"
         $venta->save();
     
-        return redirect()->route('ventas.index')->with('success', 'La venta ha sido cancelada con éxito.');
+        return redirect()->route('ventas.cliente.index')->with('success', 'La venta ha sido cancelada con éxito.');
     }
     
     

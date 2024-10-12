@@ -352,7 +352,7 @@ return [
         ],
         [
             'text' => 'Mis Compras',
-            'route' => 'ventas.index', // ruta de inicio del crud compras clientes
+            'route' => 'ventas.cliente.index', // ruta de inicio del crud compras clientes
             'icon' => 'fas fa-shopping-bag',  //
            // 'can' => 'lista_compras' SI CHE
         ],
