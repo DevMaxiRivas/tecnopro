@@ -33,6 +33,22 @@ class VentaclienteController extends Controller
         // Retornar la vista con los detalles de la venta
         return view('panel.admin.ventas.show', compact('detalle_ventas'));
     }
+
+
+    public function cancelar(Venta $venta)
+    {
+        // Verificar que la venta pertenece al cliente autenticado
+        if ($venta->id_cliente != Auth::id()) {
+            return redirect()->route('compras.index')->with('error', 'No puedes cancelar esta venta.');
+        }
+    
+        // Cambiar el estado de la venta a "cancelado"
+        $venta->estado = 4; // Asumiendo que 4 significa "cancelado"
+        $venta->save();
+    
+        return redirect()->route('ventas.index')->with('success', 'La venta ha sido cancelada con éxito.');
+    }
+    
 }
 
 

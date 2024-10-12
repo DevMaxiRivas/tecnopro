@@ -66,28 +66,33 @@
                                          @elseif($ventas->estado == 4)
                                             <span class="badge badge-danger">Cancelado</span>
                                         @endif
+                                 </td>   
+                                 <td>
+                                     <div class="d-flex justify-content-center">
+                                         <a href="{{ route('detalle_ventas.index', $ventas->id) }}" title="Ver productos" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
+                                             <i class="fa fa-plus-square" aria-hidden="true"></i>
+
+                                         </a>
+                                         @if ($ventas->estado == 1 || $ventas->estado == 2)
+                                             <a href="{{ route('compras.pdf', $ventas->id) }}" title="Generar Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                 <i class="fas fa-file-pdf"></i>
+                                             </a>
+                                         @endif
+
+                                         @if ($ventas->estado != 4)
+                                         <form action="{{ route('ventas.cancelar', $ventas->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres cancelar esta compra?');">
+                                             @csrf
+                                             @method('PATCH')
+                                             <button type="submit" class="btn btn-sm btn-secondary text-white text-uppercase me-1" title="Cancelar pedido">
+                                                 <i class="fas fa-times" aria-hidden="true"></i>
+                                             </button>
+                                         </form>
+                                     @endif
+                                     
+
+                   
+                                     </div>
                                  </td>
-     {{-- <form action="{{ route('ventas.destroy', $ventas) }}" method="POST">
-                                        @csrf 
-                                        @method('DELETE')
-                                        <div>
-                                            <label class="switch">
-                                                <input type="checkbox" id="miInterruptor" data-change-id="{{ $ventas->id }}" class="miInterruptor" value="{{ $ventas->activo }}" {{ $ventas->activo ? 'checked' : '' }}>
-                                                <span class="slider"><p class="estadop" style="visibility: hidden">{{ $ventas->activo }}</p></span>
-                                            </label>
-                                        </div>
-                                    </form> --}}
-                                </td>
-                                <td class="text-center">
-                                    <div class="d-flex justify-content-center">
-                                        <a href="#{{-- route('ventas.show', $ventas) --}}" title="Ver" data-toggle="modal" data-target="#ventasModal{{ $ventas->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
-                                            <i class="far fa-eye" aria-hidden="true"></i>
-                                        </a>
-                                        <a href="#{{-- route('ventas.edit', $ventas) --}}" title="Editar" class="btn btn-sm btn-warning text-white text-uppercase me-1">
-                                            <i class="fas fa-edit" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </td>
                             </tr>
                             {{-- @include('panel.admin.ventas.show') --}}
                             @endforeach

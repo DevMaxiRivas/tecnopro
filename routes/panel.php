@@ -7,6 +7,7 @@ use App\Http\Controllers\DetalleOrdenCompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DetalleController;
+use App\Http\Controllers\DetalleVentaClienteController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaClienteController;
@@ -29,7 +30,12 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
      //Mis Compras
     Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.index');
+    Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cancelar');
     
+    //Detalle de mis compras
+    Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
+
+   
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
     Route::resource('/compras', CompraController::class)->names('compras');
@@ -41,6 +47,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::resource('/detalle-orden-compra/{id_compra}', DetalleOrdenCompraController::class)->names('detalle-orden-compra');
 
    
+ 
+
 
 });
 
