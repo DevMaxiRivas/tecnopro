@@ -9,6 +9,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\VentaClienteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,10 +23,13 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     //Proveedores 
     Route::resource('/proveedor', ProveedorController::class)->names('proveedor'); 
-    
+
     //FormaPago
     Route::resource('/formapago', FormaPagoController::class)->names('formapago'); 
 
+     //Mis Compras
+    Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.index');
+    
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
     Route::resource('/compras', CompraController::class)->names('compras');
@@ -35,8 +39,15 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/detalle-orden-compra/{id_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
     Route::post('/detalle-orden-compra/guardar', [DetalleOrdenCompraController::class, 'guardarDetallesCompras'])->name('detalle-orden-compra.guardar');
     Route::resource('/detalle-orden-compra/{id_compra}', DetalleOrdenCompraController::class)->names('detalle-orden-compra');
+
+   
+
 });
 
+//Route::group(['middleware' => ['role:cliente']], function () {
+//Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.index');
+// Route::get('/mis-compras/{id_compra}', [VentaClienteController::class, 'detalleCompra'])->name('detalle-compra');
 
+//});
 
 

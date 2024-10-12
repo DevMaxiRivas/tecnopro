@@ -346,9 +346,15 @@ return [
         ],
         [
             'text' => 'Formas de Pago',
-            'route' => 'formapago.index', // ruta de inicio del crud productos
+            'route' => 'formapago.index', // ruta de inicio del crud formas de pago
             'icon' => 'fas fa-wallet',
-           // 'can' => 'lista_ordenes_compras'
+            'can' => 'lista_formas_pagos'
+        ],
+        [
+            'text' => 'Mis Compras',
+            'route' => 'ventas.index', // ruta de inicio del crud compras clientes
+            'icon' => 'fas fa-wallet',  //
+           // 'can' => 'lista_compras' SI CHE
         ],
 
         /* [
