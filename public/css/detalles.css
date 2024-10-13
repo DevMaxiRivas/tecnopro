@@ -159,7 +159,7 @@ table tfoot tr:first-child td {
 table tfoot tr:last-child td {
     color: #1AA3D9;
     font-size: 1.4em;
-    border-top: 1px solid #1AA3D9; 
+    /*--border-top: 1px solid #1AA3D9; */
 }
 
 table tfoot tr td:first-child {
@@ -190,3 +190,7 @@ footer {
     padding: 8px 0;
     text-align: center;
 }
+
+
+
+

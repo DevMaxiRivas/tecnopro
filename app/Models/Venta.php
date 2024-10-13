@@ -20,16 +20,20 @@ class Venta extends Model
     const FACTURA_ENVIADA = '1';
     const FACTURA_NO_ENVIADA = '0';
 
+   
     public function cliente() {
-        $this->belongsTo(User::class, 'id_cliente');
+        return $this->belongsTo(User::class, 'id_cliente');
     }
-
     public function empleado() {
-        $this->belongsTo(User::class, 'id_empleado');
+        return $this->belongsTo(User::class, 'id_empleado');
     }
 
     public function forma_pago() {
-        $this->belongsTo(FormaPago::class, 'id_forma_pago');
+       return $this->belongsTo(FormaPago::class, 'id_forma_pago');
+    }
+    
+    public function detalle_ventas() {
+        return $this->hasMany(DetalleVenta::class, 'id_venta'); 
     }
 
     // INNER JOIN avanzado (ventas --> detalle_ventas <-- productos)

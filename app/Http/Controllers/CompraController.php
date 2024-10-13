@@ -57,7 +57,6 @@ class CompraController extends Controller
         //$compras->url_factura = $request->get('url_factura');
         $compra->total = $request->get('total',0);
         
-
         // Almacena la info del producto en la BD
         $compra->save();
 
@@ -82,13 +81,14 @@ class CompraController extends Controller
     {
         $proveedores = Proveedor::get();
         $formas_pagos = FormaPago::get();
-    // Array con los estados y sus descripciones
-    $estados = [
-        Compra::PENDIENTE => 'Pendiente',
-        Compra::EN_ESPERA => 'En espera',
-        Compra::RECIBIDO => 'Recibido',
-        Compra::CANCELADO => 'Cancelado',
-    ];
+
+        // Array con los estados y sus descripciones
+        $estados = [
+            Compra::PENDIENTE => 'Pendiente',
+            Compra::EN_ESPERA => 'En espera',
+            Compra::RECIBIDO => 'Recibido',
+            Compra::CANCELADO => 'Cancelado',
+        ];
 
     return view('panel.admin.compras.edit', compact('compra','proveedores','formas_pagos', 'estados'));
     }
@@ -124,22 +124,24 @@ class CompraController extends Controller
         //
     }
     public function pdf(Compra $compra)
-{
-    $subtotal = 0;
-    $detalle_compras = $compra->detalle_compras;
-    $proveedor = $compra->proveedores;
-    foreach ($detalle_compras as $detalle) {
-        $subtotal += $detalle->subtotal; 
-    }
-    $iva = $subtotal * 0.21;
-    $total = $subtotal + $iva;
-    $fecha_emision = $compra->created_at;
-    $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
-    $pdf = PDF::loadView('panel.admin.compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
-    return $pdf->download('Reporte_de_Compra_' . $compra->id . '.pdf');
+    {
+        $subtotal = 0;
+        $detalle_compras = $compra->detalle_compras;
+        $proveedor = $compra->proveedores;
+        
+        foreach ($detalle_compras as $detalle) {
+            $subtotal += $detalle->subtotal; 
+        }
 
-    
-}
+        $iva = $subtotal * 0.21;
+        $total = $subtotal + $iva;
+        $fecha_emision = $compra->created_at;
+        $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
+        
+        $pdf = PDF::loadView('panel.admin.compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
+        
+        return $pdf->download('Reporte_de_Compra_' . $compra->id . '.pdf');
+    }
 
 }
 

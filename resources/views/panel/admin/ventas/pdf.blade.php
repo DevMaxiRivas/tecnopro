@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Orden de Compra - {{ $compra->id }}</title>
+    <title>Venta - {{ $venta->id }}</title>
     <link rel="stylesheet" href="css/detalles.css" media="all" />
 </head>
 <body>
@@ -21,16 +21,16 @@
     <div id="details" class="clearfix">
       <div id="proveedor">
         <div class="to">DIRIGIDA A :</div>
-        <h2 class="name">{{ $compra->proveedor->razon_social }}</h2>
-        <div class="address">{{ $compra->proveedor->direccion }}</div>
+        <h2 class="name">{{ $venta->cliente->name }}</h2>
+        <div class="address">{{ $venta->cliente->domicilio }}</div>
         <div class="email">
-            <a href="mailto:{{ $compra->proveedor->email }}">{{ $compra->proveedor->email }}</a>
+            <a href="mailto:{{ $venta->cliente->email }}">{{ $venta->cliente->email }}</a>
         </div>
       </div>
       <div id="invoice">
-        <h1>PEDIDO # {{ $compra->id }}</h1>
+        <h1>FACTURA # {{ $venta->id }}</h1>
         <div class="date">Fecha de Emisión:
-            {{ $compra->created_at ? $compra->created_at->format('d/m/Y') : 'N/A' }}</div>
+            {{ $venta->created_at ? $venta->created_at->format('d/m/Y') : 'N/A' }}</div>
         <div class="date">Fecha de Vencimiento: {{ $fecha_vencimiento->format('d/m/Y') }}</div>
       </div>
     </div>
@@ -38,51 +38,45 @@
         <thead>
             <tr>
                 <th class="no">#</th>
-                <th class="desc">CATEGORIA</th>
-                <th class="desc">PRODUCTO</th>
-                {{-- <th class="unit">PRECIO UNITARIO</th> --}}
+                <th class="desc">DESCRIPCIÓN</th>
+                <th class="unit">PRECIO UNITARIO</th>
                 <th class="qty">CANTIDAD </th>
-                {{-- <th class="total">SUBTOTAL</th> --}}
+                <th class="total">SUBTOTAL</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($detalle_compras as $detalle)
+            @foreach ($detalle_ventas as $detalle)
                 <tr>
-                    <td class="no">{{ $loop->iteration }}</td>
-                    <td class="desc">
-                        <h3>{{ $detalle->producto->categoria->nombre }}</h3>
-                    </td>
-                    <td class="desc">
-                        <h3>{{ $detalle->producto->nombre }}</h3>
-                    </td>
-                    {{-- <td class="unit">$ {{ number_format($detalle->precio, 2) }}</td> --}}
-                    <td class="qty">{{ $detalle->cantidad }}</td>
-                   {{--  <td class="total">$ {{ number_format($detalle->subtotal, 2) }}</td> --}}
+                   <td class="no">{{ $loop->iteration }}</td>
+                   <td class="desc"><h3>{{ $detalle->producto->nombre }}</h3></td>
+                   <td class="unit">$ {{ number_format($detalle->precio, 2) }}</td>
+                   <td class="qty">{{ $detalle->cantidad }}</td>
+                   <td class="total">$ {{ number_format($detalle->subtotal, 2) }}</td> 
                 </tr>
             @endforeach
         </tbody>
         <tfoot>
-            {{-- <tr>
+            {{--<tr>
                 <td colspan="2"></td>
                 <td colspan="2">SUBTOTAL</td>
                 <td>$ {{ number_format($subtotal, 2) }}</td>
             </tr>
-            <tr>
+                <tr>
                 <td colspan="2"></td>
                 <td colspan="2">IVA 21%</td>
                 <td>$ {{ number_format($iva, 2) }}</td>
-            </tr>
+            </tr>--}}
             <tr>
                 <td colspan="2"></td>
                 <td colspan="2">TOTAL</td>
                 <td>$ {{ number_format($total, 2) }}</td>
-            </tr> --}}
+            </tr> 
         </tfoot>
     </table>
     <div id="thanks">Gracias!</div>
     <div id="notices">
         <div>NOTA:</div>
-        <div class="notice">Por favor, confirme la recepción de esta orden de compra.</div>
+        <div class="notice">Por favor, confirme la recepción de esta factura.</div>
     </div>
   </main>
   <footer>

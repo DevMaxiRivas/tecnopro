@@ -322,11 +322,16 @@ return [
         [
             'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
-            // 'route' => 'proveedor.index',
             'icon'        => 'fas fa-project-diagram',
-            'can'         => 'lista_categorias'
+            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
         ],
-        
+        [
+            'text'        => 'Mis Proveedores',
+            'route'       => 'proveedor.index',
+            // 'route' => 'proveedor.index',
+            'icon'        => 'far fa-handshake',
+            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
+        ],
         [
             'text' => 'Mis productos',
             'route' => 'producto.index', // ruta de inicio del crud productos
@@ -337,7 +342,13 @@ return [
             'text' => 'Ordenes de compras',
             'route' => 'compras.index', // ruta de inicio del crud productos
             'icon' => 'fas fa-truck',
-           // 'can' => '',
+            'can' => 'lista_ordenes_compras'
+        ],
+        [
+            'text' => 'Ventas',
+            'route' => 'ventas.index', 
+            'icon' => 'fas fa-shopping-cart',
+            'can' => 'lista_ventas'
         ],
 
         /* [
