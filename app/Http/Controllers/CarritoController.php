@@ -244,6 +244,9 @@ class CarritoController extends Controller
 
             // Se destruye el carrito
             Cart::destroy();
+            
+            // TODO: Falta agregar servicio de mercado pago
+
 
             // TODO: Falta enviar mail de confirmacion de venta
 
