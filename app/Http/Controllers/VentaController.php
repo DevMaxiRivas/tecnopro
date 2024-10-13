@@ -94,21 +94,12 @@ class VentaController extends Controller
     }
     public function pdf(Venta $venta)
     {
-        $total = 0;
         $detalle_ventas = $venta->detalle_ventas;
         $cliente = $venta->cliente;
-        
-        foreach ($detalle_ventas as $detalle) {
-            $total += $detalle->subtotal; 
-        }
-
-        /* $iva = $subtotal * 0.21;
-        $total = $subtotal + $iva; */
+        $total = $venta->total; 
         $fecha_emision = $venta->created_at;
         $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
-        
         $pdf = PDF::loadView('panel.admin.ventas.pdf', compact('venta', 'detalle_ventas','cliente','total','fecha_vencimiento'));
-        
         return $pdf->download('Reporte_de_Venta_' . $venta->id . '.pdf');
     }
 

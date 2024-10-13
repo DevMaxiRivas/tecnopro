@@ -59,25 +59,23 @@
                 </div>
             </div>
             @if ($venta->id)
-                <div class="mb-3 row">
-                    <label for="estado" class="col-sm-4 col-form-label">* Nuevo estado</label>
-                    <div class="col-sm-8">
-                        <select id="estado" name="estado" class="form-control @error('estado') is-invalid @enderror">
-                            <option disabled selected>Seleccione un estado</option>
-                            @foreach($estados as $key => $estado)
-                                <option value="{{ $key }}" {{ $venta->estado == $key ? 'selected' : '' }}>
-                                    {{ $estado }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('estado')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+            <div class="mb-3 row">
+                <label for="estado" class="col-sm-4 col-form-label">* Nuevo estado</label>
+                <div class="col-sm-8">
+                    <select id="estado" name="estado" class="form-control @error('estado') is-invalid @enderror">
+                        <option disabled selected>Seleccione un estado</option>
+                        @foreach($estados as $key => $estado)
+                            <option value="{{ $key }}" {{ $venta->estado == $key ? 'selected' : '' }}>
+                                {{ $estado }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('estado')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
+            </div>
             @endif    
-        </div>
-
         <div class="card-footer d-flex justify-content-end">
             <button type="submit" class="btn btn-success text-uppercase">
                 {{ $venta->id ? 'Actualizar' : 'Guardar' }}

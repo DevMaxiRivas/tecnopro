@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Venta - {{ $venta->id }}</title>
-    <link rel="stylesheet" href="css/detalles.css" media="all" />
+    <link rel="stylesheet" href="css/detallesfactura.css" media="all" />
 </head>
 <body>
   <header class="clearfix">
@@ -34,38 +34,36 @@
         <div class="date">Fecha de Vencimiento: {{ $fecha_vencimiento->format('d/m/Y') }}</div>
       </div>
     </div>
+    
     <table>
         <thead>
             <tr>
                 <th class="no">#</th>
                 <th class="desc">DESCRIPCIÓN</th>
                 <th class="unit">PRECIO UNITARIO</th>
-                <th class="qty">CANTIDAD </th>
+                <th class="qty">CANTIDAD</th>
                 <th class="total">SUBTOTAL</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($detalle_ventas as $detalle)
+            
                 <tr>
-                   <td class="no">{{ $loop->iteration }}</td>
-                   <td class="desc"><h3>{{ $detalle->producto->nombre }}</h3></td>
-                   <td class="unit">$ {{ number_format($detalle->precio, 2) }}</td>
-                   <td class="qty">{{ $detalle->cantidad }}</td>
-                   <td class="total">$ {{ number_format($detalle->subtotal, 2) }}</td> 
+                    <td class="no">{{ $loop->iteration }}</td>
+                    <td class="desc"><h3>{{ $detalle->producto->nombre }}</h3></td>
+                    <td class="unit">$ {{ number_format($detalle->precio, 2) }}</td>
+                    <td class="qty">{{ $detalle->cantidad }}</td>
+                    <td class="total">$ {{ number_format($detalle->subtotal, 2) }}</td> 
                 </tr>
+                <footer>
+                    Este documento es una factura y es válido como comprobante de compra.
+                  </footer>
+                @if (($loop->iteration % 11) === 0 && !$loop->last)
+                <tr class="page-break"><td colspan="5" style="height: 0; padding: 0;"></td></tr>
+                @endif
             @endforeach
         </tbody>
         <tfoot>
-            {{--<tr>
-                <td colspan="2"></td>
-                <td colspan="2">SUBTOTAL</td>
-                <td>$ {{ number_format($subtotal, 2) }}</td>
-            </tr>
-                <tr>
-                <td colspan="2"></td>
-                <td colspan="2">IVA 21%</td>
-                <td>$ {{ number_format($iva, 2) }}</td>
-            </tr>--}}
             <tr>
                 <td colspan="2"></td>
                 <td colspan="2">TOTAL</td>
@@ -73,14 +71,7 @@
             </tr> 
         </tfoot>
     </table>
-    <div id="thanks">Gracias!</div>
-    <div id="notices">
-        <div>NOTA:</div>
-        <div class="notice">Por favor, confirme la recepción de esta factura.</div>
-    </div>
   </main>
-  <footer>
-      Esta orden de compra fue creada en una computadora y es válida sin la firma y el sello.
-  </footer>
+  
 </body>
 </html>

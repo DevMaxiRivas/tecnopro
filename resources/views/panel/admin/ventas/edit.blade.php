@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>
         <strong>
-            Editar Venta N° {{ $venta->id }}  
+            Editar Venta N° {{ $venta->id }} del cliente {{ $venta->cliente->name }} 
         </strong>
     </h1>
 @stop
