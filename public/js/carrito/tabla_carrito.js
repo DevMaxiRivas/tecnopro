@@ -9,16 +9,15 @@ function cargarTabla() {
 					data: data,
 					columns: [
 						{
-							data: 'productos.url_imagen',
+							data: 'url_imagen',
 							render: function (data, type, row) {
-								var imagen = data.split('|');
 								return `<div class="container bg-white rounded-4 d-flex justify-content-center align-items-center" style="width: auto; height: 100px;">
-											<img src="${imagen[0]}" class="image" height=70px>
+											<img src="${ data }" class="image" height=70px>
 										</div>`
 							}
 						},
 						{
-							data: 'productos.nombre',
+							data: 'nombre',
 							render: function(data, type, row){
 								return `<div class="container d-flex align-items-center justify-content-start" style="height: 100px; width: 33rem; overflow: hidden;">
 											<p class="text-truncate d-inline-block" style="max-width: 98%;" title="${data}">${data}</p>
@@ -28,8 +27,8 @@ function cargarTabla() {
 						{
 							data: 'subtotal',
 							render: function(data, type, row){
-								return `<div class="container border-start border-end border-2 d-flex align-items-center" style="width: 100px; height: 100px;">
-											<p class="p-small"  style="white-space: nowrap;">$ ${data}</p>
+								return `<div class="container border-2 d-flex align-items-center" style="width: 100px; height: 100px;">
+											<p class="p-small" style="white-space: nowrap;">$ ${data}</p>
 										</div>`
 							}
 						},
@@ -38,9 +37,9 @@ function cargarTabla() {
 							render: function (data, type, row) {
 								// Calcula la multiplicación de subtotal y cant_producto para cada fila
 								return `<div class="columnaCantidad container d-flex align-items-center" style="width: auto; height: 100px;">
-											<button class="btn btn-sm btn-disminuir text-center border border-2 disminuir-cantidad btn-disminuir" id="disminuir-cantidad"><i class='bx bx-minus'></i></button>
+											<button class="btn btn-sm btn-disminuir text-center border border-2 disminuir-cantidad btn-disminuir" id="disminuir-cantidad"><i class="fas fa-minus"></i></button>
 											<span id='cantidad' class='cantidades'>${data}</span>
-											<button class="btn btn-sm btn-aumentar text-center border border-2 aumentar-cantidad btn-aumentar" id="aumentar-cantidad"><i class='bx bx-plus'></i></button>
+											<button class="btn btn-sm btn-aumentar text-center border border-2 aumentar-cantidad btn-aumentar" id="aumentar-cantidad"><i class="fas fa-plus"></i></button>
 										<div>`;
 							}
 						},
@@ -48,8 +47,8 @@ function cargarTabla() {
 							data: null, // No necesitas datos para esta columna, ya que se calculará usando render
 							render: function (data, type, row) {
 								// Calcula la multiplicación de subtotal y cant_producto para cada fila
-								return `<div class="container border-start border-end border-2 d-flex align-items-center" style="width: 100px; height: 100px;">
-											<p class="p-small" id='totales' style="white-space: nowrap;">$ ${row.subtotal * row.cant_producto}</p>
+								return `<div class="container border-2 d-flex align-items-center" style="width: 100px; height: 100px;">
+											<p class="p-small" id='totales' style="white-space: nowrap;">$ ${ row.subtotal * row.cant_producto }</p>
 										</div>`;
 							}
 						},
@@ -57,14 +56,14 @@ function cargarTabla() {
 							data: null,
 							render: function (data, type, row) {
 								return `<div class="container d-flex align-items-center" style="width: auto; height: 100px;">
-											<button class="btn btn-danger eliminar-btn"><i class='bx bxs-x-circle'></i></button>
+											<button data-id="${row.id}" class="btn btn-danger eliminar-btn"><i class="fas fa-times"></i></button>
 										</div>`;
 							}
 						},
 						// Agrega más columnas según sea necesario
 					],
 					rowId: 'id',
-					responsive: true, // Para hacer la tabla sensible (responsive)
+					responsive: false, // Para hacer la tabla sensible (responsive)
 					lengthChange: false, // Deshabilita el control para cambiar la cantidad de resultados mostrados por página
 					searching: false, // Habilita la barra de búsqueda
 					ordering: false, // Habilita la ordenación por columna
@@ -120,24 +119,25 @@ $('#tabla_carrito').on('click', '.eliminar-btn', function () {
 	var table = $('#tabla_carrito').DataTable();
 	var fila = table.row($(this).parents('tr')); // Obtener la fila
 	var datosFila = fila.data(); // Obtener los datos de la fila
-	var rowId = fila.id(); // Obtener el ID de la fila
+	// var rowId = fila.id(); // Obtener el ID de la fila
+	var rowId = datosFila.id;
 
-	/* console.log("ID de la fila:", rowId);
-	console.log("Datos de la fila:", datosFila); */
+	// console.log("ID de la fila:", rowId);
+	// console.log("Datos de la fila:", datosFila);
+	// console.log("Fila:", fila);
 
 	//Recalcular el total del carrito
 	var totalMenos = datosFila.subtotal * datosFila.cant_producto;
 	valorTotal.textContent -= totalMenos;
 	console.log('Total de los totales nuevo:', valorTotal.textContent);
 	const btnCheckout = document.getElementById('btn-checkout');
+
 	if (valorTotal.textContent == 0) {
 		btnCheckout.classList.add("disabled");
 	} else {
 		btnCheckout.classList.remove("disabled");
 	}
 	table.row($(this).parents('tr')).remove().draw(); // Eliminar la fila
-
-
 
 	// Solicitud AJAX para eliminar el producto del carrito en el backend:
 	$.ajax({
@@ -148,13 +148,16 @@ $('#tabla_carrito').on('click', '.eliminar-btn', function () {
 			_id: rowId
 		},
 		success: function (response) {
+			
 			// Maneja la respuesta exitosa, actualiza la interfaz de usuario, si es necesario.
 			fetch(rutaContarItemsCarrito)
 				.then(response => {
+
 					// Verificar si la solicitud fue exitosa (código de respuesta 200)
 					if (!response.ok) {
 						throw new Error('Error al obtener los datos de la API');
 					}
+
 					// Parsear la respuesta JSON
 					return response.json();
 				})
@@ -168,6 +171,7 @@ $('#tabla_carrito').on('click', '.eliminar-btn', function () {
 					// Capturar errores durante el proceso
 					console.error('Error:', error);
 				});
+
 				toastr.options = {
 					"closeButton": true,
 					"debug": true,
@@ -186,8 +190,8 @@ $('#tabla_carrito').on('click', '.eliminar-btn', function () {
 					"hideMethod": "fadeOut"
 				  }
 		  
-				  toastr["error"](response.message)
-			console.log(response.message);
+				toastr["success"](response.message)
+				console.log(response.message);
 
 		},
 		error: function (xhr) {
@@ -198,7 +202,6 @@ $('#tabla_carrito').on('click', '.eliminar-btn', function () {
 
 	});
 });
-
 
 // Maneja la disminución de cantidad
 $('#tabla_carrito').on('click', '.disminuir-cantidad', function () {
@@ -214,7 +217,7 @@ $('#tabla_carrito').on('click', '.disminuir-cantidad', function () {
 
 		// Crea un contenedor div
         var containerDiv = $('<div>', {
-            class: 'container border-end border-2 d-flex align-items-center',
+            class: 'container border-2 d-flex align-items-center',
             style: 'width: 100px; height: 100px; white-space: nowrap;'
         });
 
@@ -244,8 +247,6 @@ $('#tabla_carrito').on('click', '.disminuir-cantidad', function () {
 		// Envía la actualización al servidor
 		actualizarCantidadEnBackend(rowData.id, rowData.cant_producto);
 	}
-
-
 });
 
 // Maneja el aumento de cantidad
@@ -253,7 +254,9 @@ $('#tabla_carrito').on('click', '.aumentar-cantidad', function () {
     var row = $(this).closest('tr');
     var rowData = $('#tabla_carrito').DataTable().row(row).data();
 
-    if (rowData.cant_producto < rowData.productos.stock_disponible) {
+	console.log(rowData);
+
+    if (rowData.cant_producto < rowData.stock_disponible) {
 
         rowData.cant_producto++;
         /* console.log(rowData.productos) */
@@ -288,12 +291,12 @@ $('#tabla_carrito').on('click', '.aumentar-cantidad', function () {
 		cant_carrito.innerHTML++;
 		console.log('Items en carrito:', cant_carrito.innerHTML);
 
+		// console.log(rowData.id, rowData.cant_producto);
+
         // Envía la actualización al servidor
         actualizarCantidadEnBackend(rowData.id, rowData.cant_producto);
     }
 });
-
-
 
 function actualizarCantidadEnBackend(id, nuevaCantidad) {
 	// Enviar la solicitud AJAX para actualizar la cantidad en el backend
@@ -315,8 +318,7 @@ function actualizarCantidadEnBackend(id, nuevaCantidad) {
 			console.log(errors.error);
 		}
 	});
-}
-
+} 
 
 (function () {
 

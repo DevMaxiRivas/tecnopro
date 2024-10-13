@@ -90,7 +90,7 @@ $(document).on('click', '.agregarAlCarrito', function () {
         toastr["success"](response.message)
       }
 
-      console.log(response.message);
+      // console.log(response.message);
     },
     error: function (xhr) {
       // Maneja errores, si es necesario.

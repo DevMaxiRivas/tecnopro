@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper;
 use App\Models\Venta;
+use Exception;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -28,7 +32,7 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
