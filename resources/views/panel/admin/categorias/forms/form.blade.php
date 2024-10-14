@@ -1,7 +1,6 @@
 <div class="card mb-5">
     <form action="{{ $categoria->id ? route('categoria.update', $categoria) : route('categoria.store') }}" method="POST"
         enctype="multipart/form-data">
-
         @csrf
         @if ($categoria->id)
             @method('PUT')
@@ -36,7 +35,6 @@
         </div>
         <div class="card-footer">
             <button id="update-button" type="submit" class="btn btn-success text-uppercase">
-                =======
                 <button id="update-button" type="submit" class="btn btn-success text-uppercase">
                     {{ $categoria->id ? 'Actualizar' : 'Guardar' }}
                 </button>

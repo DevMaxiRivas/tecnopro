@@ -29,7 +29,7 @@ class RoleSeeder extends Seeder
         
         // Permisos del cliente
         Permission::create(['name' => 'lista_compras'])->assignRole($rol_cliente);
-
+        
         // Permisos del empleado de compras
         Permission::create(['name' => 'lista_categorias'])->syncRoles([$rol_admin, $rol_compras]);
         Permission::create(['name' => 'lista_productos'])->syncRoles([$rol_admin, $rol_compras]);

@@ -344,6 +344,18 @@ return [
             'icon' => 'fas fa-truck',
             'can' => 'lista_ordenes_compras'
         ],
+        [
+            'text' => 'Formas de Pago',
+            'route' => 'formapago.index', // ruta de inicio del crud formas de pago
+            'icon' => 'fas fa-wallet',
+            'can' => 'lista_formas_pagos'
+        ],
+        [
+            'text' => 'Mis Compras',
+            'route' => 'ventas.index', // ruta de inicio del crud compras clientes
+            'icon' => 'fas fa-shopping-bag',  //
+           // 'can' => 'lista_compras' SI CHE
+        ],
 
         /* [
             'text' => 'pages',
