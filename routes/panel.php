@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('panel.index');
 })->name('panel');
 
-// Grupo de rutas para usuarios con Rol Admin y Empleado de Compras
+// Grupo de rutas para usuarios con Rol Cliente
 Route::group(['middleware' => ['role:cliente']], function () {
     //Mis Compras
     Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.cliente.index');
@@ -29,6 +29,8 @@ Route::group(['middleware' => ['role:cliente']], function () {
     //Detalle de mis compras
     Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
 });
+
+// Grupo de rutas para usuarios con Rol Admin y Empleado de Compras
 Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Categorias
     Route::resource('/categorias', CategoriaController::class)->names('categoria');

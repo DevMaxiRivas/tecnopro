@@ -68,24 +68,12 @@
                                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                                     </a>
 
-                                                    {{--  @if ($ventas->estado == 1 || $ventas->estado == 2 || $ventas->estado == 3)
-                                            <a href="{{ route('compras.pdf', $ventas->id) }}" title="Generar Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
-                                                <i class="fas fa-file-pdf"></i>
-                                            </a>
-                                        @endif --}}
+                                                    @if ($ventas->estado == 0)
+                                                        <a href="{{ $ventas->link_pago }}" title="Pagar"
+                                                            class="btn btn-sm btn-success text-white text-uppercase me-1 mr-2">
+                                                            <i class="fa fa-money-bill-alt" aria-hidden="true"></i>
+                                                        </a>
 
-                                                    {{-- @if ($ventas->estado == 0)
-                                        <form action="{{ route('ventas.cancelar', $ventas->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Estás seguro de que quieres cancelar esta compra?');">
-                                            @csrf
-                                            @method('PATCH')
-                                            <button type="submit" class="btn btn-sm btn-secondary text-white text-uppercase me-1" title="Cancelar pedido">
-                                                <i class="fas fa-times" aria-hidden="true"></i>
-                                            </button>
-                                        </form>
-                                    @endif --}}
-
-
-                                                    @if ($ventas->estado != 4)
                                                         <form id="cancel-form-{{ $ventas->id }}"
                                                             action="{{ route('ventas.cliente.cancelar', $ventas->id) }}"
                                                             method="POST" class="d-inline">
