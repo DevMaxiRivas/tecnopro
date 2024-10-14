@@ -1,6 +1,5 @@
 <div class="card mb-5">
-    <form action="{{ $producto->id ? route('producto.update', $producto) : route('producto.store') }}" method="POST"
-        enctype="multipart/form-data">
+    <form action="{{ $producto->id ? route('producto.update', $producto) : route('producto.store') }}" method="POST">
         @csrf
         @if ($producto->id)
             @method('PUT')

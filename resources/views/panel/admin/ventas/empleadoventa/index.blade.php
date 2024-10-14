@@ -58,16 +58,16 @@
                                         <td>${{ number_format($venta->total, 2) }}</td>
                                         <td>
                                             <div class="d-flex justify-content-center">
-                                                <a href="{{ route('detalle_venta.index', $venta->id) }}" title="Detalles venta" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
+                                                <a href="{{ route('detalle_ventaempleado.index', $venta->id) }}" title="Detalles venta" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
                                                     <i class="far fa-eye" aria-hidden="true"></i>
                                                 </a>
                                                 @if (in_array($venta->estado, [1, 2, 3])) 
-                                                    <a href="{{ route('ventas.pdf', $venta->id) }}" title="Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                    <a href="{{ route('ventas.empleadoventa.pdf', $venta->id) }}" title="Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
                                                         <i class="fas fa-file-pdf" aria-hidden="true"></i>
                                                     </a>
                                                 @endif
                                                 @if (in_array($venta->estado, [1, 2]))
-                                                <a href="{{ route('ventas.edit', $venta->id) }}" title="Editar" class="btn btn-sm btn-secondary text-white text-uppercase me-1 mr-2">
+                                                <a href="{{ route('ventas.empleadoventa.edit', $venta) }}" title="Editar" class="btn btn-sm btn-secondary text-white text-uppercase me-1 mr-2">
                                                     <i class="fas fa-edit" aria-hidden="true"></i>
                                                 </a>
                                                 @endif

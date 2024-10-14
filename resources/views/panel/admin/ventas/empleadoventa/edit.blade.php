@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>
         <strong>
-            Editar Venta N° {{ $venta->id }} del cliente {{ $venta->cliente->name }} 
+            Editar Venta N° {{ $venta->id }} 
         </strong>
     </h1>
 @stop
@@ -14,12 +14,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-3">
-                <a href="{{ route('ventas.index') }}" class="btn btn-sm btn-secondary text-uppercase">
+                <a href="{{ route('ventas.empleadoventa.index') }}" class="btn btn-sm btn-secondary text-uppercase">
                     Volver Atrás
                 </a>
             </div>
             <div class="col-12">
-                @include('panel.admin.ventas.forms.form')
+                @include('panel.admin.ventas.empleadoventa.forms.form')
             </div>
         </div>
     </div>
@@ -30,4 +30,3 @@
 
 @section('js')
 @stop
-
