@@ -323,14 +323,14 @@ return [
             'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
             'icon'        => 'fas fa-project-diagram',
-            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
+            'can'         => 'lista_categorias' //permiso de admin<i class="far fa-project-diagram"></i>
         ],
         [
             'text'        => 'Mis Proveedores',
             'route'       => 'proveedor.index',
             // 'route' => 'proveedor.index',
             'icon'        => 'far fa-handshake',
-            //'can'         => 'lista_ventas' //permiso de admin<i class="far fa-project-diagram"></i>
+            'can'         => 'lista_proveedores' //permiso de admin<i class="far fa-project-diagram"></i>
         ],
         [
             'text' => 'Mis productos',
@@ -352,13 +352,13 @@ return [
         ],
         [
             'text' => 'Mis Compras',
-            'route' => 'ventas.index', // ruta de inicio del crud compras clientes
+            'route' => 'ventas.cliente.index', // ruta de inicio del crud compras clientes
             'icon' => 'fas fa-shopping-bag',  //
-            // 'can' => 'lista_compras' SI CHE
+            'can' => 'lista_compras'
         ],
         [
             'text' => 'Ventas',
-            'route' => 'ventas.index',
+            'route' => 'ventas.cliente.index',
             'icon' => 'fas fa-shopping-cart',
             'can' => 'lista_ventas'
         ],

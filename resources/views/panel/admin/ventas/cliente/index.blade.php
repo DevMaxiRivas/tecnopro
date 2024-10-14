@@ -87,7 +87,7 @@
 
                                                     @if ($ventas->estado != 4)
                                                         <form id="cancel-form-{{ $ventas->id }}"
-                                                            action="{{ route('ventas.cancelar', $ventas->id) }}"
+                                                            action="{{ route('ventas.cliente.cancelar', $ventas->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
                                                             @method('PATCH')

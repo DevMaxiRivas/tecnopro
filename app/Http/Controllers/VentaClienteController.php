@@ -19,7 +19,7 @@ class VentaclienteController extends Controller
         $ventas = Venta::where('id_cliente', $clienteId)->get();
 
         // Retornar la vista con las ventas
-        return view('panel.admin.ventas.index', compact('ventas'));
+        return view('panel.admin.ventas.cliente.index', compact('ventas'));
     }
 
     /**
@@ -31,7 +31,7 @@ class VentaclienteController extends Controller
         $ventas = Venta::where('id', $id)->where('id_cliente', Auth::id())->firstOrFail();
 
         // Retornar la vista con los detalles de la venta
-        return view('panel.admin.ventas.show', compact('detalle_ventas'));
+        return view('panel.admin.ventas.cliente.show', compact('detalle_ventas'));
     }
 
 
@@ -39,14 +39,14 @@ class VentaclienteController extends Controller
     {
         // Verificar que la venta pertenece al cliente autenticado
         if ($venta->id_cliente != Auth::id()) {
-            return redirect()->route('ventas.index')->with('error', 'No puedes cancelar esta venta.');
+            return redirect()->route('ventas.cliente.index')->with('error', 'No puedes cancelar esta venta.');
         }
     
         // Cambiar el estado de la venta a "cancelado"
         $venta->estado = 5; // Asumiendo que 5 significa "cancelado"
         $venta->save();
     
-        return redirect()->route('ventas.index')->with('success', 'La venta ha sido cancelada con éxito.');
+        return redirect()->route('ventas.cliente.index')->with('success', 'La venta ha sido cancelada con éxito.');
     }
     
     

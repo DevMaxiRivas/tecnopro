@@ -11,12 +11,7 @@ use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\DetalleVentaClienteController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;
-<<<<<<< HEAD
 use App\Http\Controllers\VentaClienteController;
-=======
-use App\Http\Controllers\VentaController;
-use App\Models\Venta;
->>>>>>> 2b25bd1e85cd5df0abba27d64e7864f29a4b0a98
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -24,6 +19,15 @@ Route::get('/', function () {
 })->name('panel');
 
 // Grupo de rutas para usuarios con Rol Admin y Empleado de Compras
+Route::group(['middleware' => ['role:cliente']], function () {
+    //Mis Compras
+    Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.cliente.index');
+    Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cliente.cancelar');
+
+
+    //Detalle de mis compras
+    Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
+});
 Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Categorias
     Route::resource('/categorias', CategoriaController::class)->names('categoria');
@@ -33,15 +37,6 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     //FormaPago
     Route::resource('/formapago', FormaPagoController::class)->names('formapago');
-
-    //Mis Compras
-    Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.index');
-    Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cancelar');
-
-
-    //Detalle de mis compras
-    Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
-
 
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
@@ -56,19 +51,13 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Route::resource('/detalle-orden-compra', DetalleOrdenCompraController::class)->names('detalle-orden-compra');
 
     Route::post('/detalle-orden-compra/guardar', [DetalleOrdenCompraController::class, 'guardarDetallesCompras'])->name('detalle-orden-compra.guardar');
-<<<<<<< HEAD
 });
 
 // Clientes
 // Route::resource('/detalle-orden-compra/{id_compra}', DetalleOrdenCompraController::class)->names('detalle-orden-compra');
-=======
 
     // Ventas
-    Route::resource('/ventas', VentaController::class)->names('ventas');
-    Route::get('/detalle_venta/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_venta.index');
-    Route::get('/ventas/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.pdf');
-});
-
-
-
->>>>>>> 2b25bd1e85cd5df0abba27d64e7864f29a4b0a98
+    // Route::resource('/ventas', VentaController::class)->names('ventas');
+    // Route::get('/detalle_venta/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_venta.index');
+    // Route::get('/ventas/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.pdf');
+// });

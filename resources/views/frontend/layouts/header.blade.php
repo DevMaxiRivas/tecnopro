@@ -28,8 +28,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         @foreach ($categorias as $cat)
-                            <li><a class="dropdown-item"
-                                    href="#{{-- route('MandarDatosCategoriaEspecifica', $cat->id) --}}">{{ $cat->nombre }}</a>
+                            <li><a class="dropdown-item" href="#{{-- route('MandarDatosCategoriaEspecifica', $cat->id) --}}">{{ $cat->nombre }}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -85,16 +84,14 @@
                             {{--  --}}
                         @else
                             @role('admin')
-                            <li><a class="dropdown-item d-flex align-items-center justify-content-between "
-                                        href="{{ route('panel') }}">Panel <i
-                                            class="fa-solid fa-user-gear small"></i></a></li>
+                                <li><a class="dropdown-item d-flex align-items-center justify-content-between "
+                                        href="{{ route('panel') }}">Panel <i class="fa-solid fa-user-gear small"></i></a></li>
                             @endrole
                             @role('cliente')
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between "
-                                        href="#">Mi Perfil <i
-                                            class="fa-solid fa-user-gear small"></i></a></li>
+                                        href="#">Mi Perfil <i class="fa-solid fa-user-gear small"></i></a></li>
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between"
-                                        href="#">Mis compras <i
+                                        href="{{ route('ventas.cliente.index') }}">Mis compras <i
                                             class="fa-solid fa-bag-shopping"></i></a></li>
                             @endrole
 
