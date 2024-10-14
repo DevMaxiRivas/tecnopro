@@ -51,7 +51,7 @@ class FormaPagoController extends Controller
 
         return redirect()
             ->route('formapago.index')
-            ->with('alert', 'FormaPago "' . $formapago->nombre . '" agregado exitosamente.');
+            ->with('alert', 'Forma de pago "' . $formapago->nombre . '" agregado exitosamente.');
     }
 
     /**

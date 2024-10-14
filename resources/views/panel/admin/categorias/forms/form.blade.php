@@ -1,11 +1,6 @@
 <div class="card mb-5">
-<<<<<<< HEAD
     <form action="{{ $categoria->id ? route('categoria.update', $categoria) : route('categoria.store') }}" method="POST"
         enctype="multipart/form-data">
-=======
-    <form action="{{ $categoria->id ? route('categoria.update', $categoria) : route('categoria.store') }}" method="POST" enctype="multipart/form-data">
-        
->>>>>>> 878bf5679d00d8b78923be80f9fa19c209553ed6
         @csrf
         @if ($categoria->id)
             @method('PUT')

@@ -32,6 +32,7 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.index');
     Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cancelar');
     
+    
     //Detalle de mis compras
     Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
 

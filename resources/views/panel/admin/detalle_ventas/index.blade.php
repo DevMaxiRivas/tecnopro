@@ -25,11 +25,13 @@
                 <div class="card">
                     <div class="card-body">
                         @if (count($productos) > 0)
+                            
                             <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
                                 <thead>
                                     <tr>
                                         <th scope="col" class="text-uppercase text-center">#</th>
                                         <th scope="col" class="text-uppercase text-center">Producto</th>
+                                        <th scope="col" class="text-uppercase">Imagen</th>
                                         <th scope="col" class="text-uppercase text-center">Precio</th>
                                         <th scope="col" class="text-uppercase text-center">Cantidad</th>
                                         <th scope="col" class="text-uppercase text-center">Subtotal</th>
@@ -40,6 +42,10 @@
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
+                                            <td>
+                                                <img src="{{ $producto->producto->url_imagen }}" alt="{{ $producto->producto->nombre }}"
+                                                    class="img-fluid" style="width: 150px;">
+                                            </td>
                                             <td class="text-center">
                                                 @if ($producto->precio > 0)
                                                     {{ $producto->precio }}
