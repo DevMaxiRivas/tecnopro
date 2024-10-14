@@ -358,7 +358,7 @@ return [
         ],
         [
             'text' => 'Ventas',
-            // 'route' => 'ventas.index',
+            'route' => 'ventas.empleadoventa.index',
             'icon' => 'fas fa-shopping-cart',
             'can' => 'lista_ventas'
         ],

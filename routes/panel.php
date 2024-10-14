@@ -4,7 +4,6 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\DetalleComprasController;
 use App\Http\Controllers\DetalleOrdenCompraController;
-use App\Http\Controllers\DetalleVentaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DetalleController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaClienteController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\DetalleVentaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,7 +50,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::post('/detalle-orden-compra/guardar', [DetalleOrdenCompraController::class, 'guardarDetallesCompras'])->name('detalle-orden-compra.guardar');
 
     // Ventas
-    Route::resource('/ventas', VentaController::class)->names('ventas');
-    Route::get('/detalle_venta/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_venta.index');
-    Route::get('/ventas/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.pdf');
+    Route::resource('/ventas/empleadoventa', VentaController::class)->names('ventas.empleadoventa');
+    Route::get('/detalle_ventaempleado/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_ventaempleado.index');
+    Route::get('/ventas/empleadoventa/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.empleadoventa.pdf');
+    Route::get('/ventas/empleadoventa/editar/{venta}', [VentaController::class, 'edit'])->name('ventas.empleadoventa.edit');
 });

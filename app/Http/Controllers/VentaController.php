@@ -10,7 +10,9 @@ class VentaController extends Controller
 {
     public function testMercadoPago()
     {
-        return view('frontend.test');
+        $ventas = Venta::latest()->get();
+        return view('panel.admin.ventas.empleadoventa.index', compact('ventas'));
+        // return view('frontend.test');
     }
 
     public function pago(Request $request) //Registra el pago de un pedido
@@ -57,7 +59,7 @@ class VentaController extends Controller
             Venta::CANCELADO => 'Cancelado',
         ];
 
-        return view('panel.admin.ventas.edit', compact('venta', 'estados'));
+        return view('panel.admin.ventas.empleadoventa.edit', compact('venta', 'estados'));
     }
 
     /**
@@ -65,7 +67,6 @@ class VentaController extends Controller
      */
     public function update(Request $request, Venta $venta)
     {
-        // Validar los campos (incluyendo el estado)
         $request->validate([
             'estado' => 'required|in:' . implode(',', [
                 Venta::PENDIENTE,
@@ -77,14 +78,18 @@ class VentaController extends Controller
         ]);
 
         if ($venta->estado === Venta::PAGADO && $request->get('estado') === Venta::EN_PREPARACION) {
-            $venta->id_empleado = auth()->user()->id;; // Asigna el ID del empleado
+            $venta->id_empleado = auth()->user()->id; // Asigna el ID del empleado
         }
+
+        // Actualiza el estado y otros campos necesarios
         $venta->estado = $request->get('estado');
-        $venta->update();
+        $venta->update(); // Guarda los cambios
+
         return redirect()
-            ->route('ventas.index')
+            ->route('ventas.empleadoventa.index')
             ->with('alert', 'Venta "' . $venta->id . '" estado actualizado exitosamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.
