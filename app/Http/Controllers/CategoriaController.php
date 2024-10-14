@@ -12,7 +12,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-       $categorias = Categoria::latest()->get();
+    $categorias = Categoria::latest()->get();
         
         //Retornamos una vista y enviamos la variable "categorias"
         return view('panel.admin.categorias.index', compact('categorias'));
