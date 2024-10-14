@@ -41,4 +41,9 @@ class Venta extends Model
         return $this->belongsToMany(Producto::class, 'detalle_ventas', 'id_venta', 'id_producto')
             ->withPivot(['precio', 'cantidad', 'subtotal']); // accedo a los demas atributos de la tabla "detalle_ventas"
     }
+
+    public function detalle_ventas()
+    {
+        return $this->hasMany(DetalleVenta::class, 'id_venta');
+    }
 }

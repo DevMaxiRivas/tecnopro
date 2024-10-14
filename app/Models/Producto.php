@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -43,8 +44,10 @@ class Producto extends Model
     {
         $items = DetalleVenta::where('id_venta', $id_pedido)->get();
         foreach ($items as $item) {
+            // Log::info($item);
             $producto = self::find($item->id_producto);
             $producto->stock_disponible -= $item->cantidad;
+            $producto->save();
         }
     }
 }

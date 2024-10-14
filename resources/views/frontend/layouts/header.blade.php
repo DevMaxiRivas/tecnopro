@@ -54,8 +54,8 @@
 
             <ul class="navbar-nav carrito-logout gap-1">
                 <li class="nav-item">
-                    <a class="nav-link" href="#{{-- route('carrito.carrito') --}}" title="Mi carrito">
-                        <i class="fa-solid fa-shopping-cart"></i> <span id="cant_carrito">0</span>
+                    <a class="nav-link" href="{{ route('carrito.carrito') }}" title="Mi carrito">
+                        <i class="fas fa-shopping-cart"></i> <span id="cant_carrito">0</span>
                     </a>
                 </li>
                 {{-- Carrito Fin --}}
@@ -68,7 +68,7 @@
                             @php if (isset(Auth::user()->name)) {
                                 echo Auth::user()->name . " " . Auth::user()->apellido;
                             } @endphp">
-                        <i class="fa-solid fa-user"></i>{{-- <span class="small"></span> --}}
+                        <i class="fas fa-user"></i>{{-- <span class="small"></span> --}}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
 

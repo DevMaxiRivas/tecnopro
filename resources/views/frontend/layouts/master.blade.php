@@ -8,15 +8,15 @@
     <title>@yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('css/boxicons-boxicons.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/boxicons/boxicons.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('css/nice-select/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owlcarousel/owl.carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('css/paginaPrincipal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/header.css') }}">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://kit.fontawesome.com/88816cb6bd.js" crossorigin="anonymous"></script>
-
+    {{-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> --}}
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css')}}"></script>
+    {{-- <script src="https://kit.fontawesome.com/88816cb6bd.js" crossorigin="anonymous"></script> --}}
     <link href="{{ asset('css/toastr.css') }}" rel="stylesheet" />
     @yield('styles')
 

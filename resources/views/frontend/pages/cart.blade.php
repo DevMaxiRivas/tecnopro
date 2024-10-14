@@ -2,52 +2,76 @@
 @section('title', 'TecnoPro Carrito')
 @section('main-content')
     <link rel="stylesheet" href="{{ asset('css/cart.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css">
     <!-- Breadcrumbs -->
 
 
     <!-- Shopping Cart -->
     <div class="shopping-cart section m-4">
         <div class="container p-2 rounded-2 add-shadow bg-white border-0 " style="">
-            <div class="row">
-                <div class="col-12 " style="overflow-x: auto;">
-                    <!-- Shopping Summery -->
-                    <h4> <i class='bx bx-cart-alt'></i>Carrito de Compras</h4>
-                    <table id="tabla_carrito" class="table shopping-summery table-striped text-center " style="width: 100%;">
-                        <thead class="table content-box">
-                            <tr class="main-hading">
-                                <th class="text-center"></th>
-                                <th class="text-center">Producto</th>
-                                <th class="text-center">Precio</th>
-                                <th class="text-center">Cantidad</th>
-                                <th class="text-center">Total</th>
-                                <th class="text-center">Quitar</th>
-                            </tr>
-                        </thead>
-                        <tbody id="cart_item_list">
-                        </tbody>
-                    </table>
-                    <!--/ End Shopping Summery -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 d-flex justify-content-end">
-                    <!-- Total Amount -->
-
-                    <div class="total-amount text-center text-white border pt-2"
-                        style="width: 15rem; margin-top: -17px; border-radius: 0 0 30px 30px; background: rgb(116, 160, 139);">
-                        <p><i class='bx bx-money-withdraw'></i> Total a pagar:</span> $<span id="valorTotal"></p>
+            @auth
+                @if (Cart::count() > 0)
+                <div class="row">
+                    <div class="col-12 " style="overflow-x: auto;">
+                        <!-- Shopping Summery -->
+                        <h4><i class="fas fa-cart-plus me-1"></i>Carrito de Compras</h4>
+                        <table id="tabla_carrito" class="table shopping-summery table-striped text-center " style="width: 100%;">
+                            <thead class="table content-box">
+                                <tr class="main-hading">
+                                    <th class="text-center">Imagen</th>
+                                    <th class="text-center">Producto</th>
+                                    <th class="text-center">Precio</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Quitar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart_item_list">
+                            </tbody>
+                        </table>
+                        <!--/ End Shopping Summery -->
                     </div>
-                    <!--/ End Total Amount -->
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <!-- Total Amount -->
+
+                        <div class="total-amount text-center text-white border pt-2"
+                            style="width: 15rem; margin-top: -17px; border-radius: 0 0 30px 30px; background: rgb(116, 160, 139);">
+                            <p>
+                                <i class='bx bx-money-withdraw'></i> 
+                                Total a pagar: $ <span id="valorTotal"></span>
+                            </p>
+                        </div>
+                        <!--/ End Total Amount -->
+                    </div>
+                </div>
+            @else
+                <div class="alert alert-danger" role="alert">
+                    Su carrito se encuentra vacio, debe agregar productos para visualizar el resumen
+                </div>
+            @endif
+
             <div class="row pt-3">
                 <div class="col-12 d-flex justify-content-between">
-                    <a href="{{ route('productos') }}" class="btn btn-secondary rounded-pill text-white"><i
-                            class='bx bxs-store-alt'></i> Seguir comprando</a>
-                    <a href="{{ route('carrito.create') }}" id="btn-checkout" class="btn btn-success rounded-pill"><span><i
-                                class='bx bx-credit-card'></i></span> Ir a Pagar</a>
+                    <a href="{{ route('productos') }}" class="btn btn-secondary rounded-pill text-white">
+                        <i class="fas fa-store me-1"></i>
+                        Seguir comprando
+                    </a>
+
+                    @if (Cart::count() > 0)
+                    <a href="{{ route('carrito.checkout') }}" id="btn-checkout" class="btn btn-success rounded-pill">
+                        <i class="fas fa-cash-register"></i>
+                        Inicio de compra
+                    </a>
+                    @endif
                 </div>
             </div>
+            @else
+                <div class="alert alert-danger" role="alert">
+                    Es necesario iniciar sesión para visualizar su carrito de compras
+                </div>
+            @endauth
         </div>
     </div>
     <!--/ End Shopping Cart -->
@@ -106,6 +130,7 @@
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
     </script>
     <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     {{-- 		<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
 		<script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script> --}}

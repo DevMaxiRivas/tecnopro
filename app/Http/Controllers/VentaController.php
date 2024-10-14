@@ -2,61 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\DetalleVenta;
 use App\Models\Producto;
 use App\Models\Venta;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Services\MercadoPagoService;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class VentaController extends Controller
 {
-    public function __construct( //Incluye el servicio de MercadoPago
-        private MercadoPagoService $mercadoPagoService
-    ) {}
-
     public function testMercadoPago()
     {
         return view('frontend.test');
-    }
-
-    public function comprar(Request $request)
-    {
-
-        // $id_venta = $request->get('id_venta');
-        $id_venta = 1;
-        $venta = Venta::find($id_venta);
-
-        $carrito = DetalleVenta::latest()->where('id_venta', $id_venta)->get();
-        foreach ($carrito as $item) {
-            $venta->total += $item->subtotal;
-        }
-        //Si el carrito esta vacio, entonces no se genera el pedido
-        if (!$venta->total) {
-            return redirect()
-                ->route('MandarDatosPaginaInicio')
-                ->with('alert', 'No se puede guardar un pedido vacio. ' . '¡Agrega algunos productos al carrito por favor!');
-        }
-
-        // Genero preferencia de mercado pago
-        $preferencia = $this->mercadoPagoService->crearPreferencia($carrito, $venta->id); //Creo link de pago
-
-        // Asigno link de pago
-        $venta->link_pago = $preferencia->init_point;
-
-        // Asigno estado
-        $venta->estado = Venta::PENDIENTE;
-
-        $venta->save();
-
-        // Redirigiendo al home, para luego cargar checkoutPRO
-        return redirect()
-            ->route('MandarDatosPaginaInicio')
-            ->with('alert', 'Pedido de ' . $venta->cliente->name . ' agregado exitosamente. Con N°' . $venta->id . '. Abriendo link de pago...')
-            ->with('redirectUrl', $preferencia->init_point);
     }
 
     public function pago(Request $request) //Registra el pago de un pedido
@@ -76,7 +31,7 @@ class VentaController extends Controller
 
             return redirect()
                 ->route('MandarDatosPaginaInicio')
-                ->with('error', 'Pedido N°' . $pedido->num_pedido . ' pago cancelado. Vuelve a intentarlo en el panel de mis compras.');
+                ->with('error', 'Pedido N°' . $pedido->id . ' pago cancelado. Vuelve a intentarlo en el panel de mis compras.');
         }
 
         //Si se vuelve al sitio luego de pagar el pedido con mercado pago
@@ -94,5 +49,37 @@ class VentaController extends Controller
                 ->route('MandarDatosPaginaInicio')
                 ->with('error', 'Pedido N°' . $pedido->id . ' no se pudo completar el pago. Con N° operación: ' . $response->id);
         }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Venta $venta)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Venta $venta)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Venta $venta)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Venta $venta)
+    {
+        //
     }
 }

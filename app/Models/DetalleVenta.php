@@ -12,7 +12,6 @@ class DetalleVenta extends Model
     protected $table = 'detalle_ventas';
 
     protected $fillable = [
-        'id_venta',
         'id_producto',
         'precio',
         'cantidad',

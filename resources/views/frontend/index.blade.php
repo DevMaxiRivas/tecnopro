@@ -46,17 +46,16 @@
                         </div>
                     </div>
             </div>
+            
             @endforeach
-            
-            
         </div>
     </div>
     @else
-    <div class="d-flex justify-content-center">
-                <div class="container text-center">
-                    <h4 class="text-danger" style="margin:100px auto;"> No hay productos disponibles en este momento.</h4>
-                </div>
+        <div class="d-flex justify-content-center">
+            <div class="container text-center">
+                <h4 class="text-danger" style="margin:100px auto;"> No hay productos disponibles en este momento.</h4>
             </div>
+        </div>
     @endif
     </section>
     {{-- Ultimos Agregados Fin --}}
@@ -78,11 +77,10 @@
 
 
 @endsection
+
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-
 @endsection

@@ -74,46 +74,46 @@ h1,
 .text-title {
     color: var(--text-heading);
     font-size: var(--biggest-font-size);
-    font-family: var(--title-font);
+    /* font-family: var(--title-font); */
 }
 
 h2,
 .text-heading {
     color: var(--text-heading);
     font-size: var(--big-font-size);
-    font-family: var(--subheading-font);
+    /* font-family: var(--subheading-font); */
 }
 
 h3,
 .text-heading-h3 {
     color: var(--text-heading);
     font-size: var(--normal-font-size);
-    font-family: var(--subheading-font);
+    /* font-family: var(--subheading-font); */
 }
 
 p,
 .text-body-g {
     color: var(--text-general-grey);
     font-size: var(--normal-font-size);
-    font-family: var(--body-font);
+    /* font-family: var(--body-font); */
 }
 
 .p-small {
     color: var(--text-general-grey);
     font-size: var(--small-font-size);
-    font-family: var(--body-font);
+    /* font-family: var(--body-font); */
 }
 
 .text-body-w {
     color: var(--text-general-grey);
     font-size: var(--normal-font-size);
-    font-family: var(--body-font);
+    /* font-family: var(--body-font); */
 }
 
 .text-enfasis {
     color: var(--text-heading);
     font-size: var(--h2-font-size);
-    font-family: var(--btn-font);
+    /* font-family: var(--btn-font); */
 }
 
 /******************************** Clases Personalizaddas */
@@ -189,11 +189,11 @@ p,
 
 .check-out label,
 .check-out .list-group-item {
-    font-family: var(--btn-font);
+    /* font-family: var(--btn-font); */
 }
 
-.check-out input {
-    font-family: var(--btn-font);
+.check-out input, .check-out select  {
+    /* font-family: var(--btn-font); */
     color: gray;
 }
 

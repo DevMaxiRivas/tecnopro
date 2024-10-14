@@ -28,9 +28,9 @@ class MercadoPagoService
         foreach ($carrito as $productoCompra) {
 
             $item = new Item();
-            $item->title = $productoCompra->producto->nombre;
-            $item->quantity = $productoCompra->cantidad;
-            $item->unit_price = $productoCompra->precio;
+            $item->title = $productoCompra->name;
+            $item->quantity = $productoCompra->qty;
+            $item->unit_price = $productoCompra->price;
 
             $items[] = $item;
         }
