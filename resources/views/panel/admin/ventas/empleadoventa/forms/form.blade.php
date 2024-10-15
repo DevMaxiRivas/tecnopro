@@ -1,5 +1,5 @@
 <div class="card mb-5">
-    <form action="{{ route('ventas.empleadoventa.update', $venta->id) }}" method="POST">
+    <form action="{{ route('ventas.empleadoventa.update', $venta) }}" method="POST">
         @csrf
         @method('PUT')
 

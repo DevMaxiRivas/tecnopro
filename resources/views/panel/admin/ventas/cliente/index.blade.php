@@ -40,52 +40,59 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($ventas as $ventas)
+                                    @foreach ($ventas as $venta)
                                         <tr>
-                                            <td class="text-center">{{ $ventas->id }}</td>
-                                            <td> {{ $ventas->created_at }} </td>
-                                            <td class="text-center">{{ $ventas->forma_pago->nombre }}</td>
-                                            <td class="text-center">{{ $ventas->total }}</td>
+                                            <td class="text-center">{{ $venta->id }}</td>
+                                            <td> {{ $venta->created_at }} </td>
+                                            <td class="text-center">{{ $venta->forma_pago->nombre }}</td>
+                                            <td class="text-center">{{ $venta->total }}</td>
 
                                             <td>
-                                                @if ($ventas->estado == 0)
+                                                @if ($venta->estado == 0)
                                                     <span class="badge badge-warning">Pendiente</span>
-                                                @elseif($ventas->estado == 1)
+                                                @elseif($venta->estado == 1)
                                                     <span class="badge badge-primary">Pagado</span>
-                                                @elseif($ventas->estado == 2)
+                                                @elseif($venta->estado == 2)
                                                     <span class="badge badge-success">En preparacion</span>
-                                                @elseif($ventas->estado == 3)
+                                                @elseif($venta->estado == 3)
                                                     <span class="badge badge-primary">Enviado</span>
-                                                @elseif($ventas->estado == 4)
+                                                @elseif($venta->estado == 4)
                                                     <span class="badge badge-danger">Cancelado</span>
                                                 @endif
                                             </td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('detalle_ventas.index', $ventas->id) }}"
+                                                    <a href="{{ route('detalle_ventas.index', $venta->id) }}"
                                                         title="Ver productos"
                                                         class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
                                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                                     </a>
 
-                                                    @if ($ventas->estado == 0)
-                                                        <a href="{{ $ventas->link_pago }}" title="Pagar"
+                                                    @if ($venta->estado == 0)
+                                                        <a href="{{ $venta->link_pago }}" title="Pagar"
                                                             class="btn btn-sm btn-success text-white text-uppercase me-1 mr-2">
                                                             <i class="fa fa-money-bill-alt" aria-hidden="true"></i>
                                                         </a>
 
-                                                        <form id="cancel-form-{{ $ventas->id }}"
-                                                            action="{{ route('ventas.cliente.cancelar', $ventas->id) }}"
+                                                        <!-- <form id="cancel-form-{{ $venta->id }}"
+                                                            action="{{ route('ventas.cliente.cancelar', $venta->id) }}"
                                                             method="POST" class="d-inline">
                                                             @csrf
-                                                            @method('PATCH')
-                                                            <button id="cancel-button-{{ $ventas->id }}" type="button"
+                                                            @method('PATCH') -->
+                                                            <button id="cancel-button-{{ $venta->id }}" type="button"
                                                                 class="btn btn-sm btn-secondary text-white text-uppercase me-1"
                                                                 title="Cancelar pedido">
                                                                 <i class="fas fa-times" aria-hidden="true"></i>
                                                             </button>
-                                                        </form>
-                                                    @endif
+                                                        <!-- </form> -->
+                                                        @endif
+                                                        @if (in_array($venta->estado, [1, 2, 3]))
+                                                    <a href="{{ route('ventas.empleadoventa.pdf', $venta->id) }}"
+                                                        title="Factura"
+                                                        class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                                                    </a>
+                                                @endif
 
                                                 </div>
                                             </td>
@@ -108,8 +115,8 @@
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cancelButton = document.getElementById('cancel-button-{{ $ventas->id }}');
-            const cancelForm = document.getElementById('cancel-form-{{ $ventas->id }}');
+            const cancelButton = document.getElementById('cancel-button-{{-- $ventas->id --}}');
+            const cancelForm = document.getElementById('cancel-form-{{-- $ventas->id --}}');
 
             if (cancelButton && cancelForm) {
                 cancelButton.addEventListener('click', function(event) {
@@ -141,5 +148,5 @@
                 });
             }
         });
-    </script>
+    </script> 
 @stop

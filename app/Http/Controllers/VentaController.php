@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class VentaController extends Controller
 {
@@ -97,7 +98,7 @@ class VentaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Venta $venta)
+    public function update(Request $request, Venta $empleadoventum)
     {
         $request->validate([
             'estado' => 'required|in:' . implode(',', [
@@ -109,17 +110,17 @@ class VentaController extends Controller
             ]),
         ]);
 
-        if ($venta->estado === Venta::PAGADO && $request->get('estado') === Venta::EN_PREPARACION) {
-            $venta->id_empleado = auth()->user()->id; // Asigna el ID del empleado
+        if ($empleadoventum->estado === Venta::PAGADO && $request->get('estado') === Venta::EN_PREPARACION) {
+            $empleadoventum->id_empleado = auth()->user()->id; // Asigna el ID del empleado
         }
 
         // Actualiza el estado y otros campos necesarios
-        $venta->estado = $request->get('estado');
-        $venta->update(); // Guarda los cambios
+        $empleadoventum->estado = $request->get('estado');
+        $empleadoventum->update(); // Guarda los cambios
 
         return redirect()
             ->route('ventas.empleadoventa.index')
-            ->with('alert', 'Venta "' . $venta->id . '" estado actualizado exitosamente.');
+            ->with('alert', 'Venta "' . $empleadoventum->id . '" estado actualizado exitosamente.');
     }
 
 
@@ -137,7 +138,7 @@ class VentaController extends Controller
         $total = $venta->total;
         $fecha_emision = $venta->created_at;
         $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
-        $pdf = PDF::loadView('panel.admin.ventas.pdf', compact('venta', 'detalle_ventas', 'cliente', 'total', 'fecha_vencimiento'));
+        $pdf = PDF::loadView('panel.admin.ventas.empleadoventa.pdf', compact('venta', 'detalle_ventas', 'cliente', 'total', 'fecha_vencimiento'));
         return $pdf->download('Reporte_de_Venta_' . $venta->id . '.pdf');
     }
 }

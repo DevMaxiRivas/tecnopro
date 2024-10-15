@@ -19,6 +19,11 @@ Route::get('/', function () {
     return view('panel.index');
 })->name('panel');
 
+// Grupo de rutas para usuarios autenticados
+Route::group(['middleware' => ['role:admin|empleado_ventas|cliente']], function () {
+    Route::get('/ventas/empleadoventa/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.empleadoventa.pdf');
+});
+    
 // Grupo de rutas para usuarios con Rol Cliente
 Route::group(['middleware' => ['role:cliente']], function () {
     //Mis Compras
@@ -43,6 +48,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     // Productos
     Route::resource('/productos', ProductoController::class)->names('producto');
+
+    // Compras
     Route::resource('/compras', CompraController::class)->names('compras');
     Route::get('/compras/pdf/{compra}', [CompraController::class, 'pdf'])->name('compras.pdf');
 
@@ -54,6 +61,6 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Ventas
     Route::resource('/ventas/empleadoventa', VentaController::class)->names('ventas.empleadoventa');
     Route::get('/detalle_ventaempleado/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_ventaempleado.index');
-    Route::get('/ventas/empleadoventa/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.empleadoventa.pdf');
+ 
     Route::get('/ventas/empleadoventa/editar/{venta}', [VentaController::class, 'edit'])->name('ventas.empleadoventa.edit');
 });
