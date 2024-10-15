@@ -21,6 +21,37 @@
                 </div>
             @endif
 
+            <div class="d-flex justify-content-between col-12 m-0 p-0">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Información de la Venta</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><i class="fas fa-file-invoice"></i> <strong>Código de Venta:</strong> {{ $venta->id }}</p>
+                            <p><i class="fas fa-calendar-alt"></i> <strong>Fecha:</strong> {{ $venta->created_at->format('d/m/Y') }}</p>
+                            <p><i class="fas fa-clock"></i> <strong>Hora:</strong> {{ $venta->created_at->format('H:i') }}</p>
+                            <p><i class="fas fa-dollar-sign"></i> <strong>Total:</strong> ${{ number_format($venta->total, 2) }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Información del Cliente</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><i class="fas fa-user"></i> <strong>Nombre:</strong> {{ $venta->cliente->name }}</p>
+                            <p><i class="fas fa-id-card"></i> <strong>DNI:</strong> {{ $venta->cliente->dni }}</p>
+                            <p><i class="fas fa-home"></i> <strong>Domicilio:</strong> {{ $venta->cliente->domicilio }}</p>
+                            <p><i class="fas fa-envelope"></i> <strong>Email:</strong> {{ $venta->cliente->email }}</p>
+                            <!-- <p><i class="fas fa-phone"></i> <strong>Teléfono:</strong> {{ $venta->cliente->telefono }}</p> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
