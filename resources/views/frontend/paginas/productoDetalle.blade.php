@@ -48,7 +48,7 @@
                 <div class="product-price">
                     <div class="row d-flex justify-content-between">
                         <div class="col-md-3 precio-estilo">
-                            <h2><span>${{ $producto->precio }} </span></h3>
+                            <h2><span>${{ number_format($producto->precio, 2) }} </span></h3>
                         </div>
                         <div class="col-md-5">
                             <button href="#" data-agregar-id="{{ $producto->id }}"
@@ -77,8 +77,8 @@
     <script src="{{ asset('js/slider-producto.js') }}"></script>
 
     <script>
-        let rutaParaAgregar = '{{ route('carrito.agregarAlCarrito') }}';
-        var token = '{{ csrf_token() }}';
-        let clienteId = {{ Auth::id() ? Auth::id() : 0 }}
+        // let rutaParaAgregar = '{{ route('carrito.agregarAlCarrito') }}';
+        // var token = '{{ csrf_token() }}';
+        // let clienteId = {{ Auth::id() ? Auth::id() : 0 }}
     </script>
 @endsection

@@ -21,7 +21,7 @@ return new class extends Migration
 
             $table->enum('estado', [Compra::PENDIENTE, Compra::EN_ESPERA, Compra::RECIBIDO, Compra::CANCELADO])->default(Compra::PENDIENTE);
             $table->string('url_factura')->nullable();
-            $table->decimal('total', 20, 2)->default(0); // DECIMAL(10, 2)
+            $table->decimal('total', 20, 2)->nullable();
             
             // Creamos la FK "id_empleado" que hace referencia al "id" de la tabla "users"
             $table->foreign('id_empleado')->references('id')->on('users');

@@ -2,12 +2,9 @@
 
 // Rutas del Home
 
-use App\Http\Controllers\DetalleCompraController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PaginaDeInicio;
 use App\Http\Controllers\ProductoController;
-use App\Http\Controllers\VentaController;
-use App\Models\Venta;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 

@@ -14,7 +14,8 @@ class FormaPagoSeeder extends Seeder
     public function run(): void
     {
         FormaPago::create([
-            'nombre' => 'Efectivo'
+            'nombre' => 'Efectivo',
+            'activo' => FormaPago::INACTIVO
         ]);
 
         FormaPago::create([

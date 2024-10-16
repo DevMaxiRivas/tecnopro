@@ -2,11 +2,9 @@
 
 // Rutas del Panel de Administracion
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\DetalleComprasController;
 use App\Http\Controllers\DetalleOrdenCompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
-use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\DetalleVentaClienteController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;

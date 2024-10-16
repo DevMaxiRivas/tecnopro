@@ -2,8 +2,9 @@
 $(document).on('click', '.agregarAlCarrito', function () {
   var agregarId = $(this).data('agregar-id');
 
-  if (!clienteId) {
+  if (clienteId == 0) {
     window.location.href = "/login";
+    return;
   }
 
   console.log(agregarId);

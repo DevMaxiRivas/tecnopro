@@ -75,7 +75,7 @@
                                             <h5 class="card-title"> {{ Str::limit($producto->nombre, 25) }} </h5>
                                     </a>
 
-                                    <p class="card-text">$ {{ $producto->precio }}</p>
+                                    <p class="card-text">$ {{ number_format($producto->precio, 2) }}</p>
                                     <button data-agregar-id="{{ $producto->id }}"
                                         class="btn btn-sm mb-3 color-enfasis btn-enfasis rounded-pill text-white text-uppercase agregarAlCarrito add-shadow">
                                         Agregar al Carrito
@@ -105,10 +105,9 @@
 
 @section('js')
     <script>
-        let rutaParaAgregar = '{{ route('carrito.agregarAlCarrito') }}';
-        var token = '{{ csrf_token() }}';
-        let clienteId = {{ Auth::id() ? Auth::id() : 0 }}
+        // let rutaParaAgregar = '{{ route('carrito.agregarAlCarrito') }}';
+        // var token = '{{ csrf_token() }}';
+        // let clienteId = {{ Auth::id() ? Auth::id() : 0 }}
     </script>
-
 
 @endsection

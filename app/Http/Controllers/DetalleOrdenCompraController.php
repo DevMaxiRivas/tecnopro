@@ -38,9 +38,9 @@ class DetalleOrdenCompraController extends Controller
         foreach ($detalles as $detalle) {
             $nvo_detalle = DetalleCompra::find((int) $detalle['id_detalle']);
             $nvo_detalle->cantidad = (int) $detalle['cantidad'];
-            $nvo_detalle->precio = 0;
+            // $nvo_detalle->precio = 0;
+            // $nvo_detalle->subtotal = 0;
             $nvo_detalle->update();
-            $nvo_detalle->subtotal = 0;
         }
 
         foreach ($productos_por_agregar as $producto) {
@@ -48,8 +48,8 @@ class DetalleOrdenCompraController extends Controller
             $detalle->id_compra = $orden_compra->id;
             $detalle->id_producto = (int) $producto['id_producto'];
             $detalle->cantidad = (int) $producto['cantidad'];
-            $detalle->precio = 0;
-            $detalle->subtotal = 0;
+            // $detalle->precio = 0;
+            // $detalle->subtotal = 0;
             $detalle->save();
         }
 

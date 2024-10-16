@@ -19,7 +19,6 @@ class MercadoPagoService
 
     public function crearPreferencia($carrito, $id_pedido)
     {
-
         // Crea un objeto de preferencia
         $preference = new Preference();
 
