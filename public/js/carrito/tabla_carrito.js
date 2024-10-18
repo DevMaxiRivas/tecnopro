@@ -217,7 +217,7 @@ $('#tabla_carrito').on('click', '.disminuir-cantidad', function () {
 
 		// Crea un contenedor div
         var containerDiv = $('<div>', {
-            class: 'container border-2 d-flex align-items-center',
+            class: 'container d-flex align-items-center',
             style: 'width: 100px; height: 100px; white-space: nowrap;'
         });
 
@@ -264,7 +264,7 @@ $('#tabla_carrito').on('click', '.aumentar-cantidad', function () {
 
         // Crea un contenedor div
         var containerDiv = $('<div>', {
-            class: 'container border-end border-2 d-flex align-items-center',
+            class: 'container d-flex align-items-center',
             style: 'width: 100px; height: 100px; white-space: nowrap;'
         });
 

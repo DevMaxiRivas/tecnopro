@@ -31,7 +31,7 @@
                         <small style="color: var(--enfasis); opacity: 0.9;">Cantidad: {{ $item->qty }}</small>
                       </div>
                     </div>
-                    <span style="color: var(--enfasis); opacity: 0.9;" >${{ $item->price * $item->qty }}</span>
+                    <span style="color: var(--enfasis); opacity: 0.9;" >${{ number_format($item->price * $item->qty, 2) }}</span>
                   </li>    
                 
                 
@@ -42,7 +42,7 @@
               
               <li class="list-group-item d-flex justify-content-between">
                 <span>Total a pagar: </span>
-                <strong style="color: var(--enfasis);">${{ $total }}</strong>
+                <strong style="color: var(--enfasis);">${{ number_format($total, 2) }}</strong>
               </li>
             </ul>
       
@@ -50,7 +50,8 @@
           <div class="col-md-7 order-md-1">
             <h4 class="mb-3 text-heading-h3"><b>Datos del cliente</b></h4>
             <form class="needs-validation" novalidate action="{{ route('carrito.crearVenta') }}" method="POST">
-                @csrf
+              @csrf
+
               <div class="row">
                 <div class="col-md-6 mb-3">
 
@@ -63,17 +64,17 @@
                       @enderror
                   </div>
                 </div>
-                {{-- <div class="col-md-6 mb-3">
-                    <label for="apellido" class="">Apellido: </label>
-                    <div class="">
-                        <input type="text" class="form-control @error('apellido') is-invalid @enderror" id="apellido"
-                            name="apellido" value="{{ old('apellido', optional($pedido)->apellido) }}">
-                        @error('apellido')
-                            <div class="invalid-feedback"> {{ $message }} </div>
-                        @enderror
-                    </div>
-                </div> --}}
-                
+              {{-- <div class="col-md-6 mb-3">
+                  <label for="apellido" class="">Apellido: </label>
+                  <div class="">
+                      <input type="text" class="form-control @error('apellido') is-invalid @enderror" id="apellido"
+                          name="apellido" value="{{ old('apellido', optional($pedido)->apellido) }}">
+                      @error('apellido')
+                          <div class="invalid-feedback"> {{ $message }} </div>
+                      @enderror
+                  </div>
+              </div> --}}
+              
                 <div class="col-md-6 mb-3">
                   <label for="dni" class="">DNI: </label>
                   <div class="">
@@ -162,7 +163,31 @@
                   @enderror
                 </div>
               </div>
-      
+
+              {{-- <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="latitud" class="">Latitud: </label>
+                  <div class="">
+                      <input type="number" class="form-control @error('latitud') is-invalid @enderror" id="latitud"
+                          name="latitud" readonly placeholder="">
+                      @error('latitud')
+                          <div class="invalid-feedback"> {{ $message }} </div>
+                      @enderror
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label for="longitud" class="">Longitud: </label>
+                  <div class="">
+                      <input type="number" class="form-control @error('longitud') is-invalid @enderror" id="longitud"
+                          name="longitud" readonly placeholder="">
+                      @error('longitud')
+                          <div class="invalid-feedback"> {{ $message }} </div>
+                      @enderror
+                  </div>
+                </div>
+              </div> --}}
+
               <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
                 <a style="border: 2px solid gray!important; background-color: gray;" class="d-flex align-items-center justify-content-around btn btn-atras color-atras btn-lg btn-block m-1" href="{{route('carrito.carrito')}}">

@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('domicilio');
             $table->enum('activo', [User::ACTIVO, User::INACTIVO])->default(User::ACTIVO);
             $table->string('email')->unique();
+            $table->string('latitud')->nullable();
+            $table->string('longitud')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

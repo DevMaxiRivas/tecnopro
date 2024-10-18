@@ -38,7 +38,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title"> {{ Str::limit($producto->nombre, 25) }} </h5>
                             </a>
-                            <p class="card-text">$ {{ $producto->precio }}</p>
+                            <p class="card-text">$ {{ number_format($producto->precio, 2) }}</p>
                             <button data-agregar-id="{{ $producto->id }}"
                                 class="btn btn-sm mb-3 color-enfasis btn-enfasis-adicional rounded-pill text-white text-uppercase agregarAlCarrito add-shadow">
                                 Agregar al Carrito

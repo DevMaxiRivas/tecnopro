@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helper;
 use App\Models\Categoria;
+use App\Models\EnvioVenta;
 use App\Models\FormaPago;
 use App\Models\Producto;
 use App\Models\Venta;
@@ -11,6 +12,7 @@ use App\Services\MercadoPagoService;
 use Exception;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use function Laravel\Prompts\error;
 
@@ -185,7 +187,6 @@ class CarritoController extends Controller
 
     public function crearVenta(Request $request)
     {
-
         $request->validate([
             'nombre' => 'required|min:5|regex:/^[\p{L} ]+$/u',
             'dni' => 'required|integer|min:7',
@@ -213,6 +214,7 @@ class CarritoController extends Controller
             'direccion.required' => 'El campo direccion es obligatorio',
 
             'codigo_postal.required' => 'El campo codigo postal es obligatorio',
+            'codigo_postal.integer' => 'El campo codigo postal debe ser un numero',
             'codigo_posta.min' => 'El campo codigo postal debe tener como minimo 4 numeros',
 
             'id_forma_pago.required' => 'El campo forma de pago es obligatorio',
@@ -225,13 +227,17 @@ class CarritoController extends Controller
         try {
             $venta = new Venta();
 
+            $cliente = auth()->user();
+
             $venta->id_forma_pago = $request->id_forma_pago;
-            $venta->id_cliente = auth()->user()->id;
+            $venta->id_cliente = $cliente->id;
             $venta->total = floatval(str_replace(',', '', Cart::subtotal()));
             $venta->estado_factura = Venta::FACTURA_NO_ENVIADA;
-            $carrito = Cart::content();
 
             $venta->save();
+            
+            $carrito = Cart::content();
+
             // Genero preferencia de mercado pago
             $preferencia = $this->mercadoPagoService->crearPreferencia($carrito, $venta->id); //Creo link de pago
 
@@ -239,7 +245,8 @@ class CarritoController extends Controller
             $venta->link_pago = $preferencia->init_point;
             $venta->save();
 
-            foreach (Cart::content() as $item) {
+            // Se guardan los detalles de venta
+            foreach ($carrito as $item) {
                 $venta->detalle_ventas()->create([
                     'id_venta' => $venta->id,
                     'id_producto' => $item->id,
@@ -257,13 +264,40 @@ class CarritoController extends Controller
                 // }
             }
 
-            DB::commit(); // Confirmar la transacción
+            // Cargamos los datos de envio para la venta del formulario
+            $envioVenta = new EnvioVenta();
+            $envioVenta->id_venta = $venta->id;
+            $envioVenta->name = $request->nombre;
+            $envioVenta->dni = $request->dni;
+            $envioVenta->email = $request->email;
+            $envioVenta->telefono = $request->telefono;
+            $envioVenta->domicilio = $request->direccion;
+            $envioVenta->codigo_postal = $request->codigo_postal;
+            // $envioVenta->latitud = $request->latitud;
+            // $envioVenta->longitud = $request->longitud;
+            
+            $envioVenta->save();
+            
+            // Guardamos la geoposicion del cliente
+            // if(! $cliente->latitud && ! $cliente->longitud) {
+            //     $cliente->latitud = $request->latitud;
+            //     $cliente->longitud = $request->longitud;
+            //     $cliente->save();
+            // }
+
+            // Guardamos el telefono del cliente
+            // if(! $cliente->telefono) {
+            //     $cliente->telefono = $request->telefono;
+            //     $cliente->save();
+            // }
+
+            // Confirmar la transacción
+            DB::commit();
 
             // Se destruye el carrito
             Cart::destroy();
 
-
-            // TODO: Falta enviar mail de confirmacion de venta
+            // TODO: Falta enviar mail de confirmacion de venta, adjuntado la factura
 
             return redirect()
                 ->route('MandarDatosPaginaInicio')

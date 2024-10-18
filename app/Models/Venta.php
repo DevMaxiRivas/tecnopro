@@ -20,7 +20,6 @@ class Venta extends Model
     const FACTURA_ENVIADA = '1';
     const FACTURA_NO_ENVIADA = '0';
 
-
     public function cliente()
     {
         return $this->belongsTo(User::class, 'id_cliente');
@@ -45,5 +44,10 @@ class Venta extends Model
     {
         return $this->belongsToMany(Producto::class, 'detalle_ventas', 'id_venta', 'id_producto')
             ->withPivot(['precio', 'cantidad', 'subtotal']); // accedo a los demas atributos de la tabla "detalle_ventas"
+    }
+
+    public function envio_venta() 
+    {
+        return $this->belongsTo(EnvioVenta::class, 'id_venta');
     }
 }
