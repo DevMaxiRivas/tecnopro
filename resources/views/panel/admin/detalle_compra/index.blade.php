@@ -14,7 +14,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-3">
-                @if ($orden_compra->estado == '0')
+                @if ($orden_compra->estado_pedido == '0')
                     <a href="{{ route('detalle-orden-compra.agregar', $orden_compra->id) }}"
                         class="btn btn-sm btn-success text-uppercase">
                         Agregar productos a la orden compra
@@ -58,7 +58,7 @@
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
                                             <td class="text-center">
-                                                @if ($producto->precio > 0)
+                                                @if ($producto->precio)
                                                     {{ $producto->precio }}
                                                 @else
                                                     -
@@ -66,7 +66,7 @@
                                             </td>
                                             <td class="text-center">{{ $producto->cantidad }}</td>
                                             <td class="text-center">
-                                                @if ($producto->subtotal > 0)
+                                                @if ($producto->subtotal)
                                                     {{ $producto->subtotal }}
                                                 @else
                                                     -

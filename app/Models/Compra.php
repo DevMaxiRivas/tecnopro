@@ -9,6 +9,11 @@ class Compra extends Model
 {
     use HasFactory;
 
+    // Estados de Pedido
+    const ENVIADA = '4';
+    const CONFIRMADA = '5';
+    const FINALIZADA = '6';
+
     // Estados de Compra
     const PENDIENTE = '0';
     const EN_ESPERA = '1';
