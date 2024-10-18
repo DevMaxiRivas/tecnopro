@@ -29,7 +29,7 @@ class EnviarFacturaMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pago Recibido - Factura TecnoPro',
+            subject: 'Envío de Orden de Compra #'.$this->user['num_venta'],
         );
     }
 
