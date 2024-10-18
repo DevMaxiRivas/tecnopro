@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Jobs\EnviarFacturaJob;
 use App\Mail\EnviarFacturaMailable;
 use App\Mail\VentaMailable;
+use App\Models\FormaPago;
 use App\Models\Producto;
+use App\Models\User;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 class VentaController extends Controller
 {
@@ -50,7 +54,7 @@ class VentaController extends Controller
             $pedido->url_factura = $urlPDF;
             $pedido->save(); //Guarda el pedido exitosamente
 
-            $this->avisoPagoConfirmado($pedido); //Envio factura por mail
+            $this->avisoPagoConfirmado($pedido->id); //Envio factura por mail
             EnviarFacturaJob::dispatch($pedido->id)->onConnection('database'); //Envio factura por mail mediante cola de trabajo 
             $pedido->email_envio_factura = $pedido->cliente->email;
 
@@ -184,16 +188,23 @@ class VentaController extends Controller
         Mail::to($data['email'])->send(new VentaMailable($data));
     }
 
-    public function avisoPagoConfirmado(Venta $venta)
+    public function avisoPagoConfirmado($id_venta)
     { //Envio mail una vez se genere el pedido
+
+        $venta = Venta::find($id_venta);
+        $cliente = User::find($venta->id_cliente);
+        $forma_pago = FormaPago::find($venta->id_forma_pago);
+
         $data = [
-            'name' => $venta->cliente->name,
-            'email' => $venta->cliente->email, // Correo del Destinatario
+            'name' => $cliente->name,
+            'email' => $cliente->email, // Correo del Destinatario
             'num_venta' => $venta->id,
-            'fecha' => $venta->created_at,
             'fecha_pago' => $venta->updated_at,
+            'metodo_pago' => $forma_pago->nombre,
+            'total' => $venta->total,
             'urlFactura' => public_path('storage/pdfs/facturas/factura_' . $venta->id . '.pdf')
         ];
+
         // Envio de mail
         Mail::to($data['email'])->send(new EnviarFacturaMailable($data));
     }
