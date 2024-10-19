@@ -122,19 +122,6 @@
                   </div>
                 </div>
               </div>
-      
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                    <label for="direccion" class="">Dirección de envío: </label>
-                    <div class="">
-                        <input type="text" class="form-control @error('direccion') is-invalid @enderror" id="direccion"
-                            name="direccion" placeholder="" value="{{ old('direccion', optional($cliente)->domicilio) }}">
-                        @error('direccion')
-                            <div class="invalid-feedback"> {{ $message }} </div>
-                        @enderror
-                    </div>
-                </div>
-              </div>
 
               <div class="row">
                 <div class="col-md-6 mb-3">
@@ -164,29 +151,58 @@
                 </div>
               </div>
 
-              {{-- <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="latitud" class="">Latitud: </label>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="direccion" class="">Dirección de envío: </label>
+                    <div class="">
+                        <input type="text" class="form-control @error('direccion') is-invalid @enderror" id="direccion"
+                            name="direccion" placeholder="" value="{{ old('direccion', optional($cliente)->domicilio) }}">
+                        @error('direccion')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
+                    </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <small for="latitud" class="">
+                    Latitud: <span id="latitud_text"></span>
+                  </small>
                   <div class="">
-                      <input type="number" class="form-control @error('latitud') is-invalid @enderror" id="latitud"
-                          name="latitud" readonly placeholder="">
+                      <input type="hidden" class="form-control disabled @error('latitud') is-invalid @enderror" id="latitud"
+                          name="latitud" placeholder="" value="{{ old('latitud', optional($cliente)->latitud) }}">
                       @error('latitud')
                           <div class="invalid-feedback"> {{ $message }} </div>
                       @enderror
                   </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                  <label for="longitud" class="">Longitud: </label>
+                <div class="col-md-6 mb-2">
+                  <small for="longitud" class="">
+                    Longitud: <span id="longitud_text"></span>
+                  </small>
                   <div class="">
-                      <input type="number" class="form-control @error('longitud') is-invalid @enderror" id="longitud"
-                          name="longitud" readonly placeholder="">
+                      <input type="hidden" class="form-control disabled @error('longitud') is-invalid @enderror" id="longitud"
+                          name="longitud" placeholder="" value="{{ old('longitud', optional($cliente)->longitud) }}">
                       @error('longitud')
                           <div class="invalid-feedback"> {{ $message }} </div>
                       @enderror
                   </div>
                 </div>
-              </div> --}}
+
+                {{-- <div class="col-md-12 mb-2">
+                  <input class="form-check-input" type="checkbox" name="latlng" id="latlng">
+                  <label for="latlng">¿Deseas buscar manualmente ingresando los puntos de coordenadas?</label>
+                </div> --}}
+
+                <div id="map-content" class="text-center">
+                  <small class="font-weight-bold m-0"> 
+                    <b>¡Haciendo doble click en el mapa marcarás tu ubicación!</b>
+                  </small>
+                  <div id="map"></div>
+                </div>
+              </div>
 
               <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
@@ -216,14 +232,31 @@
 @endsection
 
 @section('styles')
+  
+  <link rel="stylesheet" href="{{ asset('css/leaflet/leaflet.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/leaflet/leaflet-gesture-handling.min.css') }}">
 
+  <link rel="stylesheet" href="{{ asset('css/mapa.css') }}">
+
+  {{-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" 
+  crossorigin=""/> --}}
+
+  {{-- <link rel="stylesheet" href="//unpkg.com/leaflet-gesture-handling/dist/leaflet-gesture-handling.min.css" type="text/css"> --}}
 @endsection
 
 @section('js')
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-        integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
-    </script> --}}
+
+  <script src="{{ asset('js/leaflet/leaflet.min.js') }}"></script>
+  <script src="{{ asset('js/leaflet/leaflet-gesture-handling.min.js') }}"></script>
+  
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+  {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous">
+  </script> --}}
+
+  <script src="{{ asset('js/util/mapa.js') }}"></script>
+  <script src="{{ asset('js/carrito/checkout.js') }}"></script>
 @stop

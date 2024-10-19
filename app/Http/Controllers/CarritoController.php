@@ -194,7 +194,9 @@ class CarritoController extends Controller
             'telefono' => 'required|integer|min:10',
             'direccion' => 'required|string',
             'codigo_postal' => 'required|integer|min:4',
-            'id_forma_pago' => 'required|integer|exists:forma_pagos,id,activo,' . FormaPago::ACTIVO
+            'id_forma_pago' => 'required|integer|exists:forma_pagos,id,activo,' . FormaPago::ACTIVO,
+            'latitud' => 'required',
+            'longitud' => 'required'
         ], [
             'nombre.required' => 'El campo nombre es obligatorio.',
             'nombre.min' => 'El nombre debe tener al menos 3 caracteres.',
@@ -219,7 +221,10 @@ class CarritoController extends Controller
 
             'id_forma_pago.required' => 'El campo forma de pago es obligatorio',
             'id_forma_pago.integer' => 'El campo forma de pago es erronea',
-            'id_forma_pago.exists' => 'El campo forma de pago es erronea.'
+            'id_forma_pago.exists' => 'El campo forma de pago es erronea.',
+
+            'latitud' => 'Es obligatorio marcar su ubicación en el mapa',
+            'longitud' => 'Es obligatorio marcar su ubicación en el mapa',
         ]);
 
         DB::beginTransaction();
@@ -273,31 +278,29 @@ class CarritoController extends Controller
             $envioVenta->telefono = $request->telefono;
             $envioVenta->domicilio = $request->direccion;
             $envioVenta->codigo_postal = $request->codigo_postal;
-            // $envioVenta->latitud = $request->latitud;
-            // $envioVenta->longitud = $request->longitud;
+            $envioVenta->latitud = $request->latitud;
+            $envioVenta->longitud = $request->longitud;
             
             $envioVenta->save();
             
             // Guardamos la geoposicion del cliente
-            // if(! $cliente->latitud && ! $cliente->longitud) {
-            //     $cliente->latitud = $request->latitud;
-            //     $cliente->longitud = $request->longitud;
-            //     $cliente->save();
-            // }
+             if(! $cliente->latitud && ! $cliente->longitud) {
+                 $cliente->latitud = $request->latitud;
+                 $cliente->longitud = $request->longitud;
+                 $cliente->save();
+            }
 
             // Guardamos el telefono del cliente
-            // if(! $cliente->telefono) {
-            //     $cliente->telefono = $request->telefono;
-            //     $cliente->save();
-            // }
+            if(! $cliente->telefono) {
+                 $cliente->telefono = $request->telefono;
+                 $cliente->save();
+            }
 
             // Confirmar la transacción
             DB::commit();
 
             // Se destruye el carrito
             Cart::destroy();
-
-            // TODO: Falta enviar mail de confirmacion de venta, adjuntado la factura
 
             return redirect()
                 ->route('MandarDatosPaginaInicio')
