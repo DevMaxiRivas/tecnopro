@@ -3,7 +3,7 @@
 @section('title', 'Crear OC')
 
 @section('content_header')
-    <h1>&nbsp;<strong> NUEVA ORDEN DE COMPRA</strong></h1>
+    <h1>&nbsp;<strong> NUEVA SOLICITUD DE COMPRA</strong></h1>
 @stop
 
 @section('content')

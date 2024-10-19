@@ -345,6 +345,12 @@ return [
             'can' => 'lista_cotizaciones'
         ],
         [
+            'text' => 'Ordenes de Compra',
+            'route' => 'orden_compras.index', // ruta de inicio del crud productos
+            'icon' => 'fas fa-wallet',
+            //'can' => 'lista_cotizaciones'
+        ],
+        [
             'text' => 'Formas de Pago',
             'route' => 'formapago.index', // ruta de inicio del crud formas de pago
             'icon' => 'fas fa-wallet',

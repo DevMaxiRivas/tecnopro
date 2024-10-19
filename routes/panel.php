@@ -11,6 +11,8 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaClienteController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
+use App\Http\Controllers\OrdenesDeCompraController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -59,4 +61,7 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/detalle_ventaempleado/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_ventaempleado.index');
 
     Route::get('/ventas/empleadoventa/editar/{venta}', [VentaController::class, 'edit'])->name('ventas.empleadoventa.edit');
+
+    //Ordenes de compra
+    Route::resource('/ordencompras', OrdenesDeCompraController::class)->names('orden_compras');
 });
