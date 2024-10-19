@@ -24,16 +24,12 @@ class CompraController extends Controller
      */
     public function create()
     {
-        
-        //$compras = new Compra();
         $compra = new Compra();
         $proveedores = Proveedor::get();
         $formas_pagos = FormaPago::get();
        
-
         //Retornamos la vista de creacion de productos, enviamos al compras y proveedores
         return view('panel.admin.compras.create', compact('formas_pagos','proveedores','compra')); //compact(mismo nombre de la variable)
-    
     }
 
     /**
@@ -53,8 +49,8 @@ class CompraController extends Controller
         //dd($request->get('id_forma_pago'));
         $compra->id_forma_pago = $request->get('id_forma_pago');
         // Cuando una compra se crea, se pone en estado pendiente por defecto
-        #$compras->estado=$request->get('pendiente'); 
-        //$compras->url_factura = $request->get('url_factura');
+        // $compras->estado=$request->get('pendiente'); 
+        // $compras->url_factura = $request->get('url_factura');
         $compra->total = $request->get('total',0);
         
         // Almacena la info del producto en la BD
@@ -107,7 +103,7 @@ class CompraController extends Controller
             Compra::CANCELADO,
         ]),
     ]);
-    $compra->estado = $request->get('estado');
+    $compra->estado_pedido = $request->get('estado');
     // Guardar los cambios
     $compra->update();
 

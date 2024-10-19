@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\DetalleCompra;
+use App\Models\DetalleVenta;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +22,7 @@ return new class extends Migration
             $table->decimal('precio', 20, 2)->nullable();
             $table->integer('cantidad');
             $table->decimal('subtotal', 20, 2)->nullable();
+            $table->enum('estado', [DetalleCompra::ACTIVO, DetalleCompra::INACTIVO])->default(DetalleCompra::ACTIVO);
 
             // Creamos la FK "id_compra" que hace referencia al "id" de la tabla "compras"
             $table->foreign('id_compra')->references('id')->on('compras');

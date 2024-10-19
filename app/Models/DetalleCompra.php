@@ -9,13 +9,18 @@ class DetalleCompra extends Model
 {
     use HasFactory;
     
+    // Estados del producto en el detalle
+    const ACTIVO = '1';
+    const INACTIVO = '0';
+
     protected $table = 'detalle_compras';
 
     protected $fillable = [
         'id_producto',
         'precio',
         'cantidad',
-        'subtotal'
+        'subtotal',
+        'estado'
     ];
 
     public function producto()
