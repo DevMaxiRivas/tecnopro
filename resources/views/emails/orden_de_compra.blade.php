@@ -14,7 +14,8 @@
 
     <h2 style="margin: 10px auto">Estimado/a {{ $user['proveedor'] }}</h2>
     <h3>Esperamos se encuentre bien.</h3>
-    <p>Adjunto a este correo nuestra orden de compro correspondiente a lo Solicitud de Cotización #{{ $user['num_venta'] }}.
+    <p>Adjunto a este correo nuestra orden de compro correspondiente a lo Solicitud de Cotización
+        #{{ $user['num_orden'] }}.
     </p>
 
     <h4 style="margin-top: 10px">Detalles de la Orden de Compra</h4>

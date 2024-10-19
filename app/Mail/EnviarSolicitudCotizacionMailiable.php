@@ -5,14 +5,18 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class VentaMailable extends Mailable
+class EnviarSolicitudCotizacionMailiable extends Mailable
 {
     use Queueable, SerializesModels;
 
+    /**
+     * Create a new message instance.
+     */
     public $user;
     public function __construct($user)
     {
@@ -25,7 +29,7 @@ class VentaMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Pedido confirmado',
+            subject: 'Solicitud de Cotización',
         );
     }
 
@@ -35,7 +39,7 @@ class VentaMailable extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.pedido',
+            view: 'emails.cotizacion_oc',
         );
     }
 
@@ -46,6 +50,10 @@ class VentaMailable extends Mailable
      */
     public function attachments(): array
     {
-        return [];
+        return [
+            Attachment::fromPath($this->user['urlFactura'])
+            /*  ->as('name.pdf')  */
+            /*  ->withMime('application/pdf'),  */
+        ];
     }
 }
