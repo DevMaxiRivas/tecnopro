@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compra;
+use App\Models\DetalleCompra;
 use App\Models\OrdenCompra;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -11,23 +13,23 @@ use App\Models\FormaPago;
 class OrdenesDeCompraController extends Controller
 {
 
-public function index()
+    public function index()
     {
-        $o_compras = OrdenCompra::latest()->get();
-        return view('panel.admin.orden_compras.index', compact('o_compras'));
+        $compras_finalizadas = Compra::where('estado_pedido', Compra::RECIBIDO)->get();
+        return view('panel.admin.orden_compras.index', compact('compras_finalizadas'));
     }
 
-public function create()
-{
-    $o_compras = new OrdenCompra();
-    $proveedores = Proveedor::get();
-    $formas_pagos = FormaPago::get();
-   
-    //Retornamos la vista de creacion de productos, enviamos al compras y proveedores
-    return view('panel.admin.orden_compras.create', compact('formas_pagos','proveedores','o_compras')); //compact(mismo nombre de la variable)
-}
+    public function create()
+    {
+        $o_compras = new OrdenCompra();
+        $proveedores = Proveedor::get();
+        $formas_pagos = FormaPago::get();
+    
+        //Retornamos la vista de creacion de productos, enviamos al compras y proveedores
+        return view('panel.admin.orden_compras.create', compact('formas_pagos','proveedores','o_compras')); //compact(mismo nombre de la variable)
+    }
 
-public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'id_proveedor' => 'required|exists:proveedores,id',  // Verifica que el proveedor exista en la tabla 'proveedores'
@@ -54,9 +56,12 @@ public function store(Request $request)
     
     }
 
-    public function show(OrdenCompra $o_compras)
+    public function show($id)
     {
-        //
+        $orden_compra = Compra::with('proveedor', 'productos')->findOrFail($id);
+        $productos = DetalleCompra::where('id_compra', $orden_compra->id)->get();
+
+        return view('panel.admin.orden_compras.show', compact('orden_compra', 'productos'));
     }
 
     /**

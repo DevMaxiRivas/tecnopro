@@ -50,6 +50,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Compras
     Route::resource('/compras', CompraController::class)->names('compras');
     Route::get('/compras/pdf/{compra}', [CompraController::class, 'pdf'])->name('compras.pdf');
+   # Route::resource('/ordencompras', CompraController::class)->names('orden_compras'); #VER
+   # Route::get('/ordencompras', [CompraController::class, 'index_filtrado'])->name('compras.index_filtrado');#VER
 
     // Detalle de Compra
     Route::get('/detalle-orden-compra/{id_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
@@ -63,5 +65,9 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/ventas/empleadoventa/editar/{venta}', [VentaController::class, 'edit'])->name('ventas.empleadoventa.edit');
 
     //Ordenes de compra
-    Route::resource('/ordencompras', OrdenesDeCompraController::class)->names('orden_compras');
+    Route::get('/ordenes_compra', [OrdenesDeCompraController::class, 'index'])->name('orden_compras.index');
+    Route::get('orden_compras/{id}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
+
+
+    #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
 });

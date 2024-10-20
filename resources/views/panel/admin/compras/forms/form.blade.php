@@ -64,9 +64,9 @@
                 <div class="col-sm-8">
                     <select id="estado" name="estado" class="form-control @error('estado') is-invalid @enderror">
                         <option disabled selected>Seleccione una estado</option>
-                        @foreach($estados as $key => $estado)
-                            <option value="{{ $key }}" {{ $compra->estado == $key ? 'selected' : '' }}>
-                            {{ $estado }}
+                        @foreach($estados as $key => $estado_pedido)
+                            <option value="{{ $key }}" {{ $compra->estado_pedido == $key ? 'selected' : '' }}>
+                            {{ $estado_pedido }}
                             </option>
                         @endforeach
                     </select>

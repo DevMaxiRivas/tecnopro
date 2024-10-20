@@ -3,10 +3,10 @@
 @section('plugins.Datatables', true)
 @section('plugins.Sweetalert2', true)
 
-@section('title', 'Detalle de Orden de Comra')
+@section('title', 'Detalle de Orden de Compra')
 
 @section('content_header')
-    <h1>&nbsp;<strong>Detalles de la solicitud N° {{ $orden_compra->id }} para el proveedor
+    <h1>&nbsp;<strong>Detalles de la orden de compra N° {{ $orden_compra->id }} para el proveedor
             {{ $orden_compra->proveedor->razon_social }}</strong></h1>
 @stop
 
@@ -17,15 +17,14 @@
                 @if ($orden_compra->estado_pedido == '0')
                     <a href="{{ route('detalle-orden-compra.agregar', $orden_compra->id) }}"
                         class="btn btn-sm btn-success text-uppercase">
-                        Agregar productos a la solicitud compra
+                        Agregar productos a la orden de compra
                     </a>
                 @endif
 
-                <a href="{{ route('compras.index') }}" class="btn btn-sm btn-secondary text-uppercase">
-                    Volver Atras
+                <a href="{{ route('orden_compras.index') }}" class="btn btn-sm btn-secondary text-uppercase">
+                    Volver Atrás
                 </a>
             </div>
-
 
             @if (session('alert'))
                 <div class="col-12">
@@ -52,30 +51,35 @@
                                         <th scope="col" class="text-uppercase text-center">Subtotal</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach ($productos as $producto)
-                                        <tr>
-                                            <td class="text-center">{{ $producto->id }}</td>
-                                            <td class="text-center">{{ $producto->producto->nombre }}</td>
-                                            <td class="text-center">
-                                                @if ($producto->precio)
-                                                    {{ $producto->precio }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </td>
-                                            <td class="text-center">{{ $producto->cantidad }}</td>
-                                            <td class="text-center">
-                                                @if ($producto->subtotal)
-                                                    {{ $producto->subtotal }}
-                                                @else
-                                                    -
-                                                @endif
-                                            </td>
-                                            {{-- @include('panel.admin.categorias.show') --}}
-                                        </tr>
-                                    @endforeach
-                                </tbody>
+                                    <tbody>
+                                        @foreach ($productos as $producto)
+                                            <tr>
+                                                <td class="text-center">{{ $producto->id }}</td>
+                                                <td class="text-center">
+                                                    @if ($producto->producto)
+                                                        {{ $producto->producto->nombre }}
+                                                    @else
+                                                        Producto no disponible
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if ($producto->precio)
+                                                        {{ $producto->precio }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">{{ $producto->cantidad }}</td>
+                                                <td class="text-center">
+                                                    @if ($producto->subtotal)
+                                                        {{ $producto->subtotal }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                             </table>
                         @else
                             <div class="alert alert-danger mb-0" role="alert">

@@ -61,6 +61,13 @@ class CompraController extends Controller
                 ->with('alert', 'Compras "' . $compra->id . '" Agregado exitosamente ...');
     
     }
+#VER
+    public function index_filtrado()
+    {
+        $o_compras = Compra::latest()->get();
+        return view('panel.admin.orden_compras.index', compact('o_compras'));
+    }
+
 
     /**
      * Display the specified resource.
