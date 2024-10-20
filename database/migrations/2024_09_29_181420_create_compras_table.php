@@ -26,7 +26,7 @@ return new class extends Migration
             $table->text('url_factura_pedido')->nullable()->comment('Este campo se utiliza para almacenar la factura del pedido de cotizacion al proveedor');
             
             // Ordenes de Compra
-            $table->enum('estado_compra', [Compra::PENDIENTE, Compra::ENVIADA, Compra::CONFIRMADA, Compra::FINALIZADA, Compra::CANCELADO])->default(Compra::PENDIENTE)->comment('Estados de la orden de compra');
+            $table->enum('estado_compra', [Compra::PENDIENTE, Compra::ENVIADA, Compra::CONFIRMADA, Compra::FINALIZADA, Compra::CANCELADO])->nullable()->comment('Estados de la orden de compra');
             $table->text('url_factura')->nullable()->comment('Este campo se utiliza para almacenar la factura enviada al proveedor');
             $table->decimal('total', 20, 2)->nullable();
 

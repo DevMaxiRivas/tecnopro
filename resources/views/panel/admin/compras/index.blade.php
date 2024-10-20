@@ -10,7 +10,7 @@
 
 {{-- Titulo en el contenido de la Pagina --}}
 @section('content_header')
-    <h1>&nbsp;<strong>ORDENES DE COMPRAS</strong></h1>
+    <h1>&nbsp;<strong>SOLICITUDES DE COTIZACIÓN</strong></h1>
 @stop
 
 {{-- Contenido de la Pagina --}}
@@ -20,7 +20,7 @@
             <div class="col-12 mb-3">
 
                 <a href="{{ route('compras.create') }}" class="btn btn-success text-uppercase">
-                    Nueva Orden de compra
+                    Nueva Solicitud
                 </a>
 
                 {{-- <a href="{{ route('exportar-productos-pdf') }}" class="btn btn-danger" title="PDF" target="_blank">

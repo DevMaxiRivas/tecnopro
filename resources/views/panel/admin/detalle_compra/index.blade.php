@@ -6,7 +6,7 @@
 @section('title', 'Detalle de Orden de Comra')
 
 @section('content_header')
-    <h1>&nbsp;<strong>Detalles de la Orden de Compra N° {{ $orden_compra->id }} para el proveedor
+    <h1>&nbsp;<strong>Detalles de la solicitud N° {{ $orden_compra->id }} para el proveedor
             {{ $orden_compra->proveedor->razon_social }}</strong></h1>
 @stop
 
@@ -17,7 +17,7 @@
                 @if ($orden_compra->estado_pedido == '0')
                     <a href="{{ route('detalle-orden-compra.agregar', $orden_compra->id) }}"
                         class="btn btn-sm btn-success text-uppercase">
-                        Agregar productos a la orden compra
+                        Agregar productos a la solicitud compra
                     </a>
                 @endif
 
@@ -47,9 +47,9 @@
                                     <tr>
                                         <th scope="col" class="text-uppercase text-center">#</th>
                                         <th scope="col" class="text-uppercase text-center">Producto</th>
-                                        <th scope="col" class="text-uppercase text-center">Precio</th>
+                                        {{--<th scope="col" class="text-uppercase text-center">Precio</th>--}}
                                         <th scope="col" class="text-uppercase text-center">Cantidad</th>
-                                        <th scope="col" class="text-uppercase text-center">Subtotal</th>
+                                        {{--<th scope="col" class="text-uppercase text-center">Subtotal</th>--}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,20 +57,8 @@
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
-                                            <td class="text-center">
-                                                @if ($producto->precio)
-                                                    {{ $producto->precio }}
-                                                @else
-                                                    -
-                                                @endif
                                             </td>
-                                            <td class="text-center">{{ $producto->cantidad }}</td>
-                                            <td class="text-center">
-                                                @if ($producto->subtotal)
-                                                    {{ $producto->subtotal }}
-                                                @else
-                                                    -
-                                                @endif
+                                            <td class="text-center">{{ $producto->cantidad }}</td>                                
                                             </td>
                                             {{-- @include('panel.admin.categorias.show') --}}
                                         </tr>

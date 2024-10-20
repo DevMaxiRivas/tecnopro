@@ -62,6 +62,7 @@ class CompraController extends Controller
     
     }
 
+
     /**
      * Display the specified resource.
      */
