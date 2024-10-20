@@ -18,10 +18,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-3">
-                {{-- Puedes agregar un botón si necesitas alguna acción, similar a "Nueva Solicitud" --}}
-                {{-- <a href="{{ route('orden_compras.create') }}" class="btn btn-success text-uppercase">
-                    Nueva Orden
-                </a> --}}
+                
+                <a href="{{ route('orden_compras.create') }}" class="btn btn-success text-uppercase">
+                    Nueva Orden de Compra
+                </a> 
             </div>
 
             {{-- Mostrar alertas en caso de actualizaciones o errores --}}

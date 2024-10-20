@@ -1,83 +1,95 @@
 <div class="card mb-5">
-    <form action="{{ route('orden_compras.update', $compra) }}" method="POST">
+    <form action="{{ $orden_compra->id ? route('orden_compras.update', $orden_compra) : route('orden_compras.store') }}" method="POST">
         @csrf
-        @method('PUT')
+
+        @if ($orden_compra->id)
+            @method('PUT')
+        @endif
 
         <div class="card-body">
-            <!-- Proveedor (solo como texto, no editable) -->
             <div class="mb-3 row">
-                <label for="compra" class="col-sm-4 col-form-label"> * Número orden de compra </label>
+                <label for="id_proveedor" class="col-sm-4 col-form-label"> * Proveedor </label>
                 <div class="col-sm-8">
-                    <p>{{ $compra->id }}</p>
-                </div>
-            </div>
-            
-            <div class="mb-3 row">
-                <label for="forma_pago" class="col-sm-4 col-form-label"> * Número de solicitud de cotización </label>
-                <div class="col-sm-8">
-                    @if ($compra->forma_pago)
-                        <p>{{ $compra->forma_pago->nombre }}</p>
+                    @if (is_null($orden_compra->id))
+                        <select id="id_proveedor" name="id_proveedor" class="form-control @error('id_proveedor') is-invalid @enderror">
+                            <option disabled selected>Seleccione un proveedor</option>
+                            @foreach ($proveedores as $proveedor)
+                                <option value="{{ $proveedor->id }}">{{ $proveedor->razon_social }}</option>
+                            @endforeach
+                        </select>
+                        @error('id_proveedor')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
                     @else
-                        <p>No hay un nro de cotizacion</p>
+                        <p> {{ $orden_compra->proveedor->razon_social}} </p>
                     @endif
                 </div>
             </div>
-            
-            <div class="mb-3 row">
-                <label for="proveedores" class="col-sm-4 col-form-label"> * Proveedor </label>
-                <div class="col-sm-8">
-                    @if ($compra->proveedor)
-                        <p>{{ $compra->proveedor->razon_social }}</p>
-                    @else
-                        <p>No hay un proveedor asociado</p>
-                    @endif
-                </div>
-            </div>
-            
-            <div class="mb-3 row">
-                <label for="fecha_creacion" class="col-sm-4 col-form-label"> * Fecha de creación </label>
-                <div class="col-sm-8">
-                    <p>{{ $compra->created_at }}</p>
-                </div>
-            </div>
-            
-            <div class="mb-3 row">
-                <label for="hora_creacion" class="col-sm-4 col-form-label"> * Hora de creación </label>
-                <div class="col-sm-8">
-                    <p>{{ $compra->created_at }}</p> 
-                </div>
-            </div>
-            
-            <div class="mb-3 row">
-                <label for="estado_actual" class="col-sm-4 col-form-label"> * Estado actual </label>
-                <div class="col-sm-8">
-                    <p>{{ $compra->estado_pedido }}</p>
-                </div>
-            </div>
-            
 
-            <!-- Estado (editable) -->
             <div class="mb-3 row">
-                <label for="estado" class="col-sm-4 col-form-label"> * Nuevo Estado </label>
+                <label for="id_forma_pago" class="col-sm-4 col-form-label"> * Forma de pago </label>
+                <div class="col-sm-8">
+                    @if (is_null($orden_compra->id))
+                        <select id="id_forma_pago" name="id_forma_pago" class="form-control @error('id_forma_pago') is-invalid @enderror">
+                            <option disabled selected>Seleccione una forma de pago</option>
+                            @foreach ($formas_pagos as $forma_pago)
+                                @if($forma_pago->activo == 1)
+                                    <option {{$orden_compra->id_forma_pago && $orden_compra->id_forma_pago == $forma_pago->id ? 'selected' : '' }}
+                                        value="{{ $forma_pago->id }}">
+                                        {{ $forma_pago->nombre }}
+                                    </option>
+                                @endif
+                            @endforeach
+                        </select>
+                        @error('id_forma_pago')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
+                    @else
+                        <p> {{ $orden_compra->forma_pago->nombre}} </p>
+                    @endif
+                </div>
+            </div>
+
+            @if (is_null($orden_compra->id))
+            <div class="mb-3 row">
+                <label for="id_compra" class="col-sm-4 col-form-label"> * Solicitud de Cotización </label>
+                <div class="col-sm-8">
+                    <select id="id_compra" name="id_compra" class="form-control @error('id_compra') is-invalid @enderror">
+                        <option disabled selected>Seleccione una Solicitud de Cotización</option>
+                        <!-- Opciones se llenarán dinámicamente -->
+                    </select>
+                    @error('id_compra')
+                        <div class="invalid-feedback"> {{ $message }} </div>
+                    @enderror
+                </div>
+            </div>
+            @endif 
+
+            @if ($orden_compra->id)
+            <div class="mb-3 row">
+                <label for="estado" class="col-sm-4 col-form-label"> * Estado </label>
                 <div class="col-sm-8">
                     <select id="estado" name="estado" class="form-control @error('estado') is-invalid @enderror">
-                        <option disabled selected>Seleccione un estado</option>
+                        <option disabled selected>Seleccione una estado</option>
                         @foreach($estados as $key => $estado_compra)
-                            <option value="{{ $key }}" {{ $compra->estado_compra == $key ? 'selected' : '' }}>
-                                {{ $estado_compra }}
+                            <option value="{{ $key }}" {{ $orden_compra->estado_compra == $key ? 'selected' : '' }}>
+                            {{ $estado_compra }}
                             </option>
                         @endforeach
                     </select>
+                    
                     @error('estado')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
                 </div>
             </div>
+            @endif
 
-        </div>
-
-        <div class="card-footer d-flex justify-content-end items-center">
-            <button type="submit" class="btn btn-success text-uppercase">Actualizar</button>
+            <div class="card-footer d-flex justify-content-end items-center">
+                <button type="submit" class="btn btn-success text-uppercase">
+                    {{ $orden_compra->id ? 'Actualizar' : 'Guardar' }}
+                </button>
+            </div>
         </div>
     </form>
 </div>

@@ -347,7 +347,7 @@ return [
         [
             'text' => 'Ordenes de Compra',
             'route' => 'orden_compras.index', // ruta de inicio del crud productos
-            'icon' => 'fas fa-wallet',
+            'icon' => 'fas fa-folder-plus',
             //'can' => 'lista_cotizaciones'
         ],
         [

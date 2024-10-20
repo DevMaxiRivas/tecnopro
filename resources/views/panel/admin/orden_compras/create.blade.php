@@ -3,7 +3,7 @@
 @section('title', 'Crear OC')
 
 @section('content_header')
-    <h1>&nbsp;<strong> NUEVA ORDEN COMPRA</strong></h1>
+    <h1>&nbsp;<strong> NUEVA ORDEN COMPRAA</strong></h1>
 @stop
 
 @section('content')
@@ -38,24 +38,39 @@
 
 @section('js')
 <script>
+    $('#id_proveedor').change(function(){
+        const select_provedor = $(this);
+        console.log(select_provedor.val());
+        getSolicitudesPorProveedor(select_provedor.val());
+    })
+
     function getSolicitudesPorProveedor(proveedorId) {
         // Hacer una petición al servidor para obtener las solicitudes de cotización por proveedor
-        fetch(`/solicitudes-por-proveedor/${proveedorId}`)
+        fetch(`/panel/solicitudes-por-proveedor/${proveedorId}`)
             .then(response => response.json())
             .then(data => {
                 // Limpiar el campo de selección de solicitudes
-                const solicitudesSelect = document.getElementById('id_solicitud');
+                const solicitudesSelect = document.getElementById('id_compra');
+                //const solicitudesSelect = $('#id_proveedor');
                 solicitudesSelect.innerHTML = '<option disabled selected>Seleccione una Solicitud de Cotización</option>';
-    
+                console.log(solicitudesSelect);
                 // Añadir las nuevas opciones basadas en las solicitudes recibidas
                 data.solicitudes.forEach(solicitud => {
+                    //var option = $('<option>').text(solicitud.numero).attr('value', solicitud.id);
                     const option = document.createElement('option');
                     option.value = solicitud.id;
-                    option.textContent = solicitud.numero;
+                    option.textContent = 'Nro de solicitud '+ solicitud.id;
                     solicitudesSelect.appendChild(option);
+                    //solicitudesSelect.append(option);
+                    //solicitudesSelect.append($('<option>', { value: solicitud.id, text: `Solicitud #${solicitud.id} - ${solicitud.descripcion}` }));
+                    console.log(solicitud);
+                    console.log(option);
                 });
             })
             .catch(error => console.error('Error:', error));
     }
     </script>
+
+
+
 @stop

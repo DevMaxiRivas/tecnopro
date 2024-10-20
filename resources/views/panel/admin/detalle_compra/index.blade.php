@@ -47,9 +47,9 @@
                                     <tr>
                                         <th scope="col" class="text-uppercase text-center">#</th>
                                         <th scope="col" class="text-uppercase text-center">Producto</th>
-                                        <th scope="col" class="text-uppercase text-center">Precio</th>
+                                        {{--<th scope="col" class="text-uppercase text-center">Precio</th>--}}
                                         <th scope="col" class="text-uppercase text-center">Cantidad</th>
-                                        <th scope="col" class="text-uppercase text-center">Subtotal</th>
+                                        {{--<th scope="col" class="text-uppercase text-center">Subtotal</th>--}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -57,20 +57,8 @@
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
-                                            <td class="text-center">
-                                                @if ($producto->precio)
-                                                    {{ $producto->precio }}
-                                                @else
-                                                    -
-                                                @endif
                                             </td>
-                                            <td class="text-center">{{ $producto->cantidad }}</td>
-                                            <td class="text-center">
-                                                @if ($producto->subtotal)
-                                                    {{ $producto->subtotal }}
-                                                @else
-                                                    -
-                                                @endif
+                                            <td class="text-center">{{ $producto->cantidad }}</td>                                
                                             </td>
                                             {{-- @include('panel.admin.categorias.show') --}}
                                         </tr>

@@ -5,7 +5,7 @@
 @section('content_header')
     <h1>
         <strong>
-            Editar Orden de Compra N° {{ $compra->id }}  
+            Editar Orden de Compra N° {{ $orden_compra->id }}  
         </strong>
     </h1>
 @stop

@@ -28,6 +28,13 @@ class Compra extends Model
     protected $fillable = [
         'estado',
         'url_factura',
+        'estado_pedido',
+        'estado_compra',
+        'id_empleado_compra',
+        'id_proveedor',
+        'id_forma_pago',
+        'url_presupuesto',
+        'url_factura_pedido',
         'total'
     ];
 

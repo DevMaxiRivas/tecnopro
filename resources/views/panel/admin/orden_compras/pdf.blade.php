@@ -4,6 +4,12 @@
     <meta charset="utf-8">
     <title>Orden de Compra - {{ $compra->id }}</title>
     <link rel="stylesheet" href="css/detalles.css" media="all" />
+    <style>
+        /* CSS para ajustar el espaciado del símbolo del dólar */
+        td span {
+            margin-right: 2px; /* Ajusta el espaciado según necesites */
+        }
+    </style>
 </head>
 <body>
   <header class="clearfix">
@@ -41,8 +47,8 @@
                 <th class="desc">CATEGORIA</th>
                 <th class="desc">PRODUCTO</th>
                 <th class="unit">PRECIO UNITARIO</th>
-                <th class="qty">CANTIDAD </th>
-                 <th class="total">SUBTOTAL</th>
+                <th class="qty">CANTIDAD</th>
+                <th class="total">  SUBTOTAL</th>
             </tr>
         </thead>
         <tbody>
@@ -55,9 +61,9 @@
                     <td class="desc">
                         <h3>{{ $detalle->producto->nombre }}</h3>
                     </td>
-                    <td class="unit">$ {{ number_format($detalle->precio, 2) }}</td> 
+                    <td class="unit"><span>$</span>{{ number_format($detalle->precio, 2) }}</td> 
                     <td class="qty">{{ $detalle->cantidad }}</td>
-                     <td class="total">$ {{ number_format($detalle->subtotal, 2) }}</td>
+                    <td class="total"><span>$</span>{{ number_format($detalle->subtotal, 2) }}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -65,17 +71,17 @@
             <tr>
                 <td colspan="2"></td>
                 <td colspan="2">SUBTOTAL</td>
-                <td>$ {{ number_format($subtotal, 2) }}</td>
+                <td><span>$</span>{{ number_format($subtotal, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2"></td>
                 <td colspan="2">IVA 21%</td>
-                <td>$ {{ number_format($iva, 2) }}</td>
+                <td><span>$</span>{{ number_format($iva, 2) }}</td>
             </tr>
             <tr>
                 <td colspan="2"></td>
                 <td colspan="2">TOTAL</td>
-                <td>$ {{ number_format($total, 2) }}</td>
+                <td><span>$</span>{{ number_format($total, 2) }}</td>
             </tr> 
         </tfoot>
     </table>

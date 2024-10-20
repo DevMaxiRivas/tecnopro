@@ -15,44 +15,89 @@ class OrdenesDeCompraController extends Controller
 
     public function index()
     {
-        $compras_finalizadas = Compra::where('estado_pedido', Compra::RECIBIDO)->get();
+        $compras_finalizadas = Compra::whereNotNull('estado_compra')->get();
         return view('panel.admin.orden_compras.index', compact('compras_finalizadas'));
     }
 
-    public function show($id)
+    public function show($orden_compra)
     {
-        $orden_compra = Compra::with('proveedor', 'productos')->findOrFail($id);
-        $productos = DetalleCompra::where('id_compra', $orden_compra->id)->get();
-
-        return view('panel.admin.orden_compras.show', compact('orden_compra', 'productos'));
+        $orden_compras = Compra::with('proveedor', 'productos')->findOrFail($orden_compra);
+        $productos = DetalleCompra::where('id_compra', $orden_compras->id)->get();
+        return view('panel.admin.orden_compras.show', compact('orden_compras', 'productos'));
     }
+     
+    public function create()
+    {
+        $orden_compra = new Compra();
+        //$proveedores = Compra::where('estado_pedido',Compra::RECIBIDO)->distinct()->whereNull('estado_compra')->with('proveedor')->get();
+        //$proveedores = Proveedor::with('compras')->where('compras.estado_pedido',Compra::RECIBIDO)->distinct()->get();
+        $proveedores = Proveedor::whereHas('compras', function ($query) {$query->where('estado_pedido', Compra::RECIBIDO);})->distinct()->get();
+        $formas_pagos = FormaPago::get();
+        
+        return view('panel.admin.orden_compras.create', compact('formas_pagos', 'proveedores', 'orden_compra'));
+    }
+
+    public function getSolicitudesPorProveedor($id)
+    {
+        $solicitudes = Compra::where('id_proveedor', $id)->whereNull('estado_compra')->where('estado_pedido',Compra::RECIBIDO)->get();
+
+        return response()->json(['solicitudes' => $solicitudes]);
+    }
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_proveedor' => 'required|exists:proveedores,id',  // Verifica que el proveedor exista en la tabla 'proveedores'
+            'id_forma_pago' => 'required|exists:forma_pagos,id', // Verifica que la forma de pago exista en la tabla 'formas_pagos'
+            'id_compra' => 'required|exists:compras,id'
+            // 'total' => 'required|numeric|min:0',  // Asegúrate de que el total sea un número y sea al menos 0
+        ]);
+
+        $compra = Compra::where('id',$request->id_compra)->first();
+        $compra->id_empleado_compra = auth()->user()->id;
+        $compra->estado_compra = Compra::PENDIENTE;
+ 
+        // Almacena la info del producto en la BD
+        $compra->save();
+
+        return redirect()
+                ->route('orden_compras.index')
+                ->with('alert', 'Compras "' . $compra->id . '" Agregado exitosamente ...');
+    
+    }
+
+
 
     public function update_precio(Request $request, $id)
     {
-    // Encuentra la orden de compra
-    $orden_compra = Compra::with('productos')->findOrFail($id);
-
-    // Itera sobre los productos y actualiza los precios
-    foreach ($orden_compra->productos as $producto) {
-        if (isset($request->precios[$producto->id])) {
-            $nuevo_precio = $request->precios[$producto->id];
-
-            // Actualiza el precio en la tabla detalle_compras
-            $producto->pivot->precio = $nuevo_precio;
-            $producto->pivot->subtotal = $nuevo_precio * $producto->pivot->cantidad; // Recalcula el subtotal
-            $producto->pivot->save();
+        
+        $orden_compra = Compra::with('productos')->findOrFail($id);
+        $total = 0;
+        // Itera sobre los productos y actualiza los precios
+        foreach ($orden_compra->productos as $producto) {
+            if (isset($request->precios[$producto->id])) {
+                $nuevo_precio = $request->precios[$producto->id];
+                // Actualiza el precio en la tabla detalle_compras
+                $producto->pivot->precio = $nuevo_precio;
+                $producto->pivot->subtotal = $nuevo_precio * $producto->pivot->cantidad; // Recalcula el subtotal
+                $producto->pivot->save();
+                $total += $producto->pivot->subtotal; 
+            }
         }
-    }
-    // Redirige de vuelta con un mensaje de éxito
-    return redirect()->route('orden_compras.show', $orden_compra->id)->with('alert', 'Precios actualizados correctamente.');
+        $orden_compra->total = $total;
+        $orden_compra->save();
+        // Redirige de vuelta con un mensaje de éxito
+        return redirect()->route('orden_compras.show', $orden_compra->id)->with('alert', 'Precios actualizados correctamente.');
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Compra $compra)
+    public function edit(Compra $orden_compra)
     {
+        //return $orden_compra;
         $proveedores = Proveedor::get();
         $formas_pagos = FormaPago::get();
     
@@ -65,14 +110,14 @@ class OrdenesDeCompraController extends Controller
             Compra::CANCELADO => 'Cancelado',
         ];
     
-        return view('panel.admin.orden_compras.edit', compact('compra', 'proveedores', 'formas_pagos', 'estados'));
+        return view('panel.admin.orden_compras.edit', compact('orden_compra', 'proveedores', 'formas_pagos', 'estados'));
     }
     
     
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Compra $compra)
+    public function update(Request $request, Compra $orden_compra)
     {
         // Validar solo el campo de estado
         $request->validate([
@@ -86,12 +131,12 @@ class OrdenesDeCompraController extends Controller
         ]);
     
         // Actualizar solo el estado
-        $compra->estado_compra = $request->estado;
-        $compra->save();
+        $orden_compra->estado_compra = $request->estado;
+        $orden_compra->save();
     
         // Redireccionar con mensaje de éxito
         return redirect()->route('orden_compras.index')
-                         ->with('alert', 'Estado de la compra "' . $compra->id . '" actualizado exitosamente.');
+                         ->with('alert', 'Estado de la compra "' . $orden_compra->id . '" actualizado exitosamente.');
     }
 
     
@@ -111,8 +156,18 @@ class OrdenesDeCompraController extends Controller
         $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
         
         $pdf = PDF::loadView('panel.admin.orden_compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
-        
-        return $pdf->download('Factura' . $compra->id . '.pdf');
+
+        $filename = 'Factura_' . $compra->id . '.pdf';
+    
+        // Guarda el archivo en la carpeta deseada
+        $pdf->save(storage_path('app/public/facturas/' . $filename)); // Asegúrate de que esta carpeta exista
+    
+        // Guarda la URL en el modelo de Compra
+        $compra->url_factura = asset('storage/facturas/' . $filename); // Guarda la URL
+        $compra->save(); // No olvides guardar los cambios en la base de datos
+    
+        // Retorna el PDF para descargar
+        return $pdf->download($filename);
     }
 
 }
