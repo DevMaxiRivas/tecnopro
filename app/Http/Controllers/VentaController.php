@@ -194,4 +194,12 @@ class VentaController extends Controller
 
         return response()->json($response);
     }
+
+    public function rutas()
+    {
+        $ventas = Venta::whereIn('estado', [Venta::PAGADO, Venta::EN_PREPARACION, Venta::ENVIADO])
+                    ->get();
+
+        return view('panel.admin.ventas.empleadoventa.routing', compact('ventas'));
+    }
 }

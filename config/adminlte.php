@@ -368,6 +368,12 @@ return [
             'icon' => 'fas fa-shopping-cart',
             'can' => 'lista_ventas'
         ],
+        [
+            'text' => 'Rutas de ventas',
+            'route' => 'ventas.rutas',
+            'icon' => 'fas fa-map-marked-alt',
+            'can' => 'lista_ventas'
+        ]
 
         /* [
             'text' => 'pages',

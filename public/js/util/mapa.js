@@ -64,6 +64,18 @@ function initMap(map) {
     customControlMap(map);
 }
 
+function initRouting(map, positionStart, positionEnd) {
+    L.Routing.control({
+        waypoints: [
+          L.latLng(positionStart.lat, positionStart.lng),
+          L.latLng(positionEnd.lat, positionEnd.lng)
+        ],
+        language: 'es',
+        draggableWaypoints: false,
+        createMarker: function() { return null; }
+    }).addTo(map);
+}
+
 function initGroupMarker(map, lista) {
 
     var grupos = L.markerClusterGroup({ 
