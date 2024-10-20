@@ -1,5 +1,9 @@
 let map = L.map('map', {
-    gestureHandling: true
+    gestureHandling: true,
+    fullscreenControl: true,
+	fullscreenControlOptions: {
+		position: 'topleft'
+	}
 });
 
 // Referencia de inputs

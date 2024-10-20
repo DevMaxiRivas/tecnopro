@@ -111,7 +111,7 @@ function customControlMap(map) {
 }
 
 function flyToDefaultView(map) {
-    map.flyTo(defaultPoint, 13, {
+    map.flyTo(defaultPoint, 12, {
         animate: true,
         duration: 0.25
     });
