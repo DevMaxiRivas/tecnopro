@@ -4,3 +4,8 @@
         text-align: left !important;
     }    
 }
+
+.border-left-blue {
+    border-left: 5px solid var(--blue);
+    border-radius: 3px;
+}

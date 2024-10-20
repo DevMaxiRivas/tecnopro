@@ -17,8 +17,10 @@ Route::get('/', function () {
     return view('panel.index');
 })->name('panel');
 
-// Grupo de rutas para usuarios autenticados
-Route::group(['middleware' => ['role:admin|empleado_ventas|cliente']], function () {});
+// Grupo de rutas para usuarios con rol Admin y Empleado de Ventas
+Route::group(['middleware' => ['role:admin|empleado_ventas']], function () {
+    Route::get('/ventas_mapa/{id_venta}', [VentaController::class, 'getVentasMap']); // Ruta para consultar con AJAX
+});
 
 // Grupo de rutas para usuarios con Rol Cliente
 Route::group(['middleware' => ['role:cliente']], function () {

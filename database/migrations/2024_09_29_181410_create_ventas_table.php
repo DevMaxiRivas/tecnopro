@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_cliente'); // BIGINT(20)
             $table->unsignedBigInteger('id_empleado')->nullable(); // BIGINT(20)
 
-            $table->enum('estado', [Venta::PENDIENTE, Venta::PAGADO, Venta::EN_PREPARACION, Venta::ENVIADO, Venta::CANCELADO])->default(Venta::PENDIENTE);
+            $table->enum('estado', [Venta::PENDIENTE, Venta::PAGADO, Venta::EN_PREPARACION, Venta::ENVIADO, Venta::CANCELADO, VENTA::ENTREGADO])->default(Venta::PENDIENTE);
             $table->string('url_factura')->nullable();
             $table->decimal('total', 20, 2); // DECIMAL(20, 2)
             $table->string('link_pago')->nullable();

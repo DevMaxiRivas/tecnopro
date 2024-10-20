@@ -3,17 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\EnviarFacturaJob;
-use App\Models\FormaPago;
 use App\Models\Producto;
-use App\Models\User;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
-
 
 class VentaController extends Controller
 {
@@ -95,7 +90,6 @@ class VentaController extends Controller
      */
     public function edit(Venta $venta)
     {
-
         // Array con los estados y sus descripciones
         $estados = [
             Venta::PENDIENTE => 'Pendiente',
@@ -103,6 +97,7 @@ class VentaController extends Controller
             Venta::EN_PREPARACION => 'En preparación',
             Venta::ENVIADO => 'Enviado',
             Venta::CANCELADO => 'Cancelado',
+            Venta::ENTREGADO => 'Entregado'
         ];
 
         return view('panel.admin.ventas.empleadoventa.edit', compact('venta', 'estados'));
@@ -119,7 +114,8 @@ class VentaController extends Controller
                 Venta::PAGADO,
                 Venta::EN_PREPARACION,
                 Venta::ENVIADO,
-                Venta::CANCELADO
+                Venta::CANCELADO,
+                Venta::ENTREGADO
             ]),
         ]);
 
@@ -136,7 +132,6 @@ class VentaController extends Controller
             ->with('alert', 'Venta "' . $empleadoventum->id . '" estado actualizado exitosamente.');
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
@@ -146,7 +141,8 @@ class VentaController extends Controller
     }
 
     public function generarFacturaPDF(Venta $venta)
-    { //Genero la factura una vez se pague el pedido
+    {
+        //Genero la factura una vez se pague el pedido
         $detalle_ventas = $venta->detalle_ventas;
         $cliente = $venta->cliente;
         $total = $venta->total;
@@ -161,5 +157,41 @@ class VentaController extends Controller
 
         // Retornar la ruta del PDF guardado
         return '/storage/pdfs/facturas/' . $pdfFileName; //Regresa la URL PUBLICA de la factura
+    }
+
+    public function getVentasMap(Request $request) {
+
+        $results = [];
+
+        // Comparacion de Peticion
+        if(isset($request->id_venta) && $request->id_venta != 0) {
+            $results[] = Venta::where('id', $request->id_venta)
+                            ->with(['envio_venta'])
+                            ->first();
+        } else {
+            $results = Venta::whereIn('estado', [Venta::PAGADO, Venta::EN_PREPARACION, Venta::ENVIADO])
+                            ->with(['envio_venta'])
+                            ->get();
+        }
+
+        // Respuesta de la API
+        $response = null;
+        
+        // Verificamos resultados
+        if(count($results) == 0) {
+            $message = 'No hay ventas disponibles para visualizar en el mapa';
+            $success = false;
+        } else {
+            $message = 'Ventas disponibles para visualizar';
+            $success = true;
+        }
+
+        $response = [
+            'success' => $success,
+            'message' => $message,
+            'data' => $results
+        ];
+
+        return response()->json($response);
     }
 }

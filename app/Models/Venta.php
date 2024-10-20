@@ -15,6 +15,7 @@ class Venta extends Model
     const EN_PREPARACION = '2';
     const ENVIADO = '3';
     const CANCELADO = '4';
+    const ENTREGADO = '5';
 
     // Estado de envio de factura por email
     const FACTURA_ENVIADA = '1';
@@ -48,6 +49,6 @@ class Venta extends Model
 
     public function envio_venta() 
     {
-        return $this->belongsTo(EnvioVenta::class, 'id_venta');
+        return $this->hasOne(EnvioVenta::class, 'id_venta');
     }
 }

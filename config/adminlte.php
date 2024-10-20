@@ -320,6 +320,12 @@ return [
             'can' => 'manage-blog',
         ], */
         [
+            'text'        => 'Inicio',
+            'route'       => 'panel',
+            'icon'        => 'fas fa-home',
+            // 'can'         => 'lista_categorias' //permiso de admin<i class="far fa-project-diagram"></i>
+        ],
+        [
             'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
             'icon'        => 'fas fa-project-diagram',

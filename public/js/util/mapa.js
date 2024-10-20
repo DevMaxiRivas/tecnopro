@@ -65,7 +65,6 @@ function initMap(map) {
 }
 
 function initGroupMarker(map, lista) {
-    //var grupos = L.markerClusterGroup(); 
 
     var grupos = L.markerClusterGroup({ 
         iconCreateFunction: function (cluster) { 
@@ -78,14 +77,26 @@ function initGroupMarker(map, lista) {
         } 
     });
 
-    for(var i = 0; i<lista.length; i++) {
-        var marker = L.marker([lista[i].latitud, lista[i].longitud], { icon: pin_location });
-        var msj = 'Acta N° '+lista[i].n_acta + '<br>' + lista[i].lugar_infraccion;
-        /* marker.on('click', (e) => {
-            var msj = lista[i].n_acta + '<br>' + lista[i].lugar_infraccion;
-            e.target.bindPopup(msj).openPopup();
-        }); */
-        marker.bindPopup(msj);
+    for(var i = 0; i < lista.length; i++) {
+        var marker = L.marker([
+            lista[i].envio_venta.latitud, 
+            lista[i].envio_venta.longitud
+        ], { icon: pin_location });
+        
+        var estado_venta = 'ENVIADO';
+
+        if(lista[i].estado == '1') estado_venta = 'PAGADO';
+        else if(lista[i].estado == '2') estado_venta = 'EN PREPARACION';
+
+        var info = `<b>Venta N° ${ lista[i].id }</b> <br>
+                    Abonó: $ ${ lista[i].total} <br>
+                    Estado: ${ estado_venta } <br>
+                    Cliente: ${ lista[i].envio_venta.name } <br>
+                    Domicilio: ${ lista[i].envio_venta.domicilio } <br>
+                    Telefono: ${ lista[i].envio_venta.telefono } <br>
+        `;
+
+        marker.bindPopup(info);
         grupos.addLayer(marker);
     }
 

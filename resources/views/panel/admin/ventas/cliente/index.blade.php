@@ -58,6 +58,8 @@
                                                     <span class="badge badge-primary">Enviado</span>
                                                 @elseif($venta->estado == 4)
                                                     <span class="badge badge-danger">Cancelado</span>
+                                                @elseif($venta->estado == 5)
+                                                    <span class="badge badge-success">Entregado</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -86,7 +88,7 @@
                                                         </button>
                                                         <!-- </form> -->
                                                     @endif
-                                                    @if (in_array($venta->estado, [1, 2, 3]))
+                                                    @if (in_array($venta->estado, [1, 2, 3, 5]))
                                                         <a href="{{ asset($venta->url_factura) }}" target="_blank"
                                                             title="Factura"
                                                             class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
