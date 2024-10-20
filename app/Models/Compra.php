@@ -20,6 +20,7 @@ class Compra extends Model
     const CONFIRMADA = '5';
     const FINALIZADA = '6';
 
+
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'compras';
 

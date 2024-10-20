@@ -19,43 +19,6 @@ class OrdenesDeCompraController extends Controller
         return view('panel.admin.orden_compras.index', compact('compras_finalizadas'));
     }
 
-    public function create()
-    {
-        $o_compras = new OrdenCompra();
-        $proveedores = Proveedor::get();
-        $formas_pagos = FormaPago::get();
-    
-        //Retornamos la vista de creacion de productos, enviamos al compras y proveedores
-        return view('panel.admin.orden_compras.create', compact('formas_pagos','proveedores','o_compras')); //compact(mismo nombre de la variable)
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'id_proveedor' => 'required|exists:proveedores,id',  // Verifica que el proveedor exista en la tabla 'proveedores'
-            'id_forma_pago' => 'required|exists:forma_pagos,id', // Verifica que la forma de pago exista en la tabla 'formas_pagos'
-           // 'total' => 'required|numeric|min:0',  // Asegúrate de que el total sea un número y sea al menos 0
-        ]);
-
-        $o_compras = new OrdenCompra();
-        $o_compras->id_empleado = auth()->user()->id;
-        $o_compras->id_proveedor = $request->get('id_proveedor');
-        //dd($request->get('id_forma_pago'));
-        $o_compras->id_forma_pago = $request->get('id_forma_pago');
-        // Cuando una compra se crea, se pone en estado pendiente por defecto
-        // $OrdenCompra->estado=$request->get('pendiente'); 
-        // $OrdenCompra->url_factura = $request->get('url_factura');
-        $o_compras->total = $request->get('total',0);
-        
-        // Almacena la info del producto en la BD
-        $o_compras->save();
-
-        return redirect()
-                ->route('orden_compras.index')
-                ->with('alert', 'Compras "' . $o_compras->id . '" Agregado exitosamente ...');
-    
-    }
-
     public function show($id)
     {
         $orden_compra = Compra::with('proveedor', 'productos')->findOrFail($id);
@@ -64,47 +27,95 @@ class OrdenesDeCompraController extends Controller
         return view('panel.admin.orden_compras.show', compact('orden_compra', 'productos'));
     }
 
+    public function update_precio(Request $request, $id)
+    {
+    // Encuentra la orden de compra
+    $orden_compra = Compra::with('productos')->findOrFail($id);
+
+    // Itera sobre los productos y actualiza los precios
+    foreach ($orden_compra->productos as $producto) {
+        if (isset($request->precios[$producto->id])) {
+            $nuevo_precio = $request->precios[$producto->id];
+
+            // Actualiza el precio en la tabla detalle_compras
+            $producto->pivot->precio = $nuevo_precio;
+            $producto->pivot->subtotal = $nuevo_precio * $producto->pivot->cantidad; // Recalcula el subtotal
+            $producto->pivot->save();
+        }
+    }
+    // Redirige de vuelta con un mensaje de éxito
+    return redirect()->route('orden_compras.show', $orden_compra->id)->with('alert', 'Precios actualizados correctamente.');
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrdenCompra $o_compras )
+    public function edit(Compra $compra)
     {
         $proveedores = Proveedor::get();
         $formas_pagos = FormaPago::get();
-
+    
         // Array con los estados y sus descripciones
         $estados = [
-            OrdenCompra::PENDIENTE => 'Pendiente',
-            OrdenCompra::EN_ESPERA => 'En espera',
-            OrdenCompra::RECIBIDO => 'Recibido',
-            OrdenCompra::CANCELADO => 'Cancelado',
+            Compra::PENDIENTE => 'Pendiente',
+            Compra::ENVIADA => 'Enviado',
+            Compra::CONFIRMADA => 'Confirmado',
+            Compra::FINALIZADA => 'Finalizado',
+            Compra::CANCELADO => 'Cancelado',
         ];
-
-    return view('panel.admin.orden_compras.edit', compact('compra','proveedores','formas_pagos', 'estados'));
+    
+        return view('panel.admin.orden_compras.edit', compact('compra', 'proveedores', 'formas_pagos', 'estados'));
     }
-
+    
+    
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,OrdenCompra $o_compras)
+    public function update(Request $request, Compra $compra)
     {
-    // Validar los campos (incluyendo el estado)
-    $request->validate([
-        'estado' => 'required|in:' . implode(',', [
-            OrdenCompra::PENDIENTE,
-            OrdenCompra::EN_ESPERA,
-            OrdenCompra::RECIBIDO,
-            OrdenCompra::CANCELADO,
-        ]),
-    ]);
-    $o_compras->estado_pedido = $request->get('estado');
-    // Guardar los cambios
-    $o_compras->update();
-
-    return redirect()
-            ->route('orden_compras.index')
-            ->with( 'alert', 'Compra "' . $o_compras->id . '" estado actualizado exitosamente.');
+        // Validar solo el campo de estado
+        $request->validate([
+            'estado' => 'required|in:' . implode(',', [
+                Compra::PENDIENTE,
+                Compra::ENVIADA,
+                Compra::CONFIRMADA,
+                Compra::FINALIZADA,
+                Compra::CANCELADO, 
+            ]),
+        ]);
+    
+        // Actualizar solo el estado
+        $compra->estado_compra = $request->estado;
+        $compra->save();
+    
+        // Redireccionar con mensaje de éxito
+        return redirect()->route('orden_compras.index')
+                         ->with('alert', 'Estado de la compra "' . $compra->id . '" actualizado exitosamente.');
     }
 
+    
+    public function pdf(Compra $compra)
+    {
+        $subtotal = 0;
+        $detalle_compras = $compra->detalle_compras;
+        $proveedor = $compra->proveedores;
+        
+        foreach ($detalle_compras as $detalle) {
+            $subtotal += $detalle->subtotal; 
+        }
+
+        $iva = $subtotal * 0.21;
+        $total = $subtotal + $iva;
+        $fecha_emision = $compra->created_at;
+        $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
+        
+        $pdf = PDF::loadView('panel.admin.orden_compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
+        
+        return $pdf->download('Factura' . $compra->id . '.pdf');
+    }
 
 }
+
+    
+
