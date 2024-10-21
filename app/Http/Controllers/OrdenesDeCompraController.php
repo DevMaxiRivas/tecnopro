@@ -158,13 +158,13 @@ class OrdenesDeCompraController extends Controller
         
         $pdf = PDF::loadView('panel.admin.orden_compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
 
-        $filename = 'Factura_' . $compra->id . '.pdf';
+        $filename = 'orden_compra_' . $compra->id . '.pdf';
     
         // Guarda el archivo en la carpeta deseada
         $pdf->save(storage_path('app/public/facturas/' . $filename)); // Asegúrate de que esta carpeta exista
     
         // Guarda la URL en el modelo de Compra
-        $compra->url_factura = asset('storage/facturas/' . $filename); // Guarda la URL
+        $compra->url_factura = 'storage/facturas/' . $filename; // Guarda la URL
         $compra->save(); // No olvides guardar los cambios en la base de datos
     
         // Retorna el PDF para descargar

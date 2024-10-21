@@ -78,7 +78,7 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/orden_compras/{id}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
     // Route::get('/orden_compras/editar/{id}', [OrdenesDeCompraController::class, 'edit'])->name('orden_compras.edit');
     // Route::get('/orden_compras/update', [OrdenesDeCompraController::class, 'update'])->name('orden_compras.update');
-    Route::get('/orden_compras/pdf/{compra}', [OrdenesDeCompraController::class, 'pdf'])->name('orden_compras.pdf');
+    // Route::get('/orden_compras/pdf/{compra}', [OrdenesDeCompraController::class, 'pdf'])->name('orden_compras.pdf');
 
     // Actualizar precios en orden de compra
     Route::put('orden_compras/{id}/update_precio', [OrdenesDeCompraController::class, 'update_precio'])->name('orden_compras.update_precio');

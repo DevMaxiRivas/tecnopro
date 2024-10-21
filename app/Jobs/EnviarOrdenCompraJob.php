@@ -47,7 +47,7 @@ class EnviarOrdenCompraJob implements ShouldQueue
             'fecha_pago' => $orden->updated_at,
             'metodo_pago' => $forma_pago->nombre,
             'total' => $orden->total,
-            'urlFactura' => public_path('storage/pdfs/facturas/orden_compra_' . $orden->id . '.pdf')
+            'urlFactura' => public_path('storage/facturas/orden_compra_' . $orden->id . '.pdf')
         ];
 
         Mail::to($data['email'])->send(new EnviarOrdenCompraMailable($data));

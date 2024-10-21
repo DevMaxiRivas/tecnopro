@@ -36,14 +36,18 @@ class EnviarSolicitudCotizacionJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $orden = Compra::find($this->id);
-        $proveedor = Proveedor::find($orden->id_cliente);
+        $orden = Compra::where('id', $this->id)->first();
+        $proveedor = Proveedor::where('id', $orden->id_proveedor)->first();
 
         $data = [
             'proveedor' => $proveedor->razon_social,
             'email' => $proveedor->email, // Correo del Destinatario
-            'urlFactura' => public_path('storage/pdfs/facturas/solicitud_' . $orden->id . '.pdf')
+            'urlFactura' => public_path('storage/cotizaciones/cotizacion_' . $orden->id . '.pdf')
         ];
+
+        // Actualizo estado de envio de correo
+        $orden->estado_email_enviado_presupuesto = Compra::FACTURA_ENVIADA;
+        $orden->save();
 
         Mail::to($data['email'])->send(new EnviarSolicitudCotizacionMailiable($data));
     }

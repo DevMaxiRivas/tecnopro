@@ -20,6 +20,9 @@ class Compra extends Model
     const CONFIRMADA = '5';
     const FINALIZADA = '6';
 
+    // Estado de envio de factura por email
+    const FACTURA_ENVIADA = '1';
+    const FACTURA_NO_ENVIADA = '0';
 
     // Nombre de la tabla que se conecta a este Modelo
     protected $table = 'compras';

@@ -24,10 +24,12 @@ return new class extends Migration
             $table->enum('estado_pedido', [Compra::PENDIENTE, Compra::EN_ESPERA, Compra::RECIBIDO, Compra::CANCELADO])->default(Compra::PENDIENTE)->comment('Estados de la solicitud de cotizacion');
             $table->text('url_presupuesto')->nullable()->comment('Este campo se utiliza para almacenar el presupuesto enviado por el proveedor');
             $table->text('url_factura_pedido')->nullable()->comment('Este campo se utiliza para almacenar la factura del pedido de cotizacion al proveedor');
-            
+            $table->enum('estado_email_enviado_presupuesto', [Compra::FACTURA_ENVIADA, Compra::FACTURA_NO_ENVIADA])->default(Compra::FACTURA_NO_ENVIADA);
+
             // Ordenes de Compra
             $table->enum('estado_compra', [Compra::PENDIENTE, Compra::ENVIADA, Compra::CONFIRMADA, Compra::FINALIZADA, Compra::CANCELADO])->nullable()->comment('Estados de la orden de compra');
             $table->text('url_factura')->nullable()->comment('Este campo se utiliza para almacenar la factura enviada al proveedor');
+            $table->enum('estado_email_enviado_compra', [Compra::FACTURA_ENVIADA, Compra::FACTURA_NO_ENVIADA])->default(Compra::FACTURA_NO_ENVIADA);
             $table->decimal('total', 20, 2)->nullable();
 
             $table->timestamps();

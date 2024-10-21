@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EnviarSolicitudCotizacionJob;
 use App\Models\Compra;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -64,7 +65,6 @@ class CompraController extends Controller
     
     }
 
-
     /**
      * Display the specified resource.
      */
@@ -89,30 +89,50 @@ class CompraController extends Controller
             Compra::CANCELADO => 'Cancelado',
         ];
 
-    return view('panel.admin.compras.edit', compact('compra','proveedores','formas_pagos', 'estados'));
+        return view('panel.admin.compras.edit', compact('compra','proveedores','formas_pagos', 'estados'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,Compra $compra)
+    public function update(Request $request, Compra $compra)
     {
-    // Validar los campos (incluyendo el estado)
-    $request->validate([
-        'estado' => 'required|in:' . implode(',', [
-            Compra::PENDIENTE,
-            Compra::EN_ESPERA,
-            Compra::RECIBIDO,
-            Compra::CANCELADO,
-        ]),
-    ]);
-    $compra->estado_pedido = $request->get('estado');
-    // Guardar los cambios
-    $compra->update();
+        // Validar los campos (incluyendo el estado)
+        $request->validate([
+            'estado' => 'required|in:' . implode(',', [
+                Compra::PENDIENTE,
+                Compra::EN_ESPERA,
+                Compra::RECIBIDO,
+                Compra::CANCELADO,
+            ]),
+        ]);
 
-    return redirect()
-            ->route('compras.index')
-            ->with( 'alert', 'Compra "' . $compra->id . '" estado actualizado exitosamente.');
+        // Agregamos el detalle de compras
+        $compra->load('detalle_compras');
+
+        if($compra->detalle_compras->count() == 0) {
+            return redirect()
+                ->back()
+                ->with('error', 'No puede actualizar la Solicitud de Cotizacion "' . $compra->id . '" sin cargarle productos.');
+        }
+
+        $compra->estado_pedido = $request->get('estado');
+        $compra->update();
+
+        // Generar el PDF
+        if($compra->estado_pedido == Compra::EN_ESPERA 
+            && is_null($compra->url_factura_pedido)) {
+            $this->generar_pdf($compra);
+        }
+
+        // Enviar correo
+        if($compra->estado_email_enviado_presupuesto == Compra::FACTURA_NO_ENVIADA) {
+            EnviarSolicitudCotizacionJob::dispatch($compra->id)->onConnection('database');
+        }
+
+        return redirect()
+                ->route('compras.index')
+                ->with( 'alert', 'Compra "' . $compra->id . '" estado actualizado exitosamente.');
     }
 
     /**
@@ -122,7 +142,8 @@ class CompraController extends Controller
     {
         //
     }
-    public function pdf(Compra $compra)
+
+    public function generar_pdf(Compra $compra)
     {
         $subtotal = 0;
         $detalle_compras = $compra->detalle_compras;
@@ -145,22 +166,23 @@ class CompraController extends Controller
         $pdf->save(storage_path('app/public/cotizaciones/' . $filename)); // Asegúrate de que esta carpeta exista
     
         // Guarda la URL en el modelo de Compra
-        $compra->url_factura_pedido = asset('storage/cotizaciones/' . $filename); // Guarda la URL
+        $compra->url_factura_pedido = 'storage/cotizaciones/' . $filename; // Guarda la URL
         $compra->save(); // No olvides guardar los cambios en la base de datos
 
-        return $pdf->download('Cotizaciones' . $compra->id . '.pdf');
+        // return $pdf->download('Cotizaciones' . $compra->id . '.pdf');
     }
 
-
-
+    // FUNCIONES DE TAMARA
 
     public function CotizacionIndex(){
         $compras = Compra::latest()->get();
         return view('panel.admin.cotizaciones.index',compact('compras')); 
     } 
+
     public function solicitarCotizacion(Compra $compra){
         return view('panel.admin.cotizaciones.solicitud',compact('compra')); 
     }
+
     public function StoreCotizacion(Request $request, Compra $compra) {
 
         $request->validate([
@@ -188,7 +210,6 @@ class CompraController extends Controller
            ->with('alert', 'Presupuesto subido exitosamente.');
     }
 
-
     public function descargarImagen($id_compra) 
     {
         $compra = Compra::findOrFail($id_compra); 
@@ -206,7 +227,5 @@ class CompraController extends Controller
             return response()->json(['error' => 'El archivo no se encuentra.'], 404);
         }
     }
-    
-   
 }
 

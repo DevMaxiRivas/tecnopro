@@ -87,8 +87,12 @@
                                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
 
                                                 </a>
+                                                
                                                 @if ($compra->estado_pedido == 1 || $compra->estado_pedido == 2)
-                                                    <a href="{{ route('compras.pdf', $compra->id) }}" title="Generar Reporte" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                    {{-- <a href="{{ route('compras.pdf', $compra->id) }}" title="Generar Reporte" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                    </a> --}}
+                                                    <a href="{{ asset($compra->url_factura_pedido) }}" target="_blank" rel="noopener noreferrer" title="Generar Reporte" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
                                                         <i class="fas fa-file-pdf"></i>
                                                     </a>
                                                 @endif
