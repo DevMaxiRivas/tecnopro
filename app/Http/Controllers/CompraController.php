@@ -139,7 +139,16 @@ class CompraController extends Controller
         
         $pdf = PDF::loadView('panel.admin.compras.pdf', compact('compra', 'detalle_compras','proveedor','subtotal','total','iva','fecha_vencimiento'));
         
-        return $pdf->download('Reporte_de_Compra_' . $compra->id . '.pdf');
+        $filename = 'cotizacion_' . $compra->id . '.pdf';
+    
+        // Guarda el archivo en la carpeta deseada
+        $pdf->save(storage_path('app/public/cotizaciones/' . $filename)); // Asegúrate de que esta carpeta exista
+    
+        // Guarda la URL en el modelo de Compra
+        $compra->url_factura_pedido = asset('storage/cotizaciones/' . $filename); // Guarda la URL
+        $compra->save(); // No olvides guardar los cambios en la base de datos
+
+        return $pdf->download('Cotizaciones' . $compra->id . '.pdf');
     }
 
 
