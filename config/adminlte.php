@@ -354,7 +354,7 @@ return [
             'text' => 'Ordenes de Compra',
             'route' => 'orden_compras.index', // ruta de inicio del crud productos
             'icon' => 'fas fa-folder-plus',
-            //'can' => 'lista_cotizaciones'
+            'can' => 'lista_ordenes_compras'
         ],
         [
             'text' => 'Formas de Pago',
@@ -374,12 +374,12 @@ return [
             'icon' => 'fas fa-shopping-cart',
             'can' => 'lista_ventas'
         ],
-        [
+        /* [
             'text' => 'Rutas de ventas',
             'route' => 'ventas.rutas',
             'icon' => 'fas fa-map-marked-alt',
             'can' => 'lista_ventas'
-        ]
+        ] */
 
         /* [
             'text' => 'pages',

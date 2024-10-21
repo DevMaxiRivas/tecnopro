@@ -17,6 +17,8 @@ let lng = null;
 let lat_text = null;
 let lng_text = null;
 
+let routingControl = null;
+
 let customControl =  L.Control.extend({  
 
     options: {
@@ -65,15 +67,26 @@ function initMap(map) {
 }
 
 function initRouting(map, positionStart, positionEnd) {
-    L.Routing.control({
+    routingControl =  L.Routing.control({
         waypoints: [
           L.latLng(positionStart.lat, positionStart.lng),
           L.latLng(positionEnd.lat, positionEnd.lng)
         ],
         language: 'es',
         draggableWaypoints: false,
+        routeWhileDragging: false,
         createMarker: function() { return null; }
     }).addTo(map);
+}
+
+function removeRouting(map) {
+    map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+            layer.remove();
+        }
+    });
+
+    if(routingControl) map.removeControl(routingControl);
 }
 
 function initGroupMarker(map, lista) {

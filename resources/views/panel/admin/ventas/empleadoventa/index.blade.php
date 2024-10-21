@@ -8,6 +8,22 @@
 {{-- Contenido de la Página --}}
 @section('content')
     <div class="container-fluid">
+        <div class="col-12 mb-3">
+
+            <a href="{{ route('ventas.rutas') }}" class="btn btn-success text-uppercase">
+                <i class="fas fa-map-marked-alt"></i>
+                Ver mapa 
+            </a>
+
+            {{-- <a href="{{ route('exportar-productos-pdf') }}" class="btn btn-danger" title="PDF" target="_blank">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+
+            <a href="{{ route('exportar-productos-excel') }}" class="btn btn-success" title="Excel">
+                <i class="fas fa-file-excel"></i>
+            </a> --}}
+        </div>
+
         @if (session('alert'))
             <div class="col-12">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

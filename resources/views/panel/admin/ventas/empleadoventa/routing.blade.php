@@ -12,6 +12,11 @@
 
 @section('content')
     <div class="row">
+        <div class="col-12 mb-3">
+            <a href="{{ route('ventas.empleadoventa.index') }}" class="btn btn-sm btn-secondary text-uppercase">
+                Volver Atrás
+            </a>
+        </div>
         <div class="col-12">
             <div class="card mb-5">
                 <div class="card-body">
@@ -82,7 +87,7 @@
         let markerStore;
         configPointDefault();
 
-        console.log(markerStore.getLatLng());
+        // console.log(markerStore.getLatLng());
 
         let id_venta = '0';
         
@@ -92,6 +97,13 @@
             const selectVenta = $('#select-venta');
 
             if(selectVenta.val() != id_venta) {
+
+                // Elimina todos los puntos y poligonos del mapa
+                removeRouting(map);
+
+                // Pinto el punto inicial de la tienda
+                configPointDefault();
+
                 button.attr('disabled', true);
 
                 id_venta = selectVenta.val();
