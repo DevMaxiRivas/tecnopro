@@ -21,7 +21,7 @@
                     </a>
                 @endif
 
-                <a href="{{ route('compras.index') }}" class="btn btn-sm btn-secondary text-uppercase">
+                <a href="{{ route('compras.CotizacionIndex') }}" class="btn btn-sm btn-secondary text-uppercase">
                     Volver Atras
                 </a>
             </div>

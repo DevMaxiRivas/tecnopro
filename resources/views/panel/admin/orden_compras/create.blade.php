@@ -22,7 +22,7 @@
                 <div class="card mb-5">
                     <div class="card-body">
                         <div class="alert alert-danger mb-0" role="alert">
-                            "No hay proveedores activos disponibles"
+                            No hay cotizaciones de proveedores disponibles
                         </div>
                     </div>
                 </div>

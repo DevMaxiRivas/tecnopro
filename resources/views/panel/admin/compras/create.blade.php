@@ -10,7 +10,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 mb-3">
-            <a href="{{ route('compras.index') }}" class="btn btn-sm btn-secondary text-uppercase">
+            <a href="{{ route('compras.CotizacionIndex') }}" class="btn btn-sm btn-secondary text-uppercase">
                 Volver Atras
             </a>
         </div>
