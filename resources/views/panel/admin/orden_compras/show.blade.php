@@ -53,8 +53,12 @@
                         @if (count($productos) > 0)
                             <form action="{{ route('orden_compras.update_precio', $orden_compras->id) }}" method="POST">
                                 @csrf
+
                                 @method('PUT')
-                                <table id="datatable" class="table table-striped table-hover w-100" style="text-align: center">
+                                
+                                <button type="submit" class="btn btn-primary mb-3">Guardar Precios</button>
+
+                                <table id="no-datatable" class="table table-striped table-hover w-100" style="text-align: center">
                                     <thead>
                                         <tr>
                                             <th scope="col" class="text-uppercase text-center">#</th>
@@ -62,6 +66,7 @@
                                             <th scope="col" class="text-uppercase text-center">Precio</th>
                                             <th scope="col" class="text-uppercase text-center">Cantidad</th>
                                             <th scope="col" class="text-uppercase text-center">Subtotal</th>
+                                            <th scope="col" class="text-uppercase text-center">Estado</th>
                                             <th scope="col" class="text-uppercase text-center">Acciones</th>
                                         </tr>
                                     </thead>
@@ -77,16 +82,23 @@
                                                 <td class="text-center">{{ $producto->cantidad }}</td>
                                                 <td class="text-center">{{ $producto->subtotal ?? '-' }}</td>
                                                 <td class="text-center">
-                                                    <!-- Botón verde -->
-                                                    {{-- <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button> --}}
-                                                    <!-- Botón rojo -->
-                                                    <button type="button" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                                    @if($producto->estado == 1)
+                                                        <span id="estado" class="badge badge-success">Agregado</span>
+                                                    @else
+                                                        <span id="estado" class="badge badge-danger">Eliminado</span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if($producto->estado == 0)
+                                                        <button id="cambiar_estado" data-estado="1" type="button" class="btn btn-success" title="Agregar"><i class="fas fa-check"></i></button>
+                                                    @else
+                                                        <button id="cambiar_estado" data-estado="0" type="button" class="btn btn-danger" title="Eliminar"><i class="fas fa-times"></i></button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <button type="submit" class="btn btn-primary">Guardar Precios</button>
                             </form>
                         @else
                             <div class="alert alert-danger mb-0" role="alert">
@@ -98,4 +110,18 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('js')
+    <script>
+
+        $('#cambiar_estado').click(function() {
+            var estadoNuevo = $(this).attr('data-estado');
+
+            var url = ``;
+
+            // $.get();
+        });
+
+    </script>
 @stop

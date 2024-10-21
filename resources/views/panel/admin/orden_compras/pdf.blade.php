@@ -68,7 +68,7 @@
             @endforeach
         </tbody>
         <tfoot>
-            <tr>
+            {{-- <tr>
                 <td colspan="2"></td>
                 <td colspan="2">SUBTOTAL</td>
                 <td><span>$</span>{{ number_format($subtotal, 2) }}</td>
@@ -77,7 +77,7 @@
                 <td colspan="2"></td>
                 <td colspan="2">IVA 21%</td>
                 <td><span>$</span>{{ number_format($iva, 2) }}</td>
-            </tr>
+            </tr> --}}
             <tr>
                 <td colspan="2"></td>
                 <td colspan="2">TOTAL</td>

@@ -75,10 +75,16 @@
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center">
-                                                @if ($compra->estado_compra !=3 )
-                                                <a href="{{ route('orden_compras.pdf', $compra->id) }}" title="Generar Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
-                                                    <i class="fas fa-file-pdf"></i>
-                                                </a>
+                                                @if ($compra->estado_compra != 3)
+                                                    @if(is_null($compra->url_factura))
+                                                        <a href="{{ route('orden_compras.pdf', $compra->id) }}" title="Generar Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                            <i class="fas fa-file-pdf"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ $compra->url_factura }}" title="Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                            <i class="fas fa-file-pdf"></i>
+                                                        </a>
+                                                    @endif
                                                  @endif
 
                                                 <a href="{{ route('orden_compras.show', $compra) }}" title="Agregar Precio" class="btn btn-sm btn-primary text-white text-uppercase mr-2">

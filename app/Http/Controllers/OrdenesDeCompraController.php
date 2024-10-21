@@ -150,8 +150,9 @@ class OrdenesDeCompraController extends Controller
             $subtotal += $detalle->subtotal; 
         }
 
-        $iva = $subtotal * 0.21;
-        $total = $subtotal + $iva;
+        // $iva = $subtotal * 0.21;
+        // $total = $subtotal + $iva;
+        $total = $subtotal;
         $fecha_emision = $compra->created_at;
         $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
         
