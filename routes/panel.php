@@ -84,6 +84,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::put('orden_compras/{id}/update_precio', [OrdenesDeCompraController::class, 'update_precio'])->name('orden_compras.update_precio');
     Route::get('/solicitudes-por-proveedor/{id}', [OrdenesDeCompraController::class, 'getSolicitudesPorProveedor']);
     
+    // Actualizar estado de producto en orden de compra
+    Route::post('orden_compras/update_estado', [OrdenesDeCompraController::class, 'update_estado']);
 
     #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
 });

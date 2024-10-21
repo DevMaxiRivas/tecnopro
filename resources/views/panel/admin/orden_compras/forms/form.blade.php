@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="mb-3 row">
+            {{-- <div class="mb-3 row">
                 <label for="id_forma_pago" class="col-sm-4 col-form-label"> * Forma de pago </label>
                 <div class="col-sm-8">
                     @if (is_null($orden_compra->id))
@@ -47,8 +47,8 @@
                     @else
                         <p> {{ $orden_compra->forma_pago->nombre}} </p>
                     @endif
-                </div>
-            </div>
+                </div> 
+            </div> --}}
 
             @if (is_null($orden_compra->id))
             <div class="mb-3 row">

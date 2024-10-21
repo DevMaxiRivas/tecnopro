@@ -49,7 +49,7 @@ class OrdenesDeCompraController extends Controller
     {
         $request->validate([
             'id_proveedor' => 'required|exists:proveedores,id',  // Verifica que el proveedor exista en la tabla 'proveedores'
-            'id_forma_pago' => 'required|exists:forma_pagos,id', // Verifica que la forma de pago exista en la tabla 'formas_pagos'
+            // 'id_forma_pago' => 'required|exists:forma_pagos,id', // Verifica que la forma de pago exista en la tabla 'formas_pagos'
             'id_compra' => 'required|exists:compras,id'
             // 'total' => 'required|numeric|min:0',  // Asegúrate de que el total sea un número y sea al menos 0
         ]);
@@ -113,7 +113,6 @@ class OrdenesDeCompraController extends Controller
         return view('panel.admin.orden_compras.edit', compact('orden_compra', 'proveedores', 'formas_pagos', 'estados'));
     }
     
-    
     /**
      * Update the specified resource in storage.
      */
@@ -139,7 +138,6 @@ class OrdenesDeCompraController extends Controller
                          ->with('alert', 'Estado de la compra "' . $orden_compra->id . '" actualizado exitosamente.');
     }
 
-    
     public function pdf(Compra $compra)
     {
         $subtotal = 0;
@@ -169,6 +167,38 @@ class OrdenesDeCompraController extends Controller
     
         // Retorna el PDF para descargar
         return $pdf->download($filename);
+    }
+
+    public function update_estado(Request $request) {
+
+        $detalleCompra = DetalleCompra::where('id_compra', $request->id_compra)
+                                    ->where('id_producto', $request->id_producto)
+                                    ->first();
+        
+        // Si no existe el producto
+        if(! $detalleCompra) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Producto no encontrado'
+            ]);
+        }
+
+        // El estado debe existir
+        if(! in_array($request->estado, [DetalleCompra::ACTIVO, DetalleCompra::INACTIVO])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Estado no encontrado'
+            ]);
+        }
+        
+        // Actualizacion del estado
+        $detalleCompra->estado = $request->estado;
+        $detalleCompra->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Estado actualizado con éxito'
+        ]);
     }
 
 }

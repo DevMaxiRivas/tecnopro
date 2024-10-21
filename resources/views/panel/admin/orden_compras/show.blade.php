@@ -83,16 +83,20 @@
                                                 <td class="text-center">{{ $producto->subtotal ?? '-' }}</td>
                                                 <td class="text-center">
                                                     @if($producto->estado == 1)
-                                                        <span id="estado" class="badge badge-success">Agregado</span>
+                                                        <span id="estado-{{ $producto->id_producto }}" class="badge badge-success">Agregado</span>
                                                     @else
-                                                        <span id="estado" class="badge badge-danger">Eliminado</span>
+                                                        <span id="estado-{{ $producto->id_producto }}" class="badge badge-danger">Eliminado</span>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
                                                     @if($producto->estado == 0)
-                                                        <button id="cambiar_estado" data-estado="1" type="button" class="btn btn-success" title="Agregar"><i class="fas fa-check"></i></button>
+                                                        <button data-id-compra="{{ $producto->id_compra }}" data-id-producto="{{ $producto->id_producto }}" data-estado="1" type="button" class="btn btn-success cambiar-estado" title="Agregar">
+                                                            <i id="icon-button-{{ $producto->id_producto }}" class="fas fa-check"></i>
+                                                        </button>
                                                     @else
-                                                        <button id="cambiar_estado" data-estado="0" type="button" class="btn btn-danger" title="Eliminar"><i class="fas fa-times"></i></button>
+                                                        <button data-id-compra="{{ $producto->id_compra }}" data-id-producto="{{ $producto->id_producto }}" data-estado="0" type="button" class="btn btn-danger cambiar-estado" title="Eliminar">
+                                                            <i id="icon-button-{{ $producto->id_producto }}" class="fas fa-times"></i>
+                                                        </button>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -115,12 +119,85 @@
 @section('js')
     <script>
 
-        $('#cambiar_estado').click(function() {
-            var estadoNuevo = $(this).attr('data-estado');
+        $('.cambiar-estado').click(function() {
+            
+            // Referencia del Boton, icono
+            var button = $(this);
 
-            var url = ``;
+            // Datos del boton
+            var estadoNuevo = button.attr('data-estado');
+            var id_compra = button.attr('data-id-compra');
+            var id_producto = button.attr('data-id-producto');
 
-            // $.get();
+            var icon = $('#icon-button-'+id_producto);
+            var badge = $('#estado-'+id_producto);
+
+            // Ruta
+            var routeUrl = `/panel/orden_compras/update_estado`;
+            
+            // Datos para la API
+            var data = {
+                'id_compra': id_compra,
+                'id_producto': id_producto,
+                'estado': estadoNuevo
+            };
+
+            // Peticion AJAX
+            $.ajax({
+                type: 'POST',
+                url: routeUrl,
+                data: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    if(response.success) {
+
+                        if(estadoNuevo == 0) {
+                            // Remover clases
+                            button.removeClass('btn-danger');
+                            icon.removeClass('fa-times');
+
+                            // Agregar clasess
+                            button.addClass('btn-success');
+                            icon.addClass('fa-check');
+
+                            // Actualizar data del boton
+                            button.attr('data-estado', '1');
+                            button.attr('title', 'Agregar');
+
+                            // Actualizar badge
+                            badge.text('Eliminado');
+                            badge.removeClass('badge-success');
+                            badge.addClass('badge-danger');
+                            
+                        } else {
+                            // Remover clases
+                            button.removeClass('btn-success');
+                            icon.removeClass('fa-check');
+
+                            // Agregar clasess
+                            button.addClass('btn-danger');
+                            icon.addClass('fa-times');
+
+                            // Actualizar data del boton
+                            button.attr('data-estado', '0');
+                            button.attr('title', 'Eliminar');
+
+                            // Actualizar badge
+                            badge.text('Agregado');
+                            badge.removeClass('badge-danger');
+                            badge.addClass('badge-success');
+                        }
+                    } else {
+                        console.log(response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
         });
 
     </script>
