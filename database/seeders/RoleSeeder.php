@@ -34,6 +34,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'lista_categorias'])->syncRoles([$rol_admin, $rol_compras]);
         Permission::create(['name' => 'lista_productos'])->syncRoles([$rol_admin, $rol_compras]);
         Permission::create(['name' => 'lista_proveedores'])->syncRoles([$rol_admin, $rol_compras]);
+        Permission::create(['name' => 'lista_cotizaciones'])->syncRoles([$rol_admin, $rol_compras]);
         Permission::create(['name' => 'lista_ordenes_compras'])->syncRoles([$rol_admin, $rol_compras]);
     }
 }

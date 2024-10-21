@@ -15,13 +15,22 @@ return new class extends Migration
         Schema::create('compras', function (Blueprint $table) {
             $table->id();
             
-            $table->unsignedBigInteger('id_empleado')->nullable(); // BIGINT(20)
+            $table->unsignedBigInteger('id_empleado')->nullable()->comment('Id del empleado que solicita la cotizacion'); // BIGINT(20)
             $table->unsignedBigInteger('id_proveedor'); // BIGINT(20)
             $table->unsignedBigInteger('id_forma_pago'); // BIGINT(20)
+            $table->unsignedBigInteger('id_empleado_compra')->nullable()->comment('Id del empleado que realiza la compra'); // BIGINT(20)
 
-            $table->enum('estado', [Compra::PENDIENTE, Compra::EN_ESPERA, Compra::RECIBIDO, Compra::CANCELADO])->default(Compra::PENDIENTE);
-            $table->string('url_factura')->nullable();
-            $table->decimal('total', 20, 2)->default(0); // DECIMAL(10, 2)
+            // Solicitud de Cotizacion
+            $table->enum('estado_pedido', [Compra::PENDIENTE, Compra::EN_ESPERA, Compra::RECIBIDO, Compra::CANCELADO])->default(Compra::PENDIENTE)->comment('Estados de la solicitud de cotizacion');
+            $table->text('url_presupuesto')->nullable()->comment('Este campo se utiliza para almacenar el presupuesto enviado por el proveedor');
+            $table->text('url_factura_pedido')->nullable()->comment('Este campo se utiliza para almacenar la factura del pedido de cotizacion al proveedor');
+            
+            // Ordenes de Compra
+            $table->enum('estado_compra', [Compra::PENDIENTE, Compra::ENVIADA, Compra::CONFIRMADA, Compra::FINALIZADA, Compra::CANCELADO])->default(Compra::PENDIENTE)->comment('Estados de la orden de compra');
+            $table->text('url_factura')->nullable()->comment('Este campo se utiliza para almacenar la factura enviada al proveedor');
+            $table->decimal('total', 20, 2)->nullable();
+
+            $table->timestamps();
             
             // Creamos la FK "id_empleado" que hace referencia al "id" de la tabla "users"
             $table->foreign('id_empleado')->references('id')->on('users');
@@ -32,7 +41,8 @@ return new class extends Migration
             // Creamos la FK "id_forma_pago" que hace referencia al "id" de la tabla "forma_pagos"
             $table->foreign('id_forma_pago')->references('id')->on('forma_pagos');
             
-            $table->timestamps();
+            // Creamos la FK "id_empleado_compra" que hace referencia al "id" de la tabla "users"
+            $table->foreign('id_empleado_compra')->references('id')->on('users');
         });
     }
 

@@ -339,10 +339,10 @@ return [
             'can' => 'lista_productos',
         ],
         [
-            'text' => 'Ordenes de compras',
-            'route' => 'compras.index', // ruta de inicio del crud productos
-            'icon' => 'fas fa-truck',
-            'can' => 'lista_ordenes_compras'
+            'text' => 'Solicitudes de Cotizacion',
+            'route' => 'compras.CotizacionIndex', // ruta de inicio del crud productos
+            'icon' => 'fas fa-file',
+            'can' => 'lista_cotizaciones'
         ],
         [
             'text' => 'Formas de Pago',

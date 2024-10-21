@@ -70,13 +70,13 @@
                                         </td>
                                         <td>{{ $compra->updated_at }}</td>
                                         <td>
-                                            @if ($compra->estado == 0)
+                                            @if ($compra->estado_pedido == 0)
                                                 <span class="badge badge-warning">Pendiente</span>
-                                            @elseif($compra->estado == 1)
+                                            @elseif($compra->estado_pedido == 1)
                                                 <span class="badge badge-primary">En espera</span>
-                                            @elseif($compra->estado == 2)
+                                            @elseif($compra->estado_pedido == 2)
                                                 <span class="badge badge-success">Recibido</span>
-                                            @elseif($compra->estado == 3)
+                                            @elseif($compra->estado_pedido == 3)
                                                 <span class="badge badge-danger">Cancelado</span>
                                             @endif
                                         </td>
@@ -87,7 +87,7 @@
                                                     <i class="fa fa-plus-square" aria-hidden="true"></i>
 
                                                 </a>
-                                                @if ($compra->estado == 1 || $compra->estado == 2)
+                                                @if ($compra->estado_pedido == 1 || $compra->estado_pedido == 2)
                                                     <a href="{{ route('compras.pdf', $compra->id) }}" title="Generar Reporte" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
                                                         <i class="fas fa-file-pdf"></i>
                                                     </a>
@@ -97,7 +97,7 @@
                                                     <i class="fa fa-times" aria-hidden="true"></i>
                                                 </a> --}}
 
-                                                @if ($compra->estado == 0 || $compra->estado == 1)
+                                                @if ($compra->estado_pedido == 0 || $compra->estado_pedido == 1)
                                                     <a href="{{ route('compras.edit', $compra) }}" title="Editar OC" class="btn btn-sm btn-secondary text-white text-uppercase me-1">
                                                         <i class="fas fa-edit" aria-hidden="true"></i>
                                                     </a>

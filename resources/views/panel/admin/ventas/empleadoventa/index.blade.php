@@ -64,7 +64,7 @@
                                                     <i class="far fa-eye" aria-hidden="true"></i>
                                                 </a>
                                                 @if (in_array($venta->estado, [1, 2, 3]))
-                                                    <a href="{{ route('ventas.empleadoventa.pdf', $venta->id) }}"
+                                                    <a href="{{ asset($venta->url_factura) }}" target="_blank"
                                                         title="Factura"
                                                         class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
                                                         <i class="fas fa-file-pdf" aria-hidden="true"></i>

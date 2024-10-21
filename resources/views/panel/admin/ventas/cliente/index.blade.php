@@ -75,24 +75,24 @@
                                                         </a>
 
                                                         <!-- <form id="cancel-form-{{ $venta->id }}"
-                                                            action="{{ route('ventas.cliente.cancelar', $venta->id) }}"
-                                                            method="POST" class="d-inline">
-                                                            @csrf
-                                                            @method('PATCH') -->
-                                                            <button id="cancel-button-{{ $venta->id }}" type="button"
-                                                                class="btn btn-sm btn-secondary text-white text-uppercase me-1"
-                                                                title="Cancelar pedido">
-                                                                <i class="fas fa-times" aria-hidden="true"></i>
-                                                            </button>
+                                                                action="{{ route('ventas.cliente.cancelar', $venta->id) }}"
+                                                                method="POST" class="d-inline">
+                                                                @csrf
+                                                                @method('PATCH') -->
+                                                        <button id="cancel-button-{{ $venta->id }}" type="button"
+                                                            class="btn btn-sm btn-secondary text-white text-uppercase me-1"
+                                                            title="Cancelar pedido">
+                                                            <i class="fas fa-times" aria-hidden="true"></i>
+                                                        </button>
                                                         <!-- </form> -->
-                                                        @endif
-                                                        @if (in_array($venta->estado, [1, 2, 3]))
-                                                    <a href="{{ route('ventas.empleadoventa.pdf', $venta->id) }}"
-                                                        title="Factura"
-                                                        class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
-                                                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                                                    </a>
-                                                @endif
+                                                    @endif
+                                                    @if (in_array($venta->estado, [1, 2, 3]))
+                                                        <a href="{{ asset($venta->url_factura) }}" target="_blank"
+                                                            title="Factura"
+                                                            class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                            <i class="fas fa-file-pdf" aria-hidden="true"></i>
+                                                        </a>
+                                                    @endif
 
                                                 </div>
                                             </td>
@@ -148,5 +148,5 @@
                 });
             }
         });
-    </script> 
+    </script>
 @stop

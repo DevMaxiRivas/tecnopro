@@ -2,11 +2,9 @@
 
 // Rutas del Panel de Administracion
 use App\Http\Controllers\CategoriaController;
-use App\Http\Controllers\DetalleComprasController;
 use App\Http\Controllers\DetalleOrdenCompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CompraController;
-use App\Http\Controllers\DetalleController;
 use App\Http\Controllers\DetalleVentaClienteController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\ProveedorController;
@@ -20,10 +18,8 @@ Route::get('/', function () {
 })->name('panel');
 
 // Grupo de rutas para usuarios autenticados
-Route::group(['middleware' => ['role:admin|empleado_ventas|cliente']], function () {
-    Route::get('/ventas/empleadoventa/pdf/{venta}', [VentaController::class, 'pdf'])->name('ventas.empleadoventa.pdf');
-});
-    
+Route::group(['middleware' => ['role:admin|empleado_ventas|cliente']], function () {});
+
 // Grupo de rutas para usuarios con Rol Cliente
 Route::group(['middleware' => ['role:cliente']], function () {
     //Mis Compras
@@ -53,6 +49,13 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::resource('/compras', CompraController::class)->names('compras');
     Route::get('/compras/pdf/{compra}', [CompraController::class, 'pdf'])->name('compras.pdf');
 
+    //Solicitud de cotizacion
+    Route::get('/solicitar-cotizacion', [CompraController::class, 'CotizacionIndex'])->name('compras.CotizacionIndex');
+    Route::get('/solicitar-cotizacion/subir/{compra}', [CompraController::class, 'solicitarCotizacion'])->name('compras.solicitarCotizacion');
+    Route::put('/solicitar-cotizacion/subir/{compra}', [CompraController::class, 'StoreCotizacion'])->name('compras.StoreCotizacion');
+    Route::get('/solicitar-cotizacion/descargar-imagen/{id}', [CompraController::class, 'descargarImagen'])->name('compras.descargarImagen');
+    //
+
     // Detalle de Compra
     Route::get('/detalle-orden-compra/{id_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
     Route::get('/detalle-orden-compra/{id_compra}', [DetalleOrdenCompraController::class, 'index'])->name('detalle-orden-compra.index');
@@ -61,6 +64,6 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Ventas
     Route::resource('/ventas/empleadoventa', VentaController::class)->names('ventas.empleadoventa');
     Route::get('/detalle_ventaempleado/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_ventaempleado.index');
- 
+
     Route::get('/ventas/empleadoventa/editar/{venta}', [VentaController::class, 'edit'])->name('ventas.empleadoventa.edit');
 });

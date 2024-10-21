@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EnviarFacturaJob;
+use App\Models\FormaPago;
 use App\Models\Producto;
+use App\Models\User;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
 
 class VentaController extends Controller
 {
@@ -41,6 +48,12 @@ class VentaController extends Controller
             $pedido->estado = Venta::PAGADO; //Cambia estado del pedido
             $pedido->save(); //Guarda el pedido exitosamente
             Producto::actualizarStocks($pedido->id);
+            $urlPDF = $this->generarFacturaPDF($pedido); //Genera factura 
+            $pedido->url_factura = $urlPDF;
+            $pedido->save(); //Guarda el pedido exitosamente
+
+            EnviarFacturaJob::dispatch($pedido->id)->onConnection('database'); //Envio factura por mail mediante cola de trabajo 
+            $pedido->email_envio_factura = $pedido->cliente->email;
 
             return redirect()
                 ->route('MandarDatosPaginaInicio')
@@ -131,14 +144,22 @@ class VentaController extends Controller
     {
         //
     }
-    public function pdf(Venta $venta)
-    {
+
+    public function generarFacturaPDF(Venta $venta)
+    { //Genero la factura una vez se pague el pedido
         $detalle_ventas = $venta->detalle_ventas;
         $cliente = $venta->cliente;
         $total = $venta->total;
         $fecha_emision = $venta->created_at;
-        $fecha_vencimiento = \Carbon\Carbon::parse($fecha_emision)->addDays(30);
+        $fecha_vencimiento = Carbon::parse($fecha_emision)->addDays(30);
         $pdf = PDF::loadView('panel.admin.ventas.empleadoventa.pdf', compact('venta', 'detalle_ventas', 'cliente', 'total', 'fecha_vencimiento'));
-        return $pdf->download('Reporte_de_Venta_' . $venta->id . '.pdf');
+
+        // Guardar el PDF en una carpeta dentro de storage/app/public
+        $pdfPath = storage_path('app/public/pdfs/facturas/');
+        $pdfFileName = 'factura_' . $venta->id . '.pdf';
+        $pdf->save($pdfPath . $pdfFileName);
+
+        // Retornar la ruta del PDF guardado
+        return '/storage/pdfs/facturas/' . $pdfFileName; //Regresa la URL PUBLICA de la factura
     }
 }

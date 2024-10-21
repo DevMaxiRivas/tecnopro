@@ -8,6 +8,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Proveedor;
 use App\Models\FormaPago;
 
+use Illuminate\Support\Facades\Storage;
+
 class CompraController extends Controller
 {
     /**
@@ -24,16 +26,12 @@ class CompraController extends Controller
      */
     public function create()
     {
-        
-        //$compras = new Compra();
         $compra = new Compra();
         $proveedores = Proveedor::get();
         $formas_pagos = FormaPago::get();
        
-
         //Retornamos la vista de creacion de productos, enviamos al compras y proveedores
         return view('panel.admin.compras.create', compact('formas_pagos','proveedores','compra')); //compact(mismo nombre de la variable)
-    
     }
 
     /**
@@ -53,8 +51,8 @@ class CompraController extends Controller
         //dd($request->get('id_forma_pago'));
         $compra->id_forma_pago = $request->get('id_forma_pago');
         // Cuando una compra se crea, se pone en estado pendiente por defecto
-        #$compras->estado=$request->get('pendiente'); 
-        //$compras->url_factura = $request->get('url_factura');
+        // $compras->estado=$request->get('pendiente'); 
+        // $compras->url_factura = $request->get('url_factura');
         $compra->total = $request->get('total',0);
         
         // Almacena la info del producto en la BD
@@ -107,7 +105,7 @@ class CompraController extends Controller
             Compra::CANCELADO,
         ]),
     ]);
-    $compra->estado = $request->get('estado');
+    $compra->estado_pedido = $request->get('estado');
     // Guardar los cambios
     $compra->update();
 
@@ -143,5 +141,62 @@ class CompraController extends Controller
         return $pdf->download('Reporte_de_Compra_' . $compra->id . '.pdf');
     }
 
+
+
+
+    public function CotizacionIndex(){
+        $compras = Compra::latest()->get();
+        return view('panel.admin.cotizaciones.index',compact('compras')); 
+    } 
+    public function solicitarCotizacion(Compra $compra){
+        return view('panel.admin.cotizaciones.solicitud',compact('compra')); 
+    }
+    public function StoreCotizacion(Request $request, Compra $compra) {
+
+        $request->validate([
+            'url_presupuesto' => 'nullable|file|mimes:jpg,png', // Validación para JPG/PNG 
+        ],[
+            'url_presupuesto.mimes' => 'Formato de archivo incorrecto',
+        ]);
+
+        if ($request->hasFile('url_presupuesto')) {
+            $image_url = $request->file('url_presupuesto')->store('public/presupuestos');
+            if (!$image_url) {
+                return response()->json(['error' => 'No se pudo almacenar el archivo.'], 500);
+            }
+            $compra->url_presupuesto = asset(str_replace('public', 'storage', $image_url));
+        } else {
+            $compra->url_presupuesto = '';
+        }
+
+        // Almacena la info en la BD
+        $compra->update();
+        //dd($compra->url_presupuesto);
+
+        return redirect()
+            ->route('compras.CotizacionIndex')
+           ->with('alert', 'Presupuesto subido exitosamente.');
+    }
+
+
+    public function descargarImagen($id_compra) 
+    {
+        $compra = Compra::findOrFail($id_compra); 
+
+        if (empty($compra->url_presupuesto)) {
+            return redirect()->back()->with('error', 'No hay presupuesto disponible en este momento');
+        }
+    
+        $filePath = str_replace('http://127.0.0.1:8000/storage/', 'public/', $compra->url_presupuesto);
+    
+        // Verifica la existencia del archivo
+        if (Storage::exists($filePath)) {
+            return Storage::download($filePath);
+        } else {
+            return response()->json(['error' => 'El archivo no se encuentra.'], 404);
+        }
+    }
+    
+   
 }
 
