@@ -29,7 +29,7 @@
             </div>
 
            
-            @if($formapago->id)
+            {{--@if($formapago->id) --}}
             <div class="mb-3 row">
                 <label for="estado" class="col-sm-4 col-form-label"> * Estado </label>
                 <div class="col-sm-8">
@@ -45,7 +45,7 @@
                     @enderror
                 </div>
             </div>
-            @endif
+            {{--@endif
             {{-- <div class="mb-3 row">
                 <label for="imagen" class="col-sm-4 col-form-label"> * Imagen </label>
                 <div class="col-sm-8">

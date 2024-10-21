@@ -345,9 +345,9 @@ return [
             'can' => 'lista_productos',
         ],
         [
-            'text' => 'Solicitud de Cotizaciones',
-            'route' => 'compras.index', // ruta de inicio del crud productos
-            'icon' => 'fas fa-truck',
+            'text' => 'Solicitudes de Cotizacion',
+            'route' => 'compras.CotizacionIndex', // ruta de inicio del crud productos
+            'icon' => 'fas fa-file',
             'can' => 'lista_cotizaciones'
         ],
         [

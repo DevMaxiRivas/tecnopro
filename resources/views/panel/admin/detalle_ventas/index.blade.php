@@ -6,10 +6,11 @@
 @section('title', 'Detalle de mis compras')
 
 @section('content_header')
-    <h1>&nbsp;<strong>Detalles de la compra N° {{ $venta->id }} </strong></h1>
+<h1>&nbsp;<strong>Detalles de la compra N° {{ $venta->id }} del cliente {{ $venta->cliente->name }}</strong></h1>
 @stop
 
 @section('content')
+
             @if (session('alert'))
                 <div class="col-12">
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
