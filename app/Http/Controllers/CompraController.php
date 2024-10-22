@@ -60,7 +60,7 @@ class CompraController extends Controller
         $compra->save();
 
         return redirect()
-                ->route('compras.index')
+                ->route('compras.CotizacionIndex')
                 ->with('alert', 'Compras "' . $compra->id . '" Agregado exitosamente ...');
     
     }
@@ -131,7 +131,7 @@ class CompraController extends Controller
         }
 
         return redirect()
-                ->route('compras.index')
+                ->route('compras.CotizacionIndex')
                 ->with( 'alert', 'Compra "' . $compra->id . '" estado actualizado exitosamente.');
     }
 

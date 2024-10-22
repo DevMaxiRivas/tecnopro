@@ -86,7 +86,7 @@ class OrdenesDeCompraController extends Controller
             $nuevo_precio = $request->precios[$detalleCompra->id_producto];
 
             // Falta validar que el precio sea valido (no vacio y mayor a 0)
-            // if(! $nuevo_precio || $nuevo_precio <= 0) continue;
+            if(! $nuevo_precio || $nuevo_precio <= 0) continue;
 
             // Actualiza el precio en la tabla detalle_compras
             $detalleCompra->precio = $nuevo_precio;
