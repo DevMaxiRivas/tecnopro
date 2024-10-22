@@ -120,8 +120,7 @@ class CompraController extends Controller
         $compra->update();
 
         // Generar el PDF
-        if($compra->estado_pedido == Compra::EN_ESPERA 
-            && is_null($compra->url_factura_pedido)) {
+        if(is_null($compra->url_factura_pedido)) {
             $this->generar_pdf($compra);
         }
 

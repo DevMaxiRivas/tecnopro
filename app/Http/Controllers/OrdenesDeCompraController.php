@@ -147,8 +147,7 @@ class OrdenesDeCompraController extends Controller
         $orden_compra->save();
 
         // Generar el PDF
-        if($orden_compra->estado_compra == Compra::ENVIADA 
-            && is_null($orden_compra->url_factura)) {
+        if(is_null($orden_compra->url_factura)) {
             $this->generar_pdf($orden_compra);
         }
 
