@@ -56,7 +56,10 @@
 
                                 @method('PUT')
                                 
-                                <button type="submit" class="btn btn-primary mb-3">Guardar Precios</button>
+                                @if ($orden_compras->estado_compra == 0)
+                                    <button type="submit" class="btn btn-primary mb-3">Guardar Precios</button>
+                                @endif
+                                
 
                                 <table id="no-datatable" class="table table-striped table-hover w-100" style="text-align: center">
                                     <thead>
@@ -67,7 +70,9 @@
                                             <th scope="col" class="text-uppercase text-center">Cantidad</th>
                                             <th scope="col" class="text-uppercase text-center">Subtotal</th>
                                             <th scope="col" class="text-uppercase text-center">Estado</th>
-                                            <th scope="col" class="text-uppercase text-center">Acciones</th>
+                                            @if ($orden_compras->estado_compra == 0)
+                                                <th scope="col" class="text-uppercase text-center">Acciones</th>        
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,8 +81,14 @@
                                                 <td class="text-center">{{ $producto->id_producto }}</td>
                                                 <td class="text-center">{{ $producto->producto->nombre }}</td>
                                                 <td class="text-center">
-                                                    <input type="number" step="1" name="precios[{{ $producto->id_producto }}]" value="{{ $producto->precio ?? '' }}" 
-                                                    class="form-control" {{ $orden_compras->estado == 'enviada' ? 'disabled' : '' }}>
+                                                    <input 
+                                                        type="number" 
+                                                        step="1"
+                                                        id="input-{{ $producto->id_producto }}"
+                                                        name="precios[{{ $producto->id_producto }}]" 
+                                                        value="{{ $producto->precio ?? '' }}"
+                                                        class="form-control" {{ $producto->estado == '0' ? 'disabled' : '' }}
+                                                    >
                                                 </td>
                                                 <td class="text-center">{{ $producto->cantidad }}</td>
                                                 <td class="text-center">{{ $producto->subtotal ?? '-' }}</td>
@@ -89,14 +100,16 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    @if($producto->estado == 0)
-                                                        <button data-id-compra="{{ $producto->id_compra }}" data-id-producto="{{ $producto->id_producto }}" data-estado="1" type="button" class="btn btn-success cambiar-estado" title="Agregar">
-                                                            <i id="icon-button-{{ $producto->id_producto }}" class="fas fa-check"></i>
-                                                        </button>
-                                                    @else
-                                                        <button data-id-compra="{{ $producto->id_compra }}" data-id-producto="{{ $producto->id_producto }}" data-estado="0" type="button" class="btn btn-danger cambiar-estado" title="Eliminar">
-                                                            <i id="icon-button-{{ $producto->id_producto }}" class="fas fa-times"></i>
-                                                        </button>
+                                                    @if ($orden_compras->estado_compra == 0)
+                                                        @if($producto->estado == 0)
+                                                            <button data-id-compra="{{ $producto->id_compra }}" data-id-producto="{{ $producto->id_producto }}" data-estado="1" type="button" class="btn btn-success cambiar-estado" title="Agregar">
+                                                                <i id="icon-button-{{ $producto->id_producto }}" class="fas fa-check"></i>
+                                                            </button>
+                                                        @else
+                                                            <button data-id-compra="{{ $producto->id_compra }}" data-id-producto="{{ $producto->id_producto }}" data-estado="0" type="button" class="btn btn-danger cambiar-estado" title="Eliminar">
+                                                                <i id="icon-button-{{ $producto->id_producto }}" class="fas fa-times"></i>
+                                                            </button>
+                                                        @endif
                                                     @endif
                                                 </td>
                                             </tr>
@@ -131,6 +144,7 @@
 
             var icon = $('#icon-button-'+id_producto);
             var badge = $('#estado-'+id_producto);
+            var input = $('#input-'+id_producto);
 
             // Ruta
             var routeUrl = `/panel/orden_compras/update_estado`;
@@ -171,6 +185,10 @@
                             badge.text('Eliminado');
                             badge.removeClass('badge-success');
                             badge.addClass('badge-danger');
+
+                            // Actualizar input
+                            input.addClass('disabled');
+                            input.attr('disabled', true);
                             
                         } else {
                             // Remover clases
@@ -189,6 +207,10 @@
                             badge.text('Agregado');
                             badge.removeClass('badge-danger');
                             badge.addClass('badge-success');
+
+                            // Actualizar input
+                            input.removeClass('disabled');
+                            input.attr('disabled', false);
                         }
                     } else {
                         console.log(response.message);

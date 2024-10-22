@@ -57,7 +57,7 @@ class Compra extends Model
     public function productos()
     {
         return $this->belongsToMany(Producto::class, 'detalle_compras', 'id_compra', 'id_producto')
-            ->withPivot(['precio', 'cantidad', 'subtotal']); // accedo a los demas atributos de la tabla "detalle_compras"
+            ->withPivot(['precio', 'cantidad', 'subtotal', 'estado']); // accedo a los demas atributos de la tabla "detalle_compras"
     }
 
     public function detalle_compras()

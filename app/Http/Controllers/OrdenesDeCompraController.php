@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\EnviarOrdenCompraJob;
 use App\Models\Compra;
 use App\Models\DetalleCompra;
 use App\Models\OrdenCompra;
@@ -44,7 +45,6 @@ class OrdenesDeCompraController extends Controller
         return response()->json(['solicitudes' => $solicitudes]);
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -67,26 +67,39 @@ class OrdenesDeCompraController extends Controller
     
     }
 
-
-
     public function update_precio(Request $request, $id)
     {
-        
         $orden_compra = Compra::with('productos')->findOrFail($id);
         $total = 0;
+
         // Itera sobre los productos y actualiza los precios
         foreach ($orden_compra->productos as $producto) {
-            if (isset($request->precios[$producto->id])) {
-                $nuevo_precio = $request->precios[$producto->id];
-                // Actualiza el precio en la tabla detalle_compras
-                $producto->pivot->precio = $nuevo_precio;
-                $producto->pivot->subtotal = $nuevo_precio * $producto->pivot->cantidad; // Recalcula el subtotal
-                $producto->pivot->save();
-                $total += $producto->pivot->subtotal; 
-            }
+
+            $detalleCompra = $producto->pivot;
+
+            // Si el producto en el detalle de compra esta inactivo
+            if($detalleCompra->estado == DetalleCompra::INACTIVO) continue;
+
+            // Si no existe el producto en el detalle de la orden de compra
+            if (! isset($request->precios[$detalleCompra->id_producto])) continue;
+
+            $nuevo_precio = $request->precios[$detalleCompra->id_producto];
+
+            // Falta validar que el precio sea valido (no vacio y mayor a 0)
+            // if(! $nuevo_precio || $nuevo_precio <= 0) continue;
+
+            // Actualiza el precio en la tabla detalle_compras
+            $detalleCompra->precio = $nuevo_precio;
+            $detalleCompra->subtotal = $nuevo_precio * $detalleCompra->cantidad; // Recalcula el subtotal
+            $detalleCompra->save();
+
+            // Total para actualizar a la Compra
+            $total += $producto->pivot->subtotal;
         }
+
         $orden_compra->total = $total;
         $orden_compra->save();
+
         // Redirige de vuelta con un mensaje de éxito
         return redirect()->route('orden_compras.show', $orden_compra->id)->with('alert', 'Precios actualizados correctamente.');
     }
@@ -132,23 +145,39 @@ class OrdenesDeCompraController extends Controller
         // Actualizar solo el estado
         $orden_compra->estado_compra = $request->estado;
         $orden_compra->save();
+
+        // Generar el PDF
+        if($orden_compra->estado_compra == Compra::ENVIADA 
+            && is_null($orden_compra->url_factura)) {
+            $this->generar_pdf($orden_compra);
+        }
+
+        // Enviar correo
+        if($orden_compra->estado_email_enviado_compra == Compra::FACTURA_NO_ENVIADA) {
+            EnviarOrdenCompraJob::dispatch($orden_compra->id)->onConnection('database');
+        }
     
         // Redireccionar con mensaje de éxito
         return redirect()->route('orden_compras.index')
                          ->with('alert', 'Estado de la compra "' . $orden_compra->id . '" actualizado exitosamente.');
     }
 
-    public function pdf(Compra $compra)
+    public function generar_pdf(Compra $compra)
     {
         $subtotal = 0;
-        $detalle_compras = $compra->detalle_compras;
+        
+        // $detalle_compras = $compra->detalle_compras;
+        $detalle_compras = DetalleCompra::where('id_compra', $compra->id)
+                                    ->where('estado', DetalleCompra::ACTIVO)
+                                    ->get();
+                                
         $proveedor = $compra->proveedores;
         
         foreach ($detalle_compras as $detalle) {
             $subtotal += $detalle->subtotal; 
         }
 
-        // $iva = $subtotal * 0.21;
+        $iva = $subtotal * 0.21;
         // $total = $subtotal + $iva;
         $total = $subtotal;
         $fecha_emision = $compra->created_at;
@@ -166,7 +195,7 @@ class OrdenesDeCompraController extends Controller
         $compra->save(); // No olvides guardar los cambios en la base de datos
     
         // Retorna el PDF para descargar
-        return $pdf->download($filename);
+        // return $pdf->download($filename);
     }
 
     public function update_estado(Request $request) {

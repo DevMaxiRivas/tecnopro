@@ -76,7 +76,7 @@
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 @if (in_array($compra->estado_compra, [4, 5, 6]))
-                                                    <a href="{{ asset($compra->url_factura) }}" title="Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
+                                                    <a href="{{ asset($compra->url_factura) }}" target="_blank" title="Factura" class="btn btn-sm btn-danger text-white text-uppercase me-1 mr-2">
                                                         <i class="fas fa-file-pdf"></i>
                                                     </a>
                                                 @endif

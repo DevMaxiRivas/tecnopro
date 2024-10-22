@@ -26,6 +26,7 @@ class EnviarOrdenCompraJob implements ShouldQueue
      * Create a new job instance.
      */
     public $id;
+
     public function __construct($id)
     {
         $this->id = $id;
@@ -36,19 +37,22 @@ class EnviarOrdenCompraJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $orden = Compra::find($this->id);
-        $proveedor = Proveedor::find($orden->id_cliente);
-        $forma_pago = FormaPago::find($orden->id_forma_pago);
+        $orden = Compra::where('id', $this->id)->first();
+        $proveedor = Proveedor::where('id', $orden->id_proveedor)->first();
+        $forma_pago = FormaPago::where('id', $orden->id_forma_pago)->first();
 
         $data = [
             'proveedor' => $proveedor->razon_social,
             'email' => $proveedor->email, // Correo del Destinatario
             'num_orden' => $orden->id,
-            'fecha_pago' => $orden->updated_at,
+            'fecha' => $orden->created_at,
             'metodo_pago' => $forma_pago->nombre,
             'total' => $orden->total,
             'urlFactura' => public_path('storage/facturas/orden_compra_' . $orden->id . '.pdf')
         ];
+
+        $orden->estado_email_enviado_compra = Compra::FACTURA_ENVIADA;
+        $orden->save();
 
         Mail::to($data['email'])->send(new EnviarOrdenCompraMailable($data));
     }
