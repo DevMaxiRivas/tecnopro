@@ -48,7 +48,6 @@ class VentaController extends Controller
             $pedido->save(); //Guarda el pedido exitosamente
 
             EnviarFacturaJob::dispatch($pedido->id)->onConnection('database'); //Envio factura por mail mediante cola de trabajo 
-            $pedido->email_envio_factura = $pedido->cliente->email;
 
             return redirect()
                 ->route('MandarDatosPaginaInicio')

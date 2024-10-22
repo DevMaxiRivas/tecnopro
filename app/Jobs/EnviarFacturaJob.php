@@ -4,7 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\EnviarFacturaMailable;
 use App\Models\FormaPago;
-use App\Models\User;
+use App\Models\EnvioVenta;
 use App\Models\Venta;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -35,7 +35,7 @@ class EnviarFacturaJob implements ShouldQueue
     public function handle(): void
     {
         $venta = Venta::find($this->id);
-        $cliente = User::find($venta->id_cliente);
+        $cliente = EnvioVenta::where('id_venta', $this->id)->first();
         $forma_pago = FormaPago::find($venta->id_forma_pago);
 
         $data = [
