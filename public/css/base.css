@@ -9,11 +9,11 @@
 :root {
 
     /* Colores Generales */
-    --background: #f8f9fa !important;
+    --background: #f0f0f0 !important;
     --content-box: #dee2e6 !important;
     --element-box: #ecf1f5 !important;
-    --text-heading: #232629 !important;
-    --text-general-g: #343a40 !important;
+    --text-heading: #163f68 !important;
+    --text-general-g: #0b3968 !important;
     --text-general-w: #dee2e6 !important;
     --enfasis: #1A9FDA !important;
 
