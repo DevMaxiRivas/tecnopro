@@ -89,8 +89,16 @@
                                                     {{ $producto->stock_disponible }}
                                                 @endif
                                             <td>
-                                                <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre }}"
-                                                    class="img-fluid" style="width: 150px;">
+                                                {{-- <img src="{{ $producto->url_imagen }}" alt="{{ $producto->nombre }}" class="img-fluid" style="width: 150px;"> --}}
+                                                @if ($producto->url_imagen)
+                                                    <a class="btn btn-sm btn-primary" href="{{ $producto->url_imagen }}" target="_blank" rel="noopener noreferrer">
+                                                        <i class="fas fa-image"></i>
+                                                    </a>
+                                                @else
+                                                    <button class="btn btn-sm btn-secondary" disabled>
+                                                        <i class="far fa-eye-slash" aria-hidden="true"></i>
+                                                    </button>
+                                                @endif
                                             </td>
                                             <td>
                                                 @if ($producto->activo == 0)
@@ -117,13 +125,13 @@
                                         </td> --}}
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="#{{-- route('producto.show', $producto) --}}" title="Ver" data-toggle="modal"
+                                                    {{-- <a href="#" title="Ver" data-toggle="modal"
                                                         data-target="#productoModal{{ $producto->id }}"
                                                         class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
                                                         <i class="far fa-eye" aria-hidden="true"></i>
-                                                    </a>
+                                                    </a> --}}
 
-                                                    <a href="#{{-- route('producto.edit', $producto) --}}" title="Editar"
+                                                    <a href="{{ route('producto.edit', $producto) }}" title="Editar"
                                                         class="btn btn-sm btn-warning text-white text-uppercase me-1">
                                                         <i class="fas fa-edit" aria-hidden="true"></i>
                                                     </a>
@@ -138,7 +146,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        @include('panel.admin.productos.show')
+                                        {{-- @include('panel.admin.productos.show') --}}
                                     @endforeach
                                 </tbody>
                             </table>

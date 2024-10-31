@@ -78,7 +78,11 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        //Recuperamos todas las categorias de la BD
+        $categorias = Categoria::get(); //Recordar importar el modelo Categoria
+
+        //Retornamos la vista de creacion de productos, enviamos al producto y las categorias
+        return view('panel.admin.productos.edit', compact('producto', 'categorias'));
     }
 
     /**
@@ -86,7 +90,25 @@ class ProductoController extends Controller
      */
     public function update(ProductoRequest $request, Producto $producto)
     {
-        //
+        $producto->id_categoria = $request->get('id_categoria');
+        $producto->nombre = $request->get('nombre');
+        $producto->descripcion = $request->get('descripcion');
+        $producto->stock_disponible = $request->get('stock_disponible');
+        $producto->precio = $request->get('precio');
+        $producto->activo = $request->get('activo');
+
+        if ($request->hasFile('imagen')) {
+            // Subida de imagen al servidor (public > storage)
+            $image_url = $request->file('imagen')->store('public/productos');
+            $producto->url_imagen = asset(str_replace('public', 'storage', $image_url));
+        }
+
+        // Almacena la info del producto en la BD
+        $producto->save();
+
+        return redirect()
+            ->route('producto.index')
+            ->with('alert', 'Producto "' . $producto->nombre . '" actualizado exitosamente.');
     }
 
     /**

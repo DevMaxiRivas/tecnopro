@@ -1,6 +1,7 @@
 <div class="card mb-5">
     <form action="{{ $producto->id ? route('producto.update', $producto) : route('producto.store') }}" method="POST">
         @csrf
+
         @if ($producto->id)
             @method('PUT')
         @endif
@@ -9,7 +10,7 @@
 
             {{-- @if (!empty($producto->id)) --}}
             <div class="mb-3 row">
-                <img src="{{ $producto->url_imagen ?? 'https://via.placeholder.com/1024'}}" alt="{{ $producto->nombre }}" id="image_preview" class="img-fluid" style="object-fit: cover; object-position: center; height: 420px; width: 100%;">
+                <img src="{{ $producto->url_imagen ?? asset('imagenes/logo-tecnopro-claro.png') }}" alt="{{ $producto->nombre }}" id="image_preview" class="img-fluid" style="object-fit: contain; object-position: center; height: 400px; width: 100%;">
             </div>
             {{-- @endif --}}
 

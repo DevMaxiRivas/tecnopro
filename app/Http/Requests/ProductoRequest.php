@@ -24,7 +24,7 @@ class ProductoRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'imagen' => 'bail|required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'imagen' => 'bail|image|mimes:jpeg,png,jpg,webp|max:2048',
             'nombre' => 'bail|required|max:255',
             'id_categoria' => 'bail|required|integer|exists:categorias,id,activo,'.Producto::ACTIVO,
             'precio' => 'bail|required|numeric|min:0',
@@ -38,8 +38,13 @@ class ProductoRequest extends FormRequest
             $rules['nombre'] = [
                 'required',
                 'max:255',
-                Rule::unique('productos')->ignore($productoId),
+                Rule::unique('productos')->ignore($productoId), // Esto evita que se produzca un error de unicidad si el usuario no cambia el nombre del producto existente.
             ];
+
+            $rules['imagen'] = 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048';
+
+        } else if($this->isMethod('post')){ // para el metodo store
+            $rules['imagen'] = 'bail|required|image|mimes:jpeg,png,jpg,webp|max:2048';
         }
     
         return $rules;
@@ -51,6 +56,7 @@ class ProductoRequest extends FormRequest
             'imagen.required' => 'Imagen requerida',
             'imagen.mimes' => 'Formato incorrecto (jpeg,png,jpg,webp).',
             'imagen.max' => 'Tamaño de la imagen excede los 2048 mb',
+            'imagen.image' => 'Debe subir un archivo con formato de imagen',
 
             'nombre.required' => 'Nombre requerido',
             'nombre.max' => 'Formato incorrecto, no debe excederse de los 120 caracteres',
