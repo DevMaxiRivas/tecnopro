@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name'); // nombre completo del usuario
             $table->integer('dni');
             $table->string('telefono')->nullable();
-            $table->string('domicilio');
+            $table->string('domicilio')->nullable();
             $table->enum('activo', [User::ACTIVO, User::INACTIVO])->default(User::ACTIVO);
             $table->string('email')->unique();
             $table->string('latitud')->nullable();

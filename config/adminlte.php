@@ -326,17 +326,24 @@ return [
             // 'can'         => 'lista_categorias' //permiso de admin<i class="far fa-project-diagram"></i>
         ],
         [
+            'text'        => 'Mis Usuarios',
+            'route'       => 'usuarios.index',
+            'icon'        => 'fas fa-users',
+            'can'         => 'lista_usuarios',
+            'active'      => ['regex:@^usuarios/[a-z]+$@'],
+        ],
+        [
             'text'        => 'Mis Categorias',
             'route'       => 'categoria.index',
             'icon'        => 'fas fa-project-diagram',
-            'can'         => 'lista_categorias' //permiso de admin<i class="far fa-project-diagram"></i>
+            'can'         => 'lista_categorias'
         ],
         [
             'text'        => 'Mis Proveedores',
             'route'       => 'proveedor.index',
             // 'route' => 'proveedor.index',
             'icon'        => 'far fa-handshake',
-            'can'         => 'lista_proveedores' //permiso de admin<i class="far fa-project-diagram"></i>
+            'can'         => 'lista_proveedores'
         ],
         [
             'text' => 'Mis productos',

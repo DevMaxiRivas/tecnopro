@@ -12,12 +12,17 @@ use App\Http\Controllers\VentaClienteController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
 use App\Http\Controllers\OrdenesDeCompraController;
-
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('panel.index');
 })->name('panel');
+
+// Grupo de rutas para usuarios con rol Admin y Empleado de Ventas
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::resource('/usuarios', UsuariosController::class)->names('usuarios');
+});
 
 // Grupo de rutas para usuarios con rol Admin y Empleado de Ventas
 Route::group(['middleware' => ['role:admin|empleado_ventas']], function () {

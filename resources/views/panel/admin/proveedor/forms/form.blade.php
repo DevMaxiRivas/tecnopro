@@ -55,7 +55,7 @@
             </div>
 
             <div class="mb-3 row">
-                <label for="telefono" class="col-sm-4 col-form-label"> * TELEFONO </label>
+                <label for="telefono" class="col-sm-4 col-form-label"> * Telefono </label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control @error('telefono') is-invalid @enderror"
                         id="telefono" name="telefono"
@@ -68,7 +68,7 @@
             </div>
  
             <div class="mb-3 row">
-                <label for="email" class="col-sm-4 col-form-label"> * EMAIL </label>
+                <label for="email" class="col-sm-4 col-form-label"> * Email </label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control @error('email') is-invalid @enderror"
                         id="email" name="email"
@@ -79,22 +79,23 @@
                     @enderror
                 </div>
             </div>
-            @if($proveedor->id)
-            <div class="mb-3 row">
-                <label for="estado" class="col-sm-4 col-form-label"> * Estado </label>
-                <div class="col-sm-8">
-                    <select class="form-control @error('activo') is-invalid @enderror" name="activo" id="activo" value="{{ old('activo', optional($proveedor)->activo) }}">
-                        <option value="1" @if ($proveedor->activo) {{"selected"}} @endif>Activado</option>
-                        <option value="0" @if (isset($proveedor->activo) and !$proveedor->activo) {{"selected"}} @endif>Desactivado</option>
-                    </select>
 
-                    {{-- <input type="text" class="form-control @error('activo') is-invalid @enderror" id="activo"
-                        name="activo" value="{{ old('activo', optional($proveedor)->activo) }}"> --}}
-                    @error('activo')
-                        <div class="invalid-feedback"> {{ $message }} </div>
-                    @enderror
+            @if($proveedor->id)
+                <div class="mb-3 row">
+                    <label for="estado" class="col-sm-4 col-form-label"> * Estado </label>
+                    <div class="col-sm-8">
+                        <select class="form-control @error('activo') is-invalid @enderror" name="activo" id="activo" value="{{ old('activo', optional($proveedor)->activo) }}">
+                            <option value="1" @if ($proveedor->activo) {{"selected"}} @endif>Activado</option>
+                            <option value="0" @if (isset($proveedor->activo) and !$proveedor->activo) {{"selected"}} @endif>Desactivado</option>
+                        </select>
+
+                        {{-- <input type="text" class="form-control @error('activo') is-invalid @enderror" id="activo"
+                            name="activo" value="{{ old('activo', optional($proveedor)->activo) }}"> --}}
+                        @error('activo')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
+                    </div>
                 </div>
-            </div>
             @endif
             {{-- <div class="mb-3 row">
                 <label for="imagen" class="col-sm-4 col-form-label"> * Imagen </label>
