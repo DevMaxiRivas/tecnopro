@@ -67,7 +67,7 @@
                 </div>
 
                 <div class="col-md-6 col-sm-6 rounded-4 element-box categoria-hover add-shadow mb-2 mt-2" style="height: 250px; width: 300px;">
-                    <a href="/productos/categoria/8">
+                    <a href="/productos/categoria/4">
                     <div class="row p-2">
                         <div class="col-md-12 justify-center zoom-effect" style="height: 12rem;">
                             <img src="{{ asset('imagenes/cat-consolas.png')}}" alt="#" style="height: 100%; width: 100%; object-fit: contain;">
@@ -93,13 +93,13 @@
                 </div>
                 
                 <div class="col-md-6 col-sm-6 rounded-4 element-box categoria-hover add-shadow mb-2 mt-2" style="height: 250px; width: 300px;">
-                    <a href="/productos/categoria/3">
+                    <a href="/productos/categoria/2">
                     <div class="row p-2">
                         <div class="col-md-12 justify-center zoom-effect" style="height: 12rem;">
                             <img src="{{ asset('imagenes/cat-componentes.png')}}" alt="#" style="height: 100%; width: 100%; object-fit: contain;">
                         </div>
                         <div class="col-md-12 text-center">
-                            <div class="text-enfasis">Discos rígidos</div>
+                            <div class="text-enfasis">Almacenamiento</div>
                         </div>
                     </div>
                     </a>
@@ -110,20 +110,20 @@
             <div class="row justify-content-around">
 
                 <div class="col-md-6 col-sm-6 rounded-4 element-box categoria-hover add-shadow mb-2 mt-2" style="height: 250px; width: 300px;">
-                    <a href="/productos/categoria/2">
+                    <a href="/productos/categoria/5">
                     <div class="row p-2">
                         <div class="col-md-12 justify-center zoom-effect" style="height: 12rem;">
                             <img src="{{ asset('imagenes/cat-celulares.png')}}" alt="#" style="height: 100%; width: 100%; object-fit: contain;">
                         </div>
                         <div class="col-md-12 text-center">
-                            <div class="text-enfasis">SSD</div>
+                            <div class="text-enfasis">Monitores</div>
                         </div>
                     </div>
                     </a>
                 </div>
 
                 <div class="col-md-6 col-sm-6 rounded-4 element-box categoria-hover add-shadow mb-2 mt-2" style="height: 250px; width: 300px;">
-                    <a href="/productos/categoria/10">
+                    <a href="/productos/categoria/6">
                     <div class="row p-2">
                         <div class="col-md-12 justify-center zoom-effect" style="height: 12rem;">
                             <img src="{{ asset('imagenes/cat-relojes.png')}}" alt="#" style="height: 100%; width: 100%; object-fit: contain;">
@@ -136,7 +136,7 @@
                 </div>
 
                 <div class="col-md-6 col-sm-6 rounded-4 element-box categoria-hover add-shadow mb-2 mt-2" style="height: 250px; width: 300px;">
-                    <a href="/productos/categoria/1">
+                    <a href="/productos/categoria/7">
                     <div class="row p-2">
                         <div class="col-md-12 justify-center zoom-effect" style="height: 12rem;">
                             <img src="{{ asset('imagenes/cat-notebook.png')}}" alt="#" style="height: 100%; width: 100%; object-fit: contain;">
@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="col-md-6 col-sm-6 rounded-4 element-box categoria-hover add-shadow mb-2 mt-2" style="height: 250px; width: 300px;">
-                    <a href="/productos/categoria/6">
+                    <a href="/productos/categoria/8">
                         <div class="row p-2">
                             <div class="col-md-12 justify-center zoom-effect" style="height: 12rem;">
                                 <img src="{{ asset('imagenes/cat-audio.png')}}" alt="#" style="height: 100%; width: 100%; object-fit: contain;">
@@ -181,13 +181,13 @@
                             <a href="/productos/categoria/3"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-1.jpg') }}')"></div></a>
                         </div>
                         <div class="col-md-6 col-sm-12 p-2" style="height: 23 rem">
-                            <a href="/productos/categoria/1"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-1.jpg') }}')"></div></a>
+                            <a href="productos/detallesProducto/17"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-1.jpg') }}')"></div></a>
                         </div>
                         <div class="col-md-6 col-sm-12 p-2" style="height: 23rem">
                             <a href="/productos/categoria/3"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-2.jpg') }}')"></div></a>
                         </div>
                         <div class="col-md-12 col-sm-12 p-2" style="height: 19rem">
-                            <a href="/productos/categoria/6"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-2.jpg') }}')"></div></a>
+                            <a href="productos/detallesProducto/8"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-2.jpg') }}')"></div></a>
                         </div>
 
                     </div>
@@ -212,7 +212,7 @@
 
             <div class="row justify-content-around mt-2 mb-4">
 
-                @foreach ($productos->where('activo', 1)->take(5) as $producto)
+                @foreach ($productos->where('activo', 1)->take(24) as $producto)
                 @php $imagen = explode('|', $producto->url_imagen) @endphp
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-6 justify-content-around">
                     <div class="card element-box m-2 producto-card zoom-shadow" style="width: 14rem;">
@@ -262,7 +262,7 @@
     }
 
     .categoria-hover:hover::after {
-        height: 30%; /* Muestra el degradado azul desde abajo hacia arriba */
+        height: 35%; /* Muestra el degradado azul desde abajo hacia arriba */
     }
 </style>
 
