@@ -1,3 +1,4 @@
-<footer class="main-footer">
-    @yield('footer')
+<footer class="main-footer d-flex justify-content-center">
+    {{-- @yield('footer') --}}
+    &copy; TecnoPro - {{ date('Y') }}
 </footer>
