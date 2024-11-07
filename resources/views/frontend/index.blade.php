@@ -178,7 +178,7 @@
                     <div class="row p-4 content-box content-box mx-auto add-shadow">
 
                         <div class="col-md-12 col-sm-12 col-12 p-2" style="height: 19rem">
-                            <a href="/productos/categoria/3"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-1.jpg') }}')"></div></a>
+                            <a href="/productos/categoria/8"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-1.jpg') }}')"></div></a>
                         </div>
                         <div class="col-md-6 col-sm-12 p-2" style="height: 23 rem">
                             <a href="productos/detallesProducto/17"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-1.jpg') }}')"></div></a>
@@ -187,7 +187,7 @@
                             <a href="/productos/categoria/3"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-2.jpg') }}')"></div></a>
                         </div>
                         <div class="col-md-12 col-sm-12 p-2" style="height: 19rem">
-                            <a href="productos/detallesProducto/8"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-2.jpg') }}')"></div></a>
+                            <a href="productos/detallesProducto/9"><div class="container bg-cover img-fluid rounded-4 zoom-effect" style="height: 100%; background-image:url('{{ asset('imagenes/categoria-ancha-2.jpg') }}')"></div></a>
                         </div>
 
                     </div>

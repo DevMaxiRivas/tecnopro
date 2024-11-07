@@ -32,38 +32,4 @@
     
 @stop
 
-@section('js')
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const updateButton = document.getElementById('update-button');
-
-        if (updateButton) {
-            updateButton.addEventListener('click', function (event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    title: '¡Atención!',
-                    html: `
-                        <div style="text-align: center;">
-                            <i class="fas fa-exclamation-triangle" style="color: #D91C35; font-size: 50px;"></i>
-                            <h4 style="margin-top: 10px;">Confirmación de Actualización</h4>
-                            <p style="color: #343a40;">¿Estás seguro de que deseas actualizar los datos?</p>
-                        </div>
-                    `,
-                    showCancelButton: true,
-                    confirmButtonColor: '#1AD992',
-                    cancelButtonColor: '#D91C35',
-                    confirmButtonText: 'Sí, actualizar!',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        event.target.closest('form').submit();
-                    }
-                });
-            });
-        }
-    });
-</script>
-@stop
-
 
