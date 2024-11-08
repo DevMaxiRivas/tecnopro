@@ -43,7 +43,7 @@
                     <input class="form-control barra-busqueda" type="search" name="busqueda" id="busquedaInput"
                         placeholder="Buscar..." aria-label="Search">
                     <button class="btn btn-outline-info btn-busqueda" type="submit">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <i class="fas fa-search"></i>
                     </button>
                 </div>
             </form>

@@ -59,14 +59,14 @@
     border-left: none;
     border-radius: 0 5px 5px 0;
     border-color: #ccc;
-    color: #ccc;
+    color: #7f7d7d;
     transition: 0.3s all ease-in-out;
 }
 
 .btn-busqueda:hover {
     border-left: 1px solid var(--enfasis);
     border-color: var(--enfasis);
-    color: #Fff;
+    color: #fff;
     background-color: var(--enfasis);
 }
 
