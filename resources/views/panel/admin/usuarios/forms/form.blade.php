@@ -26,7 +26,7 @@
                 <label for="dni" class="col-sm-4 col-form-label"> * DNI</label>
                 <div class="col-sm-8">
                     <input type="text" class="form-control @error('dni') is-invalid @enderror"
-                        id="dni" dni="dni"
+                        id="dni" name="dni"
                         value="{{ old('dni', optional($usuario)->dni) }}">
                     
                     @error('dni')
@@ -38,13 +38,17 @@
             <div class="mb-3 row">
                 <label for="rol" class="col-sm-4 col-form-label"> * Rol </label>
                 <div class="col-sm-8">
-                    <select class="form-control @error('rol') is-invalid @enderror" name="rol" id="rol" value="{{ old('rol', optional($usuario)->rol) }}">
-                        @foreach ($roles as $rol)
-                            <option value="{{ $rol }}" @if ($usuario->rol == $rol) {{"selected"}} @endif>
-                                {{ strtoupper(str_replace('_', ' ', $rol)) }}
-                            </option>
-                        @endforeach
-                    </select>
+                    @if ($usuario->id)
+                        <p> {{ strtoupper(str_replace('_', ' ', $usuario->rol)) }} </p>
+                    @else
+                        <select class="form-control @error('rol') is-invalid @enderror" name="rol" id="rol" value="{{ old('rol', optional($usuario)->rol) }}">
+                            @foreach ($roles as $rol)
+                                <option value="{{ $rol }}" @if ($usuario->rol == $rol) {{"selected"}} @endif>
+                                    {{ strtoupper(str_replace('_', ' ', $rol)) }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @endif
 
                     @error('rol')
                         <div class="invalid-feedback"> {{ $message }} </div>
@@ -52,18 +56,20 @@
                 </div>
             </div>
 
-            <div class="mb-3 row">
-                <label for="password" class="col-sm-4 col-form-label"> * Contraseña </label>
-                <div class="col-sm-8">
-                    
-                    <input type="text" class="form-control @error('password') is-invalid @enderror"
-                        id="password" dni="password">
+            @if (! $usuario->id)
+                <div class="mb-3 row">
+                    <label for="password" class="col-sm-4 col-form-label"> * Contraseña </label>
+                    <div class="col-sm-8">
+                        
+                        <input type="text" class="form-control @error('password') is-invalid @enderror"
+                            id="password" name="password">
 
-                    @error('password')
-                        <div class="invalid-feedback"> {{ $message }} </div>
-                    @enderror
+                        @error('password')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
+                    </div>
                 </div>
-            </div>
+            @endif
 
             <div class="mb-3 row">
                 <label for="email" class="col-sm-4 col-form-label"> * Email </label>
@@ -92,17 +98,33 @@
             </div>
 
             <div class="mb-3 row">
-                <label for="direccion" class="col-sm-4 col-form-label"> * Direccion </label>
+                <label for="domicilio" class="col-sm-4 col-form-label"> * Domicilio </label>
                 <div class="col-sm-8">
-                    <input type="text" class="form-control @error('direccion') is-invalid @enderror"
-                        id="direccion" name="direccion"
-                        value="{{ old('direccion', optional($usuario)->direccion) }}">
+                    <input type="text" class="form-control @error('domicilio') is-invalid @enderror"
+                        id="domicilio" name="domicilio"
+                        value="{{ old('domicilio', optional($usuario)->domicilio) }}">
                     
-                    @error('direccion')
+                    @error('domicilio')
                         <div class="invalid-feedback"> {{ $message }} </div>
                     @enderror
                 </div>
             </div>
+
+            @if ($usuario->id)
+                <div class="mb-3 row">
+                    <label for="activo" class="col-sm-4 col-form-label"> * Estado </label>
+                    <div class="col-sm-8">
+                        <select class="form-control @error('activo') is-invalid @enderror" name="activo" id="activo" value="{{ old('activo', optional($usuario)->activo) }}">
+                            <option value="1" @if ($usuario->activo) {{ "selected" }} @endif>Activado</option>
+                            <option value="0" @if (isset($usuario->activo) and ! $usuario->activo) {{ "selected" }} @endif>Desactivado</option>
+                        </select>
+                        
+                        @error('activo')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
+                    </div>
+                </div>
+            @endif
 
         </div>
 

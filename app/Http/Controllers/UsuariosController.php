@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
 {
@@ -23,9 +25,26 @@ class UsuariosController extends Controller
         return view('panel.admin.usuarios.create', compact('usuario', 'roles'));
     }
 
-    public function store(Request $request) 
+    public function store(UserRequest $request) 
     {
+        $usuario = new User();
 
+        $usuario->rol = $request->rol;
+        $usuario->name = $request->name;
+        $usuario->dni = $request->dni;
+        $usuario->telefono = $request->telefono;
+        $usuario->domicilio = $request->domicilio;
+        $usuario->email = $request->email;
+        $usuario->password = Hash::make($request->password);
+        $usuario->assignRole($request->rol);
+
+        $usuario->save();
+
+        // Falta enviar email al usuario
+        
+        return redirect()
+            ->route('usuarios.index')
+            ->with('alert', 'Usuario "' . $usuario->name . '" creado exitosamente.');
     }
 
     public function show(User $user)
@@ -40,9 +59,20 @@ class UsuariosController extends Controller
         return view('panel.admin.usuarios.edit', compact('usuario', 'roles'));
     }
 
-    public function update(Request $request, User $user) 
+    public function update(UserRequest $request, User $usuario) 
     {
+        $usuario->update([
+            'name' => $request->name,
+            'dni' => $request->dni,
+            'telefono' => $request->telefono,
+            'domicilio' => $request->domicilio,
+            'email' => $request->email,
+            'activo' => $request->activo
+        ]);
 
+        return redirect()
+            ->route('usuarios.index')
+            ->with('alert', 'Usuario "' . $usuario->name . '" actualizado exitosamente.');
     }
 
     public function destroy(User $user) 
