@@ -58,25 +58,26 @@
             </div> 
             
 
-        @if ($compra->id)
-            <div class="mb-3 row">
-                <label for="estado" class="col-sm-4 col-form-label"> * Estado </label>
-                <div class="col-sm-8">
-                    <select id="estado" name="estado" class="form-control @error('estado') is-invalid @enderror">
-                        <option disabled selected>Seleccione una estado</option>
-                        @foreach($estados as $key => $estado_pedido)
-                            <option value="{{ $key }}" {{ $compra->estado_pedido == $key ? 'selected' : '' }}>
-                            {{ $estado_pedido }}
-                            </option>
-                        @endforeach
-                    </select>
-                    
-                    @error('estado')
-                        <div class="invalid-feedback"> {{ $message }} </div>
-                    @enderror
+            @if ($compra->id)
+                <div class="mb-3 row">
+                    <label for="estado" class="col-sm-4 col-form-label"> * Estado </label>
+                    <div class="col-sm-8">
+                        <select id="estado" name="estado" class="form-control @error('estado') is-invalid @enderror">
+                            <option disabled selected>Seleccione una estado</option>
+                            @foreach($estados as $key => $estado_pedido)
+                                <option value="{{ $key }}" {{ $compra->estado_pedido == $key ? 'selected' : '' }}>
+                                {{ $estado_pedido }}
+                                </option>
+                            @endforeach
+                        </select>
+                        
+                        @error('estado')
+                            <div class="invalid-feedback"> {{ $message }} </div>
+                        @enderror
+                    </div>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
             
         <div class="card-footer d-flex justify-content-end items-center">
             <button type="submit" class="btn btn-success text-uppercase">
