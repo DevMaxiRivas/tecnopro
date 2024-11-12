@@ -51,6 +51,7 @@
                                 <th scope="col" class="text-uppercase text-center">Telefono</th>
                                 <th scope="col" class="text-uppercase text-center">Email</th>
                                 <th scope="col" class="text-uppercase text-center">Activo</th>
+                                <th scope="col" class="text-uppercase text-center">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -81,10 +82,10 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center">
-                                        <a href="#{{-- route('proveedor.show', $proveedor) --}}" title="Ver" data-toggle="modal" data-target="#proveedorModal{{ $proveedor->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
+                                        {{--<a href="{{ route('proveedor.show', $proveedor)}}" title="Ver" data-toggle="modal" data-target="#proveedorModal{{ $proveedor->id }}" class="btn btn-sm btn-info text-white text-uppercase me-1 mr-2">
                                             <i class="far fa-eye" aria-hidden="true"></i>
-                                        </a>
-                                        <a href="#{{-- route('proveedor.edit', $proveedor) --}}" title="Editar" class="btn btn-sm btn-warning text-white text-uppercase me-1">
+                                        </a>--}}
+                                        <a href="{{ route('proveedor.edit', $proveedor) }}" title="Editar" class="btn btn-sm btn-warning text-white text-uppercase me-1">
                                             <i class="fas fa-edit" aria-hidden="true"></i>
                                         </a>
                                     </div>
