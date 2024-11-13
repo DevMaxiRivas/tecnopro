@@ -14,6 +14,5 @@ class DetalleVentaController extends Controller
     {
         $venta = Venta::find($venta);
         $productos = DetalleVenta::where('id_venta', $venta->id)->get();
-
         return view('panel.admin.detalle_ventaempleado.index', compact('productos', 'venta'));
     }}

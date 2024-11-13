@@ -69,6 +69,8 @@
                                                 <span class="badge badge-primary">Enviado</span>
                                             @elseif ($venta->estado == 4)
                                                 <span class="badge badge-danger">Cancelado</span>
+                                            @elseif ($venta->estado == 5)
+                                                <span class="badge badge-success">Entregado</span>
                                             @endif
                                         </td>
                                         <td>${{ number_format($venta->total, 2) }}</td>
