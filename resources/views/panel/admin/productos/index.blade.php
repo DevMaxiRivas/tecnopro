@@ -127,6 +127,9 @@
                                                         class="btn btn-sm btn-warning text-white text-uppercase me-1">
                                                         <i class="fas fa-edit" aria-hidden="true"></i>
                                                     </a>
+                                                    {{-- <a href="{{ route('graficos-productos')}}" class="btn btn-primary" title="ChartJs">
+                                                        <i class="fas fa-chart-pie"></i>
+                                                    </a> --}}
 
                                                     {{-- <form action="{{ route('producto.destroy', $producto) }}" method="POST">
                                                     @csrf 
