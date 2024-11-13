@@ -59,7 +59,7 @@
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
                                             <td class="text-center">
                                                 @if ($producto->precio)
-                                                    {{ $producto->precio }}
+                                                    ${{ number_format($producto->precio, 2) }}
                                                 @else
                                                     -
                                                 @endif

@@ -357,6 +357,13 @@ return [
             'can' => 'lista_compras'
         ],
         [
+            'text'        => 'Mi Perfil',
+            /* 'url'         => '#', */
+            'route'       => 'cliente.editar',
+            'icon'        =>  'fas fa-id-card',
+            'can'         => 'lista_compras' //permiso de clientes */
+        ],
+        [
             'text' => 'Ventas',
             'route' => 'ventas.empleadoventa.index',
             'icon' => 'fas fa-shopping-cart',

@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductoRequest;
 use App\Models\Categoria;
 use App\Models\Producto;
+
 use Illuminate\Http\Request;
+
+
 
 class ProductoController extends Controller
 {
@@ -118,4 +121,7 @@ class ProductoController extends Controller
 
         return response()->json($productos, 200);
     }
+
+
+    
 }

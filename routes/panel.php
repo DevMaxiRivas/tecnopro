@@ -13,6 +13,9 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserController;
+
+
 Route::get('/', function () {
     return view('panel.index');
 })->name('panel');
@@ -29,6 +32,14 @@ Route::group(['middleware' => ['role:cliente']], function () {
 
     //Detalle de mis compras
     Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
+
+    //inicio
+    Route::get('/inicio', [UserController::class, 'index'])->name('cliente.index');
+    //Editar
+    Route::get('/editar', [UserController::class, 'editar'])->name('cliente.editar');
+    //Actualizar datos
+    Route::put('/actualizar/{cliente}', [UserController::class, 'actualizar'])->name('cliente.actualizar');
+
 });
 
 // Grupo de rutas para usuarios con Rol Admin y Empleado de Compras
@@ -66,4 +77,9 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/detalle_ventaempleado/{id_venta}', [DetalleVentaController::class, 'index'])->name('detalle_ventaempleado.index');
 
     Route::get('/ventas/empleadoventa/editar/{venta}', [VentaController::class, 'edit'])->name('ventas.empleadoventa.edit');
+
+    //Graficos
+    Route::get('/home/clientes', [UserController::class, 'graficoMejoresClientes'])->name('grafico-mejores-clientes');
+    Route::get('/home/cli', [UserController::class, 'graficoClientes'])->name('graficos-clientes');
+
 });
