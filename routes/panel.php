@@ -70,6 +70,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('/detalle-orden-compra/{id_compra}/agregar', [DetalleOrdenCompraController::class, 'agregarProductos'])->name('detalle-orden-compra.agregar');
     Route::get('/detalle-orden-compra/{id_compra}', [DetalleOrdenCompraController::class, 'index'])->name('detalle-orden-compra.index');
     Route::post('/detalle-orden-compra/guardar', [DetalleOrdenCompraController::class, 'guardarDetallesCompras'])->name('detalle-orden-compra.guardar');
+    Route::get('/detalle-orden-compra/exportar-excel/{id_compra}', [DetalleOrdenCompraController::class, 'exportarDetalleCompraExcel'])->name('detalle-orden-compra.exportar-excel');
+    Route::post('/detalle-orden-compra/importar-excel', [DetalleOrdenCompraController::class, 'importarDetalleCompraExcel'])->name('detalle-orden-compra.importar-excel');
 
     // Ventas
     Route::resource('/ventas/empleadoventa', VentaController::class)->names('ventas.empleadoventa');

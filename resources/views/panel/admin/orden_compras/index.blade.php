@@ -21,7 +21,7 @@
                 
                 <a href="{{ route('orden_compras.create') }}" class="btn btn-success text-uppercase">
                     Nueva Orden de Compra
-                </a> 
+                </a>
             </div>
 
             {{-- Mostrar alertas en caso de actualizaciones o errores --}}
@@ -45,7 +45,7 @@
                                     <tr>
                                         <th scope="col" class="text-uppercase">Código</th>
                                         <th scope="col" class="text-uppercase">Proveedor</th>
-                                        <th scope="col" class="text-uppercase">Última modificación</th>
+                                        <th scope="col" class="text-uppercase">Fecha de creación</th>
                                         <th scope="col" class="text-uppercase">Estado</th>
                                         <th scope="col" class="text-uppercase text-center">Acciones</th>
                                     </tr>
@@ -59,7 +59,7 @@
                                             <br>
                                             <span class="badge badge-light">{{ $compra->proveedor->email }}</span>
                                         </td>
-                                        <td>{{ $compra->updated_at }}</td>
+                                        <td>{{ $compra->created_at }}</td>
                                         <td>
                                             @if ($compra->estado_compra == 4)
                                                 <span class="badge badge-primary">Enviada</span>

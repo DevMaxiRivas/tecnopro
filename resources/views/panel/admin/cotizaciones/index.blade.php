@@ -57,7 +57,7 @@
                                 <tr>
                                     <th scope="col" class="text-uppercase">Codigo</th>
                                     <th scope="col" class="text-uppercase">Proveedor</th>
-                                    <th scope="col" class="text-uppercase">Última modificacion</th>
+                                    <th scope="col" class="text-uppercase">Fecha de creación</th>
                                     <th scope="col" class="text-uppercase">Estado</th>
                                     <th scope="col" class="text-uppercase text-center">Acciones</th>
                                 </tr>
@@ -71,7 +71,7 @@
                                     <br>
                                     <span class="badge badge-light">{{ $compra->proveedor->email }}</span>
                                     </td>
-                                    <td>{{ $compra->updated_at }}</td>
+                                    <td>{{ $compra->created_at }}</td>
                                     <td>
                                         @if ($compra->estado_pedido == 0)
                                             <span class="badge badge-warning">Pendiente</span>

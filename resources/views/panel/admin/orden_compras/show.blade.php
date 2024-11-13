@@ -50,6 +50,19 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+
+                        @if ($orden_compras->estado_compra == 0)
+                        <div class="d-flex justify-content-start align-items-center mb-2">
+                            <a href="{{ route('detalle-orden-compra.exportar-excel', $orden_compras->id) }}" class="btn btn-success mr-2" title="Exportar excel">
+                                <i class="fas fa-file-excel" aria-hidden="true"></i> Exportar Excel
+                           </a>
+
+                            <a title="Importar Excel" data-toggle="modal" data-target="#productoModal" class="btn btn-success">
+                                <i class="fas fa-file-excel" aria-hidden="true"></i> Importar Excel
+                            </a>
+                        </div>
+                        @endif
+
                         @if (count($productos) > 0)
                             <form action="{{ route('orden_compras.update_precio', $orden_compras->id) }}" method="POST">
                                 @csrf
@@ -59,7 +72,6 @@
                                 @if ($orden_compras->estado_compra == 0)
                                     <button type="submit" class="btn btn-primary mb-3">Guardar Precios</button>
                                 @endif
-                                
 
                                 <table id="no-datatable" class="table table-striped table-hover w-100" style="text-align: center">
                                     <thead>
@@ -81,17 +93,22 @@
                                                 <td class="text-center">{{ $producto->id_producto }}</td>
                                                 <td class="text-center">{{ $producto->producto->nombre }}</td>
                                                 <td class="text-center">
-                                                    <input 
-                                                        type="number" 
-                                                        step="1"
-                                                        id="input-{{ $producto->id_producto }}"
-                                                        name="precios[{{ $producto->id_producto }}]" 
-                                                        value="{{ $producto->precio ?? '' }}"
-                                                        class="form-control" {{ $producto->estado == '0' ? 'disabled' : '' }}
-                                                    >
+                                                    @if ($orden_compras->estado_compra === '0')
+                                                        <input 
+                                                            type="number" 
+                                                            step="1"
+                                                            id="input-{{ $producto->id_producto }}"
+                                                            name="precios[{{ $producto->id_producto }}]" 
+                                                            value="{{ $producto->precio ?? '' }}"
+                                                            class="form-control" {{ $orden_compras->estado_compra !== '0' ? 'disabled' : '' }}
+                                                        > 
+                                                    @else
+                                                        $ {{ $producto->precio }}
+                                                    @endif
+                                                    
                                                 </td>
                                                 <td class="text-center">{{ $producto->cantidad }}</td>
-                                                <td class="text-center">{{ $producto->subtotal ?? '-' }}</td>
+                                                <td class="text-center">{{ $producto->subtotal ? '$ '.$producto->subtotal: '-' }}</td>
                                                 <td class="text-center">
                                                     @if($producto->estado == 1)
                                                         <span id="estado-{{ $producto->id_producto }}" class="badge badge-success">Agregado</span>
@@ -124,6 +141,33 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productoModalLabel"> Importar Excel </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ route('detalle-orden-compra.importar-excel') }}" method="POST" enctype="multipart/form-data">
+                    
+                    @csrf
+
+                    <div class="modal-body">
+                        <input type="file" id="file" name="file" aria-describedby="inputGroupFileAddon01">
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Subir</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

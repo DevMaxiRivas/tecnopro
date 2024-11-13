@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\OrdenCompraExport;
+use App\Imports\OrdenCompraImport;
 use App\Models\Categoria;
 use App\Models\Compra;
 use App\Models\DetalleCompra;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DetalleOrdenCompraController extends Controller
 {
@@ -54,5 +57,22 @@ class DetalleOrdenCompraController extends Controller
         }
 
         return response()->json(['success' => true, 'productos_por_agregar' => $detalle, 'orden_compra_id' => $orden_compra_id, 'detalles' => $detalles]);
+    }
+
+    public function exportarDetalleCompraExcel($orden_compra) {
+        return Excel::download(new OrdenCompraExport($orden_compra), 'orden_compra_'.$orden_compra.'.xlsx');     
+    }
+
+    public function importarDetalleCompraExcel(Request $request) {
+
+        // Validar que el archivo exista y sea un archivo Excel
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        // Procesar el archivo y cargar los datos
+        Excel::import(new OrdenCompraImport, $request->file('file'));
+
+        return back()->with('success', 'Importación realizada correctamente.');
     }
 }
