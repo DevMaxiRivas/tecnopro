@@ -44,3 +44,9 @@
 
 @push('js')
 @endpush
+
+    </form>
+</div>
+
+@push('js')
+@endpush

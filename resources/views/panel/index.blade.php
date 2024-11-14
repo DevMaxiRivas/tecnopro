@@ -15,15 +15,15 @@
 
         @role('admin|empleado_ventas|empleado_compras')
             {{-- @foreach ($results as $result)
-        <div class="col-lg-3 col-md-4 col-sm-12">
-            <div class="card">
-                <div class="card-body border-left-blue">
-                    <h5 class="card-title text-lg font-weight-bold ">{{ $result['nombre'] }}</h5>
-                    <p class="card-text text-xl font-weight-bold text-right">{{ $result['cantidad']}}</p>
+            <div class="col-lg-3 col-md-4 col-sm-12">
+                <div class="card">
+                    <div class="card-body border-left-blue">
+                        <h5 class="card-title text-lg font-weight-bold ">{{ $result['nombre'] }}</h5>
+                        <p class="card-text text-xl font-weight-bold text-right">{{ $result['cantidad']}}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        @endforeach --}}
+            @endforeach --}}
 
             <div class="col-lg-3 col-md-4 col-sm-12">
                 <div class="card">
@@ -76,6 +76,39 @@
             </div>
         @endrole
     </div>
+
+    @role('admin|empleado_ventas|empleado_compras')
+    <div class="row">
+        <!-- BAR CHART STOCK PRODUCTOS -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-warehouse" style="font-size: 24px; margin-right: 8px;"></i>
+                        <strong>Stock de Productos</strong>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <canvas id="barChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- PIE CHART VENTAS POR MÉTODOS DE PAGO -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-credit-card" style="font-size: 24px; margin-right: 8px;"></i>
+                        <strong>Ventas por Métodos de Pago</strong>
+                    </div>
+                </div>
+                <div class="card-body h-50">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
 
         <!-- REGISTRO DE CLIENTES -->
@@ -100,11 +133,10 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <canvas id="barChart"></canvas>
+                    <canvas id="barChartclientes"></canvas>
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="row">
@@ -132,48 +164,7 @@
             </div>
         </div>
     </div>
-
-@stop
-
-@section('content')
-    @role('admin')
-        <h1><b>Panel Estadistico</b></h1>
-        <div class="card">
-            <div class="container-fluid pt-2">
-                <div class="row">
-
-                    <!-- REGISTRO DE CLIENTES -->
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <strong>Registro de Clientes <i class="fa fa-users" aria-hidden="true"></i></strong>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="lineChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- MEJORES CLIENTES -->
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header bg-primary text-white">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <strong>Mejores Clientes <i class="fa fa-users" aria-hidden="true"></i></strong>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <canvas id="barChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
     @endrole
-
 @stop
 
 @section('css')
@@ -182,7 +173,6 @@
         {{-- <link rel="stylesheet" href="{{ asset('css/leaflet/leaflet-gesture-handling.min.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('css/leaflet/control-fullscreen.css') }}">
         <link rel="stylesheet" href="{{ asset('css/leaflet/markercluster.css') }}">
-
         <link rel="stylesheet" href="{{ asset('css/mapa.css') }}">
     @endrole
 @stop
@@ -193,7 +183,6 @@
         {{-- <script src="{{ asset('js/leaflet/leaflet-gesture-handling.min.js') }}"></script> --}}
         <script src="{{ asset('js/leaflet/control-fullscreen.js') }}"></script>
         <script src="{{ asset('js/leaflet/markercluster.min.js') }}"></script>
-
         <script src="{{ asset('js/util/mapa.js') }}"></script>
         <script src="{{ asset('js/util/modal.js') }}"></script>
         <script src="{{ asset('js/panel/home.js') }}"></script>
@@ -203,7 +192,7 @@
         <script>
             $(document).ready(function() {
                 const lineChart = document.getElementById('lineChart').getContext('2d');
-                const barChart = document.getElementById('barChart').getContext('2d');
+                const barChart = document.getElementById('barChartclientes').getContext('2d');
 
                 const configDataLineChart = $('#config_linechart');
                 const configDataBarChart = $('#config_barchart');
@@ -416,7 +405,7 @@
                                         "beginAtZero": true,
                                         "callback": function(value, index, values) {
                                             return addDollarSymbol ? '$' + value :
-                                            value; // Agrega el símbolo de dólar solo si addDollarSymbol es true
+                                                value; // Agrega el símbolo de dólar solo si addDollarSymbol es true
                                         }
                                     }
                                 }]
@@ -433,8 +422,161 @@
                 cargarYGraficar("/panel/graficos-productos", "barChartVentas", "Cantidad de Productos más vendidos",
                     "bar", true, false); // Primer gráfico: sin símbolo $
                 cargarYGraficar("/panel/graficos-productos2", "barChartCompras", "Costos por mes", "line", false,
-                true); // Segundo gráfico: con símbolo $
+                    true); // Segundo gráfico: con símbolo $
+            });
+        </script>
+
+        <script>
+            $(function() {
+                const barChart = document.getElementById('barChart').getContext('2d');
+                const configDataBarChart = $('#config_barchart');
+                // Peticion AJAX para extraer datos de la BD y graficar
+                $.get('/panel/graficos-productos1', function(response) {
+                        response = JSON.parse(response);
+                        // Si hay exito en la petición
+                        if (response.success) {
+                            let labels = response.data[0];
+                            let count = response.data[1];
+                            // Para Graficar el Diagrama de Barras (BarChart)
+                            graficar(barChart, 'bar', labels, count, 'Cantidad', configDataBarChart);
+                        } else {
+                            console.log(response.message);
+                        }
+                    })
+                    .fail(function(error) {
+                        console.log(error.statusText, error.status);
+                    });
+                // Grafica cualquier gráfico estadistico de ChartJs
+                function graficar(context, typeGraphic, label, count, title, inputData) {
+                    // Inicio de la configuracion de ChartJs
+                    let configChart = `{
+                "type": "${typeGraphic}",
+                "data": {
+                    "labels": ${ JSON.stringify(label) },
+                    "datasets": [{
+                        "label": "${title}",
+                        "data": ${ JSON.stringify(count) },
+                         "backgroundColor": [
+                            "rgba(255, 159, 64, 0.2)",
+                            "rgba(54, 162, 235, 0.2)",
+                            "rgba(75, 192, 192, 0.2)",  
+                            "rgba(153, 102, 255, 0.2)",
+                            "rgba(255, 99, 132, 0.2)"
+                        ],
+                        "borderColor": [
+                            "rgba(255, 159, 64, 1)",
+                            "rgba(54, 162, 235, 1)",
+                            "rgba(75, 192, 192, 1)",
+                            "rgba(153, 102, 255, 1)",
+                            "rgba(255, 99, 132, 1)"
+                        ],
+                        "borderWidth": 2
+                    }]
+                }`;
+                    // Si es alguno de estos graficos, iniciarán en el punto 0
+                    if (typeGraphic === 'bar' || typeGraphic === 'horizontalBar') {
+                        configChart += `
+                ,"options": {
+                    "scales": {
+                        "xAxes": [{
+                            "ticks": {
+                                "beginAtZero": true,
+                                "display": false
+                            }
+                        }],
+                        "yAxes": [{
+                            "ticks": {
+                                "beginAtZero": true
+                            }
+                        }]
+                    }
+                }
+                `;
+                    }
+                    configChart += '}'; // Cierre del JSON
+                    // Guardamos el string en el input data del formulario correspondiente
+                    inputData.val(configChart);
+                    // JSON.parse(string) -> convierte el string a JSON
+                    let myChart = new Chart(context, JSON.parse(configChart));
+                }
             });
         </script>
     @endrole
-@endsection
+    <!-- VENTAS POR MÉTODOS DE PAGO  -->
+    @role('admin')
+        <script>
+            $(function() {
+                const pieChart = document.getElementById('pieChart').getContext('2d');
+                const configDataPieChart = $('#config_piechart')
+                // Peticion AJAX para extraer datos de la BD y graficar
+                $.get('/panel/graficos-ventasmetodos', function(response) {
+                        response = JSON.parse(response);
+                        // Si hay exito en la petición
+                        if (response.success) {
+                            let labels = response.data[0];
+                            let count = response.data[1];
+                            // Para Graficar el Diagrama de Barras (BarChart)
+                            graficar(pieChart, 'pie', labels, count, 'Cantidad de Productos por Categoria',
+                                configDataPieChart);
+                        } else {
+                            console.log(response.message);
+                        }
+                    })
+                    .fail(function(error) {
+                        console.log(error.statusText, error.status);
+                    });
+                // Grafica cualquier gráfico estadistico de ChartJs
+                function graficar(context, typeGraphic, label, count, title, inputData) {
+                    // Inicio de la configuracion de ChartJs
+                    let configChart = `{
+                "type": "${typeGraphic}",
+                "data": {
+                    "labels": ${ JSON.stringify(label) },
+                    "datasets": [{
+                        "label": "${title}",
+                        "data": ${ JSON.stringify(count) },
+                        "backgroundColor": [
+                            "rgba(54, 162, 235, 0.2)",
+                            "rgba(75, 192, 192, 0.2)",
+                            "rgba(153, 102, 255, 0.2)",  
+                            "rgba(255, 99, 132, 0.2)"
+                        ],
+                        "borderColor": [
+                            "rgba(54, 162, 235, 1)",
+                            "rgba(75, 192, 192, 1)",
+                            "rgba(153, 102, 255, 1)",
+                            "rgba(255, 99, 132, 1)"
+                        ],
+                        "borderWidth": 2
+                    }]
+                }`;
+                    // Si es alguno de estos graficos, iniciarán en el punto 0
+                    if (typeGraphic === 'bar' || typeGraphic === 'horizontalBar') {
+                        configChart += `
+                ,"options": {
+                    "scales": {
+                        "xAxes": [{
+                            "ticks": {
+                                "beginAtZero": true,
+                                "display": false
+                            }
+                        }],
+                        "yAxes": [{
+                            "ticks": {
+                                "beginAtZero": true
+                            }
+                        }]
+                    }
+                }
+                `;
+                    }
+                    configChart += '}'; // Cierre del JSON
+                    // Guardamos el string en el input data del formulario correspondiente
+                    inputData.val(configChart);
+                    // JSON.parse(string) -> convierte el string a JSON
+                    let myChart = new Chart(context, JSON.parse(configChart));
+                }
+            });
+        </script>
+    @endrole
+@stop

@@ -312,4 +312,33 @@ class ProductoController extends Controller
         return view('panel.admin.productos.graficos_productos2');
     }
 
+    public function graficosProductosxStock() {
+        if (request()->ajax()) {
+            $labels = [];
+            $counts = [];
+            // Obtener los 5 productos con menor stock disponible, ordenados de manera decreciente
+            $productosConMenorStock = Producto::orderBy('stock_disponible', 'asc')->take(5)->get()->sortByDesc('stock_disponible');
+            // Preparar los datos para el gráfico
+            foreach ($productosConMenorStock as $producto) {
+                $labels[] = $producto->nombre;
+                $counts[] = $producto->stock_disponible;
+            }
+            // Retornar los datos para el gráfico
+            $response = [
+                'success' => true,
+                'data' => [$labels, $counts]
+            ];
+            return json_encode($response);
+        }
+        // Si no es AJAX, retorna la vista normal
+        return view('panel');
+    }
 }
+
+   
+
+         
+         
+ 
+
+

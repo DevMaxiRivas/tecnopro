@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -201,4 +202,32 @@ class VentaController extends Controller
 
         return view('panel.admin.ventas.empleadoventa.routing', compact('ventas'));
     }
+
+    public function graficosVentasxMetodos(){
+        if (request()->ajax()) {
+            $labels = [];
+            $counts = [];
+            // Obtener las ventas agrupadas por método de pago
+            $ventasAgrupadas = Venta::with('forma_pago')
+                ->select(DB::raw('id_forma_pago, COUNT(*) as total'))
+                ->groupBy('id_forma_pago')
+                ->orderBy('total', 'desc')
+                ->get();
+            // Preparar los datos para el gráfico
+            foreach ($ventasAgrupadas as $venta) {
+                $labels[] = $venta->forma_pago ? $venta->forma_pago->nombre : 'Desconocido';
+                $counts[] = $venta->total;
+            }
+            // Retornar los datos para el gráfico
+            $response = [
+                'success' => true,
+                'data' => [$labels, $counts]
+            ];
+            return json_encode($response);
+        }
+        // Si no es AJAX, retorna la vista normal
+        return view('panel');
+    }
 }
+
+ 

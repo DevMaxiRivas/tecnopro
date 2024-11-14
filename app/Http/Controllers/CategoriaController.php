@@ -73,14 +73,14 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, Categoria $categoria)
     {
-        $categoria->nombre = $request->get('nombre');
-        $categoria->activo = $request->get('activo');
-
-        $categoria->update();
-
-        return redirect()
-            ->route('categoria.index')
-            ->with( 'alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
+         // Validar solo el campo de estado
+         $categoria->nombre = $request->get('nombre');
+         $categoria->activo = $request->get('activo');
+         // Actualiza la info del producto en la BD
+         $categoria->update();
+         return redirect()
+             ->route('categoria.index')
+             ->with('alert', 'Categoria "' . $categoria->nombre . '" actualizada exitosamente.');
     }
 
     public function cambiarEstado(Request $request) {}
