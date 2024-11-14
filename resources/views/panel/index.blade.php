@@ -87,10 +87,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <!-- BAR CHART para Productos más comprados -->
+    <!-- BAR CHART para Productos más comprados -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white">
