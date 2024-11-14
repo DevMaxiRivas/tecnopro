@@ -10,8 +10,6 @@ use App\Models\Producto;
 use DateTime;
 use Illuminate\Http\Request;
 
-
-
 class ProductoController extends Controller
 {
     public function index()
@@ -271,6 +269,9 @@ class ProductoController extends Controller
         if (request()->ajax()) {
             $labels = [];
             $costsByMonth = [];
+
+            // Establecer la localización en español
+            setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain', 'es_ES', 'es');
     
             // Obtener todos los detalles de compra
             $detalles = DetalleCompra::get();
@@ -296,7 +297,10 @@ class ProductoController extends Controller
     
             // Preparar los datos para el gráfico
             foreach ($costsByMonth as $mes => $costoTotal) {
-                $labels[] = DateTime::createFromFormat('!m', $mes)->format('F'); // Convertir número del mes a nombre del mes
+                $monthNumber = $mes;
+                $monthName = strftime('%B', mktime(0, 0, 0, $monthNumber, 1));  // Nombre del mes en español
+                //$labels[] = DateTime::createFromFormat('!m', $mes)->format('F'); // Convertir número del mes a nombre del mes
+                $labels[] = ucfirst($monthName);
                 $costs[] = $costoTotal; // Costo total del mes
             }
     

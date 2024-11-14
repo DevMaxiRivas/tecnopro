@@ -16,7 +16,7 @@ class OrdenesDeCompraController extends Controller
 
     public function index()
     {
-        $compras_finalizadas = Compra::whereNotNull('estado_compra')->latest()->get();
+        $compras_finalizadas = Compra::whereNotNull('estado_compra')->orderBy('id', 'DESC')->get();
         return view('panel.admin.orden_compras.index', compact('compras_finalizadas'));
     }
 
