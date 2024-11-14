@@ -21,6 +21,7 @@ class OrdenCompraImport implements ToModel, WithHeadingRow
 
         if($detalle) {
             $detalle->precio = $row['precio'];
+            $detalle->subtotal = $row['precio'] * $detalle->cantidad;
             $detalle->save();
         }
 

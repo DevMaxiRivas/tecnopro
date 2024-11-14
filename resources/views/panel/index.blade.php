@@ -25,7 +25,7 @@
             </div>
             @endforeach --}}
 
-            <div class="col-lg-3 col-md-4 col-sm-12">
+            <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body border-left-blue">
                         <h5 class="card-title text-lg font-weight-bold">
@@ -41,7 +41,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-12">
+            <div class="col-lg-6 col-md-6 col-sm-12">
                 <div class="card">
                     <a href="{{ route('reporte.ventas') }}" class="text-dark">
                         <div class="card-body border-left-blue">
