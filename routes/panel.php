@@ -11,6 +11,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaClienteController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
+
 use App\Http\Controllers\OrdenesDeCompraController;
 
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     
     // Actualizar estado de producto en orden de compra
     Route::post('orden_compras/update_estado', [OrdenesDeCompraController::class, 'update_estado']);
+    Route::get('graficos-productos1',[ProductoController::class,'graficosProductosxStock'])->name('graficos-productos1');
+    Route::get('graficos-ventasmetodos',[VentaController::class,'graficosVentasxMetodos'])->name('graficos-ventasmetodos');
 
     #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
 });
