@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Jobs\EnviarDatosCuentaJob;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class UsuariosController extends Controller
 
         $usuario->save();
 
-        // Falta enviar email al usuario
+        EnviarDatosCuentaJob::dispatch($usuario, $request->password)->onConnection('database');
         
         return redirect()
             ->route('usuarios.index')

@@ -18,7 +18,7 @@ class ProveedorSeeder extends Seeder
             'cuit' => '22345123451',
             'direccion' => 'Florida 537 - Buenos Aires',
             'telefono' => '541170799997',
-            'email' => 'ventas@fullh4rd.com.ar',
+            'email' => 'ventas@ventas.com.ar',
             'activo' => Proveedor::ACTIVO
         ]);
     }
