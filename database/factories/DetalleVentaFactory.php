@@ -18,7 +18,7 @@ class DetalleVentaFactory extends Factory
     {
         $producto = Producto::inRandomOrder()->first();
         $venta = Venta::inRandomOrder()->first();
-        $cantidad = $this->faker->numberBetween(1, 10);
+        $cantidad = $this->faker->numberBetween(1, 3);
         $subtotal = $producto->precio * $cantidad;
         $venta->total += $subtotal;
         $venta->save();
