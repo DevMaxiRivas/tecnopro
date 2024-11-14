@@ -98,5 +98,9 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     // Actualizar estado de producto en orden de compra
     Route::post('orden_compras/update_estado', [OrdenesDeCompraController::class, 'update_estado']);
 
+    //GRAFICOS PRODUCTOS
+    Route::get('graficos-productos',[ProductoController::class,'graficosProductosxCategoria'])->name('graficos-productos');
+    Route::get('graficos-productos2',[ProductoController::class,'graficosProductosxSolicitudes'])->name('graficos-productos2');
+
     #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
 });

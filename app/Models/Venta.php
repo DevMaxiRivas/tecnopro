@@ -16,10 +16,24 @@ class Venta extends Model
     const ENVIADO = '3';
     const CANCELADO = '4';
     const ENTREGADO = '5';
-
+    
     // Estado de envio de factura por email
     const FACTURA_ENVIADA = '1';
     const FACTURA_NO_ENVIADA = '0';
+
+    protected $fillable = [
+        'id_forma_pago',
+        'id_cliente',
+        'id_empleado',
+        'estado',
+        'url_factura',
+        'total',
+        'link_pago',
+        'email_envio_factura',
+        'estado_factura',
+        'created_at',
+        'updated_at',
+    ];
 
     public function cliente()
     {

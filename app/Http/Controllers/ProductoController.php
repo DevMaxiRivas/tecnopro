@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductoRequest;
 use App\Models\Categoria;
+use App\Models\DetalleCompra;
+use App\Models\DetalleVenta;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
@@ -140,4 +142,127 @@ class ProductoController extends Controller
 
         return response()->json($productos, 200);
     }
+
+
+    /* public function graficosProductosxCategoria() {
+        // Si se hace una peticion AJAX
+        if(request()->ajax()) {
+            $labels = [];
+            $counts = [];
+
+            $categorias = Categoria::get();
+            foreach($categorias as $categoria) {
+                $labels[] = $categoria->nombre;
+                $counts[] = Producto::where('id_categoria', $categoria->id)->count();
+            }
+
+            $response = [
+                'success' => true,
+                'data' => [$labels, $counts]
+            ];
+
+            return json_encode($response);
+        }
+
+        return view('panel.admin.productos.graficos_productos');
+    } */
+
+
+    public function graficosProductosxCategoria() {
+        // Si se hace una petición AJAX
+        if(request()->ajax()) {
+            $labels = [];
+            $counts = [];
+    
+            // Obtener los detalles de ventas
+            $detalles = DetalleVenta::get();
+    
+            // Crear un array para almacenar la suma de cantidades por producto
+            $productosVendidos = [];
+    
+            // Recorrer los detalles de ventas y acumular las cantidades por producto
+            foreach ($detalles as $detalle) {
+                if (isset($productosVendidos[$detalle->id_producto])) {
+                    // Acumular la cantidad vendida para el producto
+                    $productosVendidos[$detalle->id_producto] += $detalle->cantidad;
+                } else {
+                    // Inicializar la cantidad para un producto
+                    $productosVendidos[$detalle->id_producto] = $detalle->cantidad;
+                }
+            }
+    
+            // Ordenar los productos por la cantidad vendida (de mayor a menor)
+            arsort($productosVendidos);
+    
+            // Tomar solo los 4 productos más vendidos
+            $topProductos = array_slice($productosVendidos, 0, 4, true);
+    
+            // Recorrer los productos más vendidos y preparar los datos para el gráfico
+            foreach ($topProductos as $idProducto => $cantidadVendida) {
+                $producto = Producto::find($idProducto); // Obtener el producto por ID
+                $labels[] = $producto->nombre; // Obtener el nombre del producto
+                $counts[] = $cantidadVendida; // Obtener la cantidad vendida
+            }
+    
+            // Retornar los datos para el gráfico
+            $response = [
+                'success' => true,
+                'data' => [$labels, $counts]
+            ];
+    
+            return json_encode($response);
+        }
+    
+        return view('panel.admin.productos.graficos_productos');
+    }
+
+    public function graficosProductosxSolicitudes() {
+        // Si se hace una petición AJAX
+        if(request()->ajax()) {
+            $labels = [];
+            $counts = [];
+    
+            // Obtener los detalles de ventas
+            $detalles = DetalleCompra::get();
+    
+            // Crear un array para almacenar la suma de cantidades por producto
+            $productosComprados = [];
+    
+            // Recorrer los detalles de ventas y acumular las cantidades por producto
+            foreach ($detalles as $detalle) {
+                if (isset($productosComprados[$detalle->id_producto])) {
+                    // Acumular la cantidad vendida para el producto
+                    $productosComprados[$detalle->id_producto] += $detalle->cantidad;
+                } else {
+                    // Inicializar la cantidad para un producto
+                    $productosComprados[$detalle->id_producto] = $detalle->cantidad;
+                }
+            }
+    
+            // Ordenar los productos por la cantidad vendida (de mayor a menor)
+            arsort($productosComprados);
+    
+            // Tomar solo los 4 productos más vendidos
+            $topProductos = array_slice($productosComprados, 0, 4, true);
+    
+            // Recorrer los productos más vendidos y preparar los datos para el gráfico
+            foreach ($topProductos as $idProducto => $cantidadComprada) {
+                $producto = Producto::find($idProducto); // Obtener el producto por ID
+                $labels[] = $producto->nombre; // Obtener el nombre del producto
+                $counts[] = $cantidadComprada; // Obtener la cantidad vendida
+            }
+    
+            // Retornar los datos para el gráfico
+            $response = [
+                'success' => true,
+                'data' => [$labels, $counts]
+            ];
+    
+            return json_encode($response);
+        }
+    
+        return view('panel.admin.productos.graficos_productos2');
+    }
+    
+
 }
