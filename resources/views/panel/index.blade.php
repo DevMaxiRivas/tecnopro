@@ -58,31 +58,36 @@
     @endrole
 </div>
 
-<div class="row">
-    <!-- BAR CHART -->
+    <div class="row">
+        <!-- BAR CHART para Productos más vendidos -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <strong>Productos más vendidos</strong>
-                        {{--<form action="{{ route('exportar-graficos-pdf') }}" method="POST" target="_blank">
-                            @csrf
-                            @method('POST')
-
-                            <input id="config_barchart" name="config_grafics" type="text" hidden>
-
-                            <button id="button_form_barchart" type="submit" class="btn btn-danger" title="Imprimir BarChart PDF">
-                                <i class="fas fa-file-pdf"></i>
-                            </button>
-                        </form>--}}
-                    </div>
+                    <strong>Productos más vendidos</strong>
                 </div>
                 <div class="card-body">
-                    <canvas id="barChart"></canvas>
+                    <canvas id="barChartVentas"></canvas>
                 </div>
             </div>
         </div>
-</div>
+    </div>
+
+    <div class="row">
+        <!-- BAR CHART para Productos más comprados -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <strong>Productos más comprados</strong>
+                </div>
+                <div class="card-body">
+                    <canvas id="barChartCompras"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 @stop
 
@@ -110,7 +115,7 @@
     @endrole
 
     @role('admin')
-    <script>
+   {{--  <script>
         $(function() {
             const barChart = document.getElementById('barChart').getContext('2d');
 
@@ -195,7 +200,86 @@
                 let myChart = new Chart(context, JSON.parse(configChart));
             }
         });
-    </script>
+    </script> --}}
+
+<script>
+    $(function() {
+        function cargarYGraficar(url, canvasId, chartTitle) {
+            // Seleccionamos el contexto del canvas
+            const context = document.getElementById(canvasId).getContext('2d');
+
+            // Petición AJAX para obtener datos
+            $.get(url, function(response) {
+                response = JSON.parse(response);
+
+                // Si hay éxito en la petición
+                if(response.success) {
+                    let labels = response.data[0];
+                    let counts = response.data[1];
+
+                    // Graficamos usando la función `graficar`
+                    graficar(context, 'bar', labels, counts, chartTitle);
+                } else {
+                    console.log(response.message);
+                }
+            }).fail(function(error) {
+                console.log(error.statusText, error.status);
+            });
+        }
+
+        function graficar(context, typeGraphic, labels, data, title) {
+    var configChart = `
+    {
+        "type": "${typeGraphic}",
+        "data": {
+            "labels": ${JSON.stringify(labels)},
+            "datasets": [{
+                "label": "${title}",
+                "data": ${JSON.stringify(data)},
+                "backgroundColor": [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)"
+                ],
+                "borderColor": [
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(153, 102, 255, 1)"
+                ],
+                "borderWidth": 2
+            }]
+        },
+        "options": {
+            "scales": {
+                "xAxes": [{
+                    "ticks": {
+                        "beginAtZero": true,
+                        "display": false
+                    }
+                }],
+                "yAxes": [{
+                    "ticks": {
+                        "beginAtZero": true
+                    }
+                }]
+            }
+        }
+    }
+    `;
+    
+    new Chart(context, JSON.parse(configChart));
+}
+
+
+
+        // Llamamos a la función para cargar y graficar cada gráfico
+        cargarYGraficar('/panel/graficos-productos', 'barChartVentas', 'Cantidad de Productos más vendidos');
+        cargarYGraficar('/panel/graficos-productos2', 'barChartCompras', 'Cantidad de Productos más comprados');
+    });
+</script>
+
     @endrole
 @stop
 

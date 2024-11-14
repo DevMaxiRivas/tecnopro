@@ -89,6 +89,7 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
 
     //GRAFICOS PRODUCTOS
     Route::get('graficos-productos',[ProductoController::class,'graficosProductosxCategoria'])->name('graficos-productos');
+    Route::get('graficos-productos2',[ProductoController::class,'graficosProductosxSolicitudes'])->name('graficos-productos2');
 
     #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
 });
