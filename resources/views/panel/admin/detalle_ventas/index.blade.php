@@ -80,7 +80,7 @@
                                             </td>
                                             <td class="text-center">
                                                 @if ($producto->precio > 0)
-                                                    {{ $producto->precio }}
+                                                    ${{ number_format($producto->precio, 2) }}
                                                 @else
                                                     -
                                                 @endif
@@ -88,7 +88,7 @@
                                             <td class="text-center">{{ $producto->cantidad }}</td>
                                             <td class="text-center">
                                                 @if ($producto->subtotal > 0)
-                                                    {{ $producto->subtotal }}
+                                                    ${{ number_format($producto->subtotal, 2) }}
                                                 @else
                                                     -
                                                 @endif

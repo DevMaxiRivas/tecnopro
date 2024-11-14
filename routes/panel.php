@@ -44,6 +44,14 @@ Route::group(['middleware' => ['role:cliente']], function () {
 
     //Detalle de mis compras
     Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');
+
+    Route::get('/miPerfil', [UserController::class, 'index'])->name('cliente.index');
+    
+    //Editar
+    Route::get('/editar', [UserController::class, 'editar'])->name('cliente.editar');
+    //Actualizar datos
+    Route::put('/actualizar/{cliente}', [UserController::class, 'actualizar'])->name('cliente.actualizar');
+
 });
 
 // Grupo de rutas para usuarios con Rol Admin y Empleado de Compras
@@ -106,7 +114,7 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('graficos-productos2',[ProductoController::class,'graficosProductosxSolicitudes'])->name('graficos-productos2');
 
     #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
-
+ 
     //Graficos
     Route::get('/home/clientes', [UserController::class, 'graficoMejoresClientes'])->name('grafico-mejores-clientes');
     Route::get('/home/cli', [UserController::class, 'graficoClientes'])->name('graficos-clientes');

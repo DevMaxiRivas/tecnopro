@@ -80,11 +80,11 @@
                                             <td>{{ $producto->id }}</td>
                                             <td>{{ $producto->producto->nombre }}</td>
                                             <td>
-                                                {{ $producto->precio > 0 ? $producto->precio : '-' }}
+                                                ${{ number_format($producto->precio, 2) > 0 ? $producto->precio : '-' }}
                                             </td>
                                             <td>{{ $producto->cantidad }}</td>
                                             <td>
-                                                {{ $producto->subtotal > 0 ? $producto->subtotal : '-' }}
+                                            ${{ number_format($producto->subtotal, 2) > 0 ? $producto->subtotal : '-' }}
                                             </td>
                                         </tr>
                                     @endforeach
