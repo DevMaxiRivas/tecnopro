@@ -11,17 +11,22 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\VentaClienteController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
+use App\Http\Controllers\HomePanelController;
 use App\Http\Controllers\OrdenesDeCompraController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('panel.index');
-})->name('panel');
+Route::get('/', [HomePanelController::class, 'index'])->name('panel');
 
 // Grupo de rutas para usuarios con rol Admin y Empleado de Ventas
 Route::group(['middleware' => ['role:admin']], function () {
     Route::resource('/usuarios', UsuariosController::class)->names('usuarios');
+
+    Route::get('/reportes/ventas', function() {
+        return view('panel.reporteventa');
+    })->name('reporte.ventas');
+
+    Route::post('/ganancias', [HomePanelController::class, 'ganancias']);
 });
 
 // Grupo de rutas para usuarios con rol Admin y Empleado de Ventas
@@ -35,7 +40,6 @@ Route::group(['middleware' => ['role:cliente']], function () {
     //Mis Compras
     Route::get('/miscompras', [VentaClienteController::class, 'index'])->name('ventas.cliente.index');
     Route::patch('/compras/{venta}/cancelar', [VentaclienteController::class, 'cancelar'])->name('ventas.cliente.cancelar');
-
 
     //Detalle de mis compras
     Route::get('/miscompras/detalle_ventas/{id_venta}', [DetalleVentaClienteController::class, 'index'])->name('detalle_ventas.index');

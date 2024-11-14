@@ -38,6 +38,22 @@
             </div>
         </div>
 
+        <div class="col-lg-3 col-md-4 col-sm-12">
+            <div class="card">
+                <a href="{{ route('reporte.ventas') }}" class="text-dark">
+                    <div class="card-body border-left-blue">
+                        <h5 class="card-title text-lg font-weight-bold">
+                            <i class="fas fa-money-bill-wave"></i>
+                            Ganancia Mensual
+                        </h5>
+                        <p class="card-text text-xl font-weight-bold text-right m-0">
+                            $ {{ $ganancias }}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <div class="modal fade" id="modal-mapa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-xl" role="document">  
                 <div id="content" class="modal-content">
