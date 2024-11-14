@@ -45,7 +45,7 @@
                                             <td class="text-center">{{ $venta->id }}</td>
                                             <td> {{ $venta->created_at }} </td>
                                             <td class="text-center">{{ $venta->forma_pago->nombre }}</td>
-                                            <td class="text-center">{{ $venta->total }}</td>
+                                            <td class="text-center"> ${{ number_format($venta->total, 2) }}</td>
 
                                             <td>
                                                 @if ($venta->estado == 0)

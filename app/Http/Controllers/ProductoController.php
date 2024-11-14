@@ -10,6 +10,8 @@ use App\Models\Producto;
 use DateTime;
 use Illuminate\Http\Request;
 
+
+
 class ProductoController extends Controller
 {
     public function index()

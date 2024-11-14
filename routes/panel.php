@@ -13,6 +13,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\DetalleVentaController;
 use App\Http\Controllers\HomePanelController;
 use App\Http\Controllers\OrdenesDeCompraController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
@@ -103,4 +104,8 @@ Route::group(['middleware' => ['role:admin|empleado_compras']], function () {
     Route::get('graficos-productos2',[ProductoController::class,'graficosProductosxSolicitudes'])->name('graficos-productos2');
 
     #Route::get('/detalleordencompra/{id_compra}', [OrdenesDeCompraController::class, 'show'])->name('orden_compras.show');
+
+    //Graficos
+    Route::get('/home/clientes', [UserController::class, 'graficoMejoresClientes'])->name('grafico-mejores-clientes');
+    Route::get('/home/cli', [UserController::class, 'graficoClientes'])->name('graficos-clientes');
 });

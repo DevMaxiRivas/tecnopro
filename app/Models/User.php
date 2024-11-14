@@ -75,4 +75,12 @@ class User extends Authenticatable
     public function compras_empleado_proveedor() {
         $this->hasMany(Compra::class, 'id_empleado');
     }
+
+    public function scopeRegisteredInYear($query, $year)
+    {
+    return $query->whereYear('created_at', $year)
+                ->selectRaw('YEAR(created_at) as year, MONTH(created_at) as month, count(*) as total')
+                ->groupBy('year', 'month');
+    }
+    
 }

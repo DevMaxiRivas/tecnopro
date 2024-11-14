@@ -89,7 +89,7 @@
                             @endrole
                             @role('cliente')
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between "
-                                        href="#">Mi Perfil <i class="fa-solid fa-user-gear small"></i></a></li>
+                                        href="{{ route('cliente.index') }}">Mi Perfil <i class="fa-solid fa-user-gear small"></i></a></li>
                                 <li><a class="dropdown-item d-flex align-items-center justify-content-between"
                                         href="{{ route('ventas.cliente.index') }}">Mis compras <i
                                             class="fa-solid fa-bag-shopping"></i></a></li>

@@ -57,6 +57,12 @@
                                         <tr>
                                             <td class="text-center">{{ $producto->id }}</td>
                                             <td class="text-center">{{ $producto->producto->nombre }}</td>
+                                            <td class="text-center">
+                                                @if ($producto->precio)
+                                                    ${{ number_format($producto->precio, 2) }}
+                                                @else
+                                                    -
+                                                @endif
                                             </td>
                                             <td class="text-center">{{ $producto->cantidad }}</td>                                
                                             </td>
