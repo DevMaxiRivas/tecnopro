@@ -7,6 +7,7 @@ use App\Models\Categoria;
 use App\Models\DetalleCompra;
 use App\Models\DetalleVenta;
 use App\Models\Producto;
+use DateTime;
 use Illuminate\Http\Request;
 
 class ProductoController extends Controller
@@ -194,7 +195,7 @@ class ProductoController extends Controller
         return view('panel.admin.productos.graficos_productos');
     }
 
-    public function graficosProductosxSolicitudes() {
+    /* public function graficosProductosxSolicitudes() {
         // Si se hace una petición AJAX
         if(request()->ajax()) {
             $labels = [];
@@ -240,7 +241,51 @@ class ProductoController extends Controller
         }
     
         return view('panel.admin.productos.graficos_productos2');
-    }
+    } */
     
+    public function graficosProductosxSolicitudes() {
+        if (request()->ajax()) {
+            $labels = [];
+            $costsByMonth = [];
+    
+            // Obtener todos los detalles de compra
+            $detalles = DetalleCompra::get();
+    
+            // Recorrer los detalles de compra y acumular los costos por mes
+            foreach ($detalles as $detalle) {
+                // Extraer el mes de la fecha de compra
+                $mes = date('m', strtotime($detalle->created_at));
+    
+                // Calcular el costo total para ese producto en esa entrada (cantidad * precio_unitario)
+                $costoProducto = $detalle->cantidad * $detalle->precio;
+    
+                // Acumular el costo en el mes correspondiente
+                if (isset($costsByMonth[$mes])) {
+                    $costsByMonth[$mes] += $costoProducto;
+                } else {
+                    $costsByMonth[$mes] = $costoProducto;
+                }
+            }
+    
+            // Ordenar los datos por el mes (de menor a mayor)
+            ksort($costsByMonth);
+    
+            // Preparar los datos para el gráfico
+            foreach ($costsByMonth as $mes => $costoTotal) {
+                $labels[] = DateTime::createFromFormat('!m', $mes)->format('F'); // Convertir número del mes a nombre del mes
+                $costs[] = $costoTotal; // Costo total del mes
+            }
+    
+            // Retornar los datos para el gráfico
+            $response = [
+                'success' => true,
+                'data' => [$labels, $costs]
+            ];
+    
+            return json_encode($response);
+        }
+    
+        return view('panel.admin.productos.graficos_productos2');
+    }
 
 }

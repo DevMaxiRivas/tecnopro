@@ -18,7 +18,7 @@ class DetalleCompraFactory extends Factory
     {
         $producto = Producto::inRandomOrder()->first();
         $compra = Compra::inRandomOrder()->first();
-        $cantidad = $this->faker->numberBetween(1, 10);
+        $cantidad = $this->faker->numberBetween(1, 3);
         $subtotal = $producto->precio * $cantidad;
         $compra->total += $subtotal;
         $compra->save();
@@ -29,7 +29,9 @@ class DetalleCompraFactory extends Factory
             'precio' => $producto->precio,
             'cantidad' => $cantidad ,
             'subtotal' => $subtotal,
-            'estado'=>DetalleCompra::ACTIVO,
+            'estado' => DetalleCompra::ACTIVO,
+            'created_at' => $compra->created_at,
+            'updated_at' => $compra->created_at,
         ];
     }
 }
