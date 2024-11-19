@@ -157,25 +157,28 @@
                         }]
                     }`;
                 // Si es alguno de estos graficos, iniciarán en el punto 0
-                if(typeGraphic === 'bar' || typeGraphic === 'horizontalBar') {
+                    if(typeGraphic === 'bar' || typeGraphic === 'horizontalBar') {
                     configChart += `
                     ,"options": {
-                        "scales": {
-                            "xAxes": [{
-                                "ticks": {
-                                    "beginAtZero": true,
-                                    "display": false
-                                }
-                            }],
-                            "yAxes": [{
-                                "ticks": {
-                                    "beginAtZero": true
-                                }
-                            }]
-                        }
-                    }
-                    `;
-                }
+                    "scales": {
+                    "xAxes": [{
+                    "ticks": {
+                    "beginAtZero": true,
+                    "display": false
+                     }
+                    }],
+                    "yAxes": [{
+                    "ticks": {
+                    "beginAtZero": true
+                   }
+                   }]
+                   },
+                  "legend": {
+                  "display": false
+                  }
+                  }
+                 `;
+                 } 
                 configChart += '}'; // Cierre del JSON
                 // Guardamos el string en el input data del formulario correspondiente
                 inputData.val(configChart);
